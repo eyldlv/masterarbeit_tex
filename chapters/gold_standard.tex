@@ -36,10 +36,18 @@ The fourth, alignment error rate (AER) one was introduced by \cite{och-ney-2000-
 In order to measure the performance of both models, the embedding based model (SimAlign) and the stastitical model (fast\_align), on the language pair German-Romansh a gold standard is needed. 
 Since no such gold standard exists, I took upon myself to create one. 
 Although I am not a speaker of Romansh, my experience as a trained linguist, as well as my knowledge in related languages (Latin, Italian, French), allows me to confidently tackle this task. 
-Additionally, whenever I was in doubt, I referred to the online dictionary \href{https://www.pledarigrond.ch/rumantschgrischun}{Pleadri grond}, which also offers a grammar overview.
+Additionally, whenever I was in doubt, I referred to the online dictionary \href{https://www.pledarigrond.ch/rumantschgrischun}{Pledari grond}, which also offers a grammar overview. 
+(TODO: add more grammar references)
 
 
 \section{Guidelines}
 As mentioned above, clear guidelines need to be defined for creating the gold standard in order to ensure quality and consistency. I shall now proceed to describe the guidelines I used for my annotation of the word alignments for the gold standard.
 
 A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{as few words as possible and as many words as necessary that carry the same meaning should be aligned.}, referring to \cite{lambert2005}. 
+
+\subsection{Compound words}
+Compounding is the formation of new lexemes by adjoining two or more lexemes \autocite{bauer1988}. In German, compounds are productive and prominent means of word formation in German \autocite{clematide2018}. 
+In a sample of 4,500 types examined by \cite{clematide2018}, 80\% of German nouns were compounds.
+Romansh, in comparison, uses the preposition \emph{da} for word linking. 
+
+
