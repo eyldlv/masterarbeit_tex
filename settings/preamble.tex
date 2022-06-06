@@ -1,9 +1,28 @@
 \documentclass[11pt, a4paper]{report}
 \usepackage[english]{babel}
+
+%\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{csquotes}
 
 
-\usepackage{times}
+% Definition vom Zeilenabstand
+\usepackage{setspace} % Zeilenabstand
+\onehalfspacing %\doublespace or \singlespace
+
+% Definition vom Seitenlayout
+\setlength{\topmargin}{-1.2cm}
+\setlength{\oddsidemargin}{0.5cm} 
+\setlength{\evensidemargin}{0.5cm}
+
+\setlength{\textheight}{24.5cm} 
+\setlength{\textwidth}{15cm}
+
+\setlength{\footskip}{1.2cm} 
+\setlength{\footnotesep}{0.4cm}
+
+
+\usepackage{times} % Times New Roman
 
 \usepackage[style=authoryear]{biblatex}
 \addbibresource{bibliography/bibliography.bib}
