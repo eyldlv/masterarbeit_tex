@@ -1,0 +1,664 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pr",
+				"previous_word"
+			],
+			[
+				"wor",
+				"word2index"
+			],
+			[
+				"tok",
+				"tokenized"
+			],
+			[
+				"cle",
+				"clean_text"
+			],
+			[
+				"wort",
+				"worarten"
+			],
+			[
+				"tt",
+				"texttt"
+			],
+			[
+				"word_s",
+				"word_set_2"
+			],
+			[
+				"word_",
+				"word_set_1"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"s",
+				"sorted_dicts2"
+			],
+			[
+				"sor",
+				"sorted_dicts1"
+			],
+			[
+				"sort",
+				"sorted_dicts2"
+			],
+			[
+				"word",
+				"wordfreq1"
+			],
+			[
+				"list",
+				"lista_uno"
+			],
+			[
+				"random",
+				"random_nomen"
+			],
+			[
+				"ran",
+				"random_nomen"
+			],
+			[
+				"ra",
+				"random_nomen"
+			],
+			[
+				"ent",
+				"entities_file"
+			],
+			[
+				"sen",
+				"sentence_table"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"quer",
+				"querySelectorAll"
+			],
+			[
+				"g",
+				"great_grandchild"
+			],
+			[
+				"cont",
+				"contains_internet_address"
+			],
+			[
+				"se",
+				"segment_text"
+			],
+			[
+				"l",
+				"lang_code"
+			],
+			[
+				"inu",
+				"inputreversed"
+			],
+			[
+				"re",
+				"request_data"
+			],
+			[
+				"ana",
+				"analyse_sentence"
+			],
+			[
+				"anal",
+				"analyse_sentence"
+			],
+			[
+				"HTTP",
+				"HTTPRequestHandler"
+			],
+			[
+				"for",
+				"for_ruslts_div"
+			],
+			[
+				"div",
+				"for_ruslts_div"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"padd",
+				"padding-bottom"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"hea",
+				"header"
+			],
+			[
+				"bro",
+				"saddlebrown"
+			],
+			[
+				"ali",
+				"text-align"
+			],
+			[
+				"fon",
+				"font-family"
+			],
+			[
+				"len",
+				"len_word_2"
+			],
+			[
+				"sub",
+				"subtitle_en"
+			],
+			[
+				"count",
+				"count_dicts"
+			],
+			[
+				"coun",
+				"count_dicts"
+			],
+			[
+				"co",
+				"count_dicts"
+			],
+			[
+				"di",
+				"dictionary"
+			],
+			[
+				"norm",
+				"normalized_dict"
+			],
+			[
+				"no",
+				"normalized_dict"
+			],
+			[
+				"ne",
+				"newer_email"
+			],
+			[
+				"longest",
+				"get_longest_word"
+			],
+			[
+				"blue",
+				"skyblue"
+			],
+			[
+				"backgr",
+				"background-color"
+			],
+			[
+				"sp",
+				"span"
+			],
+			[
+				"con",
+				"countVowels"
+			],
+			[
+				"ch",
+				"checkPalindrome"
+			],
+			[
+				"cre",
+				"createParagraphForPalindrome"
+			],
+			[
+				"to",
+				"toUpperCase"
+			],
+			[
+				"in",
+				"invertCase"
+			],
+			[
+				"is",
+				"isCapitalized"
+			],
+			[
+				"getWor",
+				"getWordLength"
+			],
+			[
+				"numOf",
+				"numOfConsonants"
+			],
+			[
+				"blu",
+				"blueviolet"
+			],
+			[
+				"padd-",
+				"padding-bottom"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"font-",
+				"font-weight"
+			],
+			[
+				"la",
+				"larger"
+			],
+			[
+				"max-",
+				"max-width"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				"XeLaTeX"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"select theme",
+				"UI: Select Color Scheme"
+			],
+			[
+				"theme",
+				"UI: Select Color Scheme"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Wrap selection in LaTeX command"
+			],
+			[
+				"build",
+				"Build With: LaTeX - Basic Builder"
+			],
+			[
+				"late cac",
+				"LaTeXTools: Clear document cache"
+			],
+			[
+				"latex build",
+				"Build With: LaTeX - PdfLaTeX"
+			],
+			[
+				"color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Theme",
+				"UI: Select Theme"
+			],
+			[
+				"",
+				"Build With: LaTeX - Basic Builder - XeLaTeX"
+			],
+			[
+				"package control re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Snippet: ma",
+				"Snippet: Matrix"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 192.0,
+		"history":
+		[
+			"3+4",
+			"skim"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterarbeit/thesis"
+	],
+	"file_history":
+	[
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterarbeit/thesis/,",
+		"/Users/eyaldolev/Downloads/clvorlage/CLthesis.tex",
+		"/Users/eyaldolev/Downloads/clvorlage/chapters/references.tex",
+		"/Users/eyaldolev/Downloads/clvorlage/chapters/acknow.tex",
+		"/Users/eyaldolev/Downloads/clvorlage/chapters/abstract.tex",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/.gitignore",
+		"/Users/eyaldolev/Documents/Masterprojekt/code_2/.gitignore",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/scripts/.gitignore",
+		"/Users/eyaldolev/Library/Mobile Documents/iCloud~md~obsidian/Documents/MT_FS_2022/.obsidian/snippets/mono.css",
+		"/Users/eyaldolev/Library/Mobile Documents/iCloud~md~obsidian/Documents/MT_FS_2022/.obsidian/snippets/mono.cs",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/data/DE_RM_600.tsv",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/scripts/align_example_de-rm.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/scripts/visualize.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/scripts/calc_align_score.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/scripts/align_example.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/align.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/simalign/README.md",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/test_files/DE_RM_600.tsv",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_5/report/edolev_jbrasser_ex04.tex",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/PCL2/trial_exam/task3/extract_new.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/split_2009.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Unterlagen/MIGROS Lohnabrechnungen/Lohnabrechnung_2022_01.txt",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/primeDB.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/alignments_alignments_pharaoh.txt",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/pharaoh",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/export_alignments.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/scripts/tab_to_pipes.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/CombAlign/config.ini",
+		"/Users/eyaldolev/Documents/Masterprojekt/CombAlign/aligners/eflomal/Makefile",
+		"/Users/eyaldolev/Documents/Masterprojekt/mgiza/mgizapp/scripts/run.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/mgiza/mgizapp/scripts/force-align-moses.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/mgiza/mgizapp/scripts/plain2snt-hasvcb.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/CombAlign/requirements.txt",
+		"/Users/eyaldolev/Documents/Masterprojekt/CombAlign/install_tools.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/LASER/tasks/embed/embed.sh",
+		"/Users/eyaldolev/.zshrc",
+		"/Users/eyaldolev/.zshsrc",
+		"/Users/eyaldolev/Documents/Masterprojekt/LASER/install_external_tools.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/LASER/install_models.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/prime.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/tokenizer.pl",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterarbeit/tex/thesis.tex",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/json/corpus/create_bicorpus_sample.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/create_corpus.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/hunalign/junk.txt",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/create_db.sh",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/samples/sample_3.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-4/configs/deen_transformer_regular.yaml",
+		"/Users/eyaldolev/Documents/Masterprojekt/AlignMan/utilities/tokenize_functions.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/html/Index2021.aspx.html",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/json_2010/corpus/2021.json",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/quatsch.csv",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/main.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/html/2010/2010_2010010501_DE.html",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_3/report/edolev_ex_03.log",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/scripts/train.sh",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/You_Only_Live_Twice.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Spy_Who_Loved_Me.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/On_Her_Majestys_Secret_Service.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Moonraker.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Man_With_the_Golden_Gun.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Live_and_Let_Die.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Goldfinger.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/From_Russia_With_Love.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/For_Your_Eyes_Only.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Dr_no.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Diamonds_are_Forever.txt",
+		"/Users/eyaldolev/Documents/MT/mt-exercise-3/data/Casino_Royale.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_2/predict.sh",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/gesetzessammlung/rechtsbuch_links.txt",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/html.html",
+		"/Users/eyaldolev/Documents/MT/joeynmt-toy-models/test.de.txt",
+		"/Users/eyaldolev/Documents/MT/joeynmt-toy-models/data/test.bpe.de",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/BLEUeval.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_2/train_skeleton.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Documents/Bewerbungen/2022_02_13_UZH/Dolev_CV.tex",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_02/tex/balir_ex_02.tex",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Prodigy/output_pretrain/config.cfg",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Prodigy/pretraining.cfg",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_02/tex/pcl1_ex01.tex",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_02/BAC_1969_en.xml.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/test/test_hypothesis.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/PCL2/exercise_6/aa/cli.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/PCL2/exercise_6/edolev_jroady_pcl2_ex6.tex",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/PCL2/exercise_6/tests/test_cli.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/test/test_reference.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/test/test_clipping_reference.txt",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_01/Alpine_Journal/BAC_1969_en.xml",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_01/Alpine_Journal/BAC_1969_en-ner.xml",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Prodigy/annotations.jsonl",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/article_zeit/trans_bing_de.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/test/test_clipping_hypothesis.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/MT/mt_2022_exercise_1/article_zeit/text_de Kopie.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/Erstellung/Assignment 3/assignment3_1.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/Erstellung/Assignment 3/assignment3_2.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/2_FS2020/Erstellung/Assignment 3/assignment3.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/put_files_in_dir.py",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/change_filenames.py",
+		"/Users/eyaldolev/Documents/Erstuellung_Tutorat/Ex_01/2_1.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/InfiII/Ex1tasks/tasks/task2.c",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/InfiII/Ex1tasks/task2.1.c",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/InfiII/Ex00tasks/ex0.c",
+		"/Users/eyaldolev/Documents/Masterprojekt/code/test_change_filenames.py",
+		"/Users/eyaldolev/Documents/mypython/Algorithmen/encrypt.py",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Personal/Uni/UZH/Masterprojekt/code/links/2020_rm.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Personal/Uni/UZH/Masterprojekt/code/links/2000_rm.txt",
+		"/Users/eyaldolev/Documents/Briefe/Briefvorlage_Eyal/Dolev_Bewerbung.tex",
+		"/Users/eyaldolev/Documents/Briefe/latex-briefvorlage-master/brief-absender.lco",
+		"/Users/eyaldolev/Documents/Briefe/latex-briefvorlage-master/brief.tex",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/code/texts/2011_de_1.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/code/texts/2011_de_0.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/code/texts/2011_de.txt[:-4]_0.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/code/links/2005_de.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/code/links/1997_de.txt",
+		"/Users/eyaldolev/Library/CloudStorage/OneDrive-Persönlich/Uni/UZH/Masterprojekt/test.txt",
+		"/Users/eyaldolev/.config/joplin-desktop/edit-130ffe3df3304754a87c50c3943fbbb7.md",
+		"/Users/eyaldolev/Projects/Webseite/server.py",
+		"/Users/eyaldolev/Documents/myjava/helloworld.java",
+		"/Users/eyaldolev/OneDrive/Uni/UZH/PCL-3/report/edolev_report.tex",
+		"/Users/eyaldolev/OneDrive/Uni/UZH/Lang_Tech/seminar_paper/seminar_paper.tex",
+		"/Users/eyaldolev/Documents/latex/test.tex",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wolter_HansJuergen_hwolte/2_submissions/amoha_hwolte_PfL_ex6/task3_final.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wolter_HansJuergen_hwolte/2_submissions/amoha_hwolte_PfL_ex6/task2c_final.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wolter_HansJuergen_hwolte/2_submissions/amoha_hwolte_PfL_ex6/task2a_final.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wang_Xue_wxue/2_submissions/msoll_wxue_pfl_exercise06/task3.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wang_Xue_wxue/2_submissions/msoll_wxue_pfl_exercise06/task2.3.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Wang_Xue_wxue/2_submissions/msoll_wxue_pfl_exercise06/task2.1-2.2.py",
+		"/Users/eyaldolev/OneDrive - Universität Zürich UZH/PfL_tutorial/ex06/Ulrich_Julia_Maike_jululr/2_submissions/clelut_jululr_ex06/task1.py"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 60.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 120.0
+	},
+	"pinned_build_system": "",
+	"project": "thesis.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 192.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
