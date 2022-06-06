@@ -1,4 +1,5 @@
 \chapter{Gold standard}
+\section{Introduction}
 In order to measure the quality of words alignments, a model's performance is measured on a test set which is a gold standard created by human annotators. 
 For the gold standard to be of good quality and consistent with itself, annotators have to follow strict guidelines.
 These guidelines address issues of ambiguity in word alignments. \autocite[115]{koehn2009}. 
@@ -11,18 +12,34 @@ Three different choices can be made:
 	\item The word should remain unaligned since it has to clear equivalent in German.
 	\item The word \emph{does} is connected with \emph{live}; it contains the number and tense information which is in German contained in one word \emph{wohnt}, so it should be aligned to \emph{wohnt}, together with \emph{live}.
 	\item \emph{does} is part of the negation; without it, the sentence would not contain this word. Therefore, \emph{does} should be aligned with \emph{nicht} (the German negation).
+\end{enumerate}
 
-\section{Sure and Possible alignments}
-An approach for solving problematic cases is the distinction between \emph{sure} (s) and \emph{possible} (p) alignments \autocite[115]{koehn2009}, which are also sometimes referred as fuzzy alignments \autocite{clematide2018}. 
-Generally, these labels allow to distinguish between ambiguous and unambiguous links. Ambiguous links are labeled \emph{possible} and unambiguous links are labeled \emph{sure} \autocite{lambert2005}. This distinction also has an impoact on the way the evaluation metrics are computed (more on that later).
+\section{Sure and Possible Alignments}
+An approach for solving problematic cases is the distinction between \emph{sure} (s) and \emph{possible} (p) alignments \autocite{och-ney-2000-improved}, which are also sometimes referred as fuzzy alignments \autocite{clematide2018}. 
+Generally, these labels allow to distinguish between ambiguous and unambiguous links. 
+Ambiguous links are labeled \emph{possible} and unambiguous links are labeled \emph{sure} \autocite{lambert2005}. 
+The \emph{possible} label was conceived to be used especially for aligning words within idiomatic expressions, free translations and missing function words \autocite{och-ney-2000-improved}.
+This distinction also has an impact on the way the evaluation metrics are computed (more on that later).
 
 There seems to be no clear global definition about which alignments should be considered as umabiguous and marked as \emph{sure} and which should be considered ambiguous marked as \emph{possible}. 
 For some created gold standards, no distinciton between \emph{sure} and \emph{possible} alignments was made \autocite{clematide2018}. 
 In another case, annotators were asked to first label all alignments as \emph{sure} and then refine their alignments with confidence labels \autocite{holmqvist-ahrenberg-2011-gold}. 
 In the creation of the English-Icelandic gold standard in \cite{steingrimsson-etal-2021-combalign},  annotators used only \emph{sure} links. 
-Their annotations were then combined, with all 1-1 alignments both annotators agreed upon (i.e. the intersection of their annotations) makred as \emph{sure} and differences all other alignments made by either one or both were marked as \emph{possible} \autocite{steingrimsson-etal-2021-combalign}. 
+Their annotations were then combined, with all 1-1 alignments both annotators agreed upon (i.e., the intersection of their annotations) makred as \emph{sure} and differences all other alignments made by either one or both were marked as \emph{possible} \autocite{steingrimsson-etal-2021-combalign}. 
 
+\section{Evaluation Metrics}
+TODO: move to results/evaluation part
+Four types of measures have become standard for evaluating word alignment. Three of them -- precision, recall and F-measure -- are well known in Information Retrieval metrics \cite{mihalcea-pedersen-2003-evaluation}. 
+The fourth, alignment error rate (AER) one was introduced by \cite{och-ney-2000-improved}.
 
-\end{enumerate}
+\section{Gold standard for German-Romansh}
+In order to measure the performance of both models, the embedding based model (SimAlign) and the stastitical model (fast\_align), on the language pair German-Romansh a gold standard is needed. 
+Since no such gold standard exists, I took upon myself to create one. 
+Although I am not a speaker of Romansh, my experience as a trained linguist, as well as my knowledge in related languages (Latin, Italian, French), allows me to confidently tackle this task. 
+Additionally, whenever I was in doubt, I referred to the online dictionary \href{https://www.pledarigrond.ch/rumantschgrischun}{Pleadri grond}, which also offers a grammar overview.
+
 
 \section{Guidelines}
+As mentioned above, clear guidelines need to be defined for creating the gold standard in order to ensure quality and consistency. I shall now proceed to describe the guidelines I used for my annotation of the word alignments for the gold standard.
+
+A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{as few words as possible and as many words as necessary that carry the same meaning should be aligned.}, referring to \cite{lambert2005}. 
