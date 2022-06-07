@@ -45,6 +45,16 @@ As mentioned above, clear guidelines need to be defined for creating the gold st
 
 A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{as few words as possible and as many words as necessary that carry the same meaning should be aligned.}, referring to \cite{lambert2005}. 
 
+\subsection{General priniciples}
+\begin{itemize}
+	\item prefer 1-1 alignments over 1-n alignments
+	\item align words, not phrases
+	\item only align words that are translations of each other also outside of context
+	\item POS doesn't matter: German often prefers a nominal style, Romansh prefers a verbal style -- expect some noun-verb alignments.
+	
+\end{itemize}
+
+
 \subsection{Compound words}
 Compounding is the formation of new lexemes by adjoining two or more lexemes \autocite{bauer1988}. In German, compounds are productive and prominent means of word formation in German \autocite{clematide2018}. 
 In a sample of 4,500 types examined by \cite{clematide2018}, 80\% of German nouns were compounds.
@@ -75,6 +85,24 @@ This is also inline with principles I, II and III in \cite{clematide2018}.
 	\end{center}
 \end{table}
 
+\subsection{German preterite vs.~Romansh perfect}
+In the corpus at hand, two tenses are used in German for referring to past events: the preterite and the perfect. 
+The German preterite is a synthetic verb form, i.e., it is made up of a single conjugated form. 
+Some examples are \emph{nahm} (infinitive \emph{nehmen} \enquote{take}) or \emph{wurde} (infinitive \emph{werden} \enquote{become}). 
+The German perfect is an analytic construction made up of an auxiliary verb (\emph{haben} \enquote{have} or \emph{sein} \enquote{be}) and the past participle, e.g., \emph{Die Präsidentenkonferenz \textbf{hat} nun \textbf{entschieden}} \enquote{The conference has decided}. 
 
+In contranst to German, Romansh only has one tense referring to past events: the perfect. 
+It is an analytic construction made, in a similar fashion as in German, of an auxiliary \emph{habere} \enquote{have} for transitive verbs or \emph{esse} \enquote{be} for intransitive verbs and the past participle \autocite[189]{bossong2008}. 
+The German sentence given above (\emph{Die Präsidentenkonferenz hat nun entschieden}) was translated as \emph{La conferenza da las presidentas e dals presidents \textbf{ha} usse \textbf{decidi}}. 
+\emph{ha} is the auxiliary and \emph{decidi} is the past participle. 
+This poses no real problem since we can link the German auxiliary to the Romansh auxiliary and the German participle to the Romansh participle.
 
+However, a German preterite is always translated using the Romansh perfect. 
+For example, in the sentence \emph{Der Kanton Graubünden war letzsmals 2003 Gastkanton} \enquote{The last time the Canton of Grisons was a host canton was in 2003} the verb \emph{war} \enquote{was} is translated as \emph{è stà}. 
+This theoretically results in a 1-2 link. 
+However, since the verb \emph{è} here only carries grammatical information of tense and number, but no real lexical information, it should reamin unaligned. 
+
+\paragraph{Principle II}
+The German perfect should be aligned to the Romansh perfect using a 1-1 alignment; auxiliary to auxiliary and participle to participle. 
+The German preterite should also be aligned using a 1-1 alignment to the Romansh participle, leaving the auxiliary unaligned and avoiding a 1-2 alignment.
 
