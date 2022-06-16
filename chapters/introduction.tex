@@ -1,0 +1,17 @@
+\chapter{Introduction}
+\section{Motivation}
+
+
+\section{Research Question and Goals}
+\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment outperforms all the statistical baseline models. 
+Contrary to statistical models, their model uses vectors of word representations learned by a neural net (also commonly known as word embeddings) and, by using some sort of similarity measurement (e.g., cosine similarity), aligns the most similar words in the source and the target sentence. 
+
+But not only that the model outperforms the existing stastical models, its biggest advantage as propogated by \cite{jalili-sabet-etal-2020-simalign} is that it requires no training data. 
+Statistical models will only reach a threshold of good performance with enough training data (TODO: cite numbers from SimAlign). 
+Using word embeddings can be used to align words in just a single sentence with high precision. 
+Of course, all of this works persuming we already have a trained model whose learned embeddings we can use for this task. 
+There exist some language models that were trained on multi-lingual data. 
+mBERT was trained on 104 languages and LASER was trained on 93 languages. 
+But will word embeddings based word alignment will work in zero-shot settings? 
+That is, can the embeddings learned by a multilingual language model be used for word alignment for a language that wasn't included in the training data?
+
