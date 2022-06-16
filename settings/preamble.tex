@@ -5,6 +5,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{csquotes}
 
+% Create glosses
+\usepackage{gb4e}
+\noautomath
+
 % Schönere Tabellen
 \usepackage{booktabs}
 
@@ -24,9 +28,29 @@
 \setlength{\footnotesep}{0.4cm}
 
 
-\usepackage{times} % Times New Roman
+% \usepackage{times} % Times New Roman
 
 \usepackage[style=authoryear]{biblatex}
 \addbibresource{bibliography/bibliography.bib}
+
+
+
+% Create word alignment graphs
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\tikzset{every tikzmarknode/.style={inner sep = 1pt,execute at end node={\vphantom{bg}}}}
+
+% Attempts to plot word alignments
+% \newcommand*{\hnode}[1]{\node[outer sep=0pt,anchor=base] (#1) {#1};} % create a labelled node
+
+% \usepackage{pstricks}% http://www.tug.org/PSTricks/main.cgi/
+% \usepackage{pst-node}
+% \usepackage{calc}% For width calculations
+% \newcommand*{\Tword}[1]{\rnode{#1}{\raisebox{1ex}{\smash{#1}}}}% \Tword{<top>}
+% \newcommand*{\Bword}[1]{\rnode{#1}{\raisebox{-2ex}{\smash{#1}}}}% \Bword{<bottom>}
+% \newcommand{\TtoB}[3][]{% \TtoB{<top>}{<bottom}
+%   \ncdiag[arm=1em,angleA=-90,angleB=90,linestyle=solid,linecolor=black,linewidth=0.5pt,#1]{#2}{#3}}%
+
+
 
 \usepackage{hyperref}
