@@ -1,86 +1,104 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% https://bibdesk.sourceforge.io/
 
-%% Created for Eyal Dolev at 2022-06-08 12:42:44 +0200 
+%% Created for Eyal Dolev at 2022-06-17 16:47:27 +0200 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
+
+
+
+@inbook{valaer2012,
+	address = {Chur},
+	author = {Rico Franc Val{\"a}r},
+	chapter = {Wie die Anerkennung des R{\"a}toromanischen die Schweiz einte. Einige Hintergr{\"u}nde zur Volksabstimmung vom 20. Februar 1938},
+	date-added = {2022-06-17 16:42:59 +0200},
+	date-modified = {2022-06-17 16:47:27 +0200},
+	editor = {Gerhard Wanner and Georg J{\"a}ger},
+	pages = {101-116},
+	publisher = {Desertina},
+	title = {Geschichte und Gegenwart des R{\"a}toromanischen in Graub{\"u}nden und im Rheintal},
+	year = {2012}}
+
+@online{bundesamt2020,
+	author = {{Bundesamt f{\"u}r Statistik}},
+	date-added = {2022-06-17 15:49:27 +0200},
+	date-modified = {2022-06-17 15:50:35 +0200},
+	title = {Hauptsprachen in der Schweiz - 2020},
+	url = {https://www.bfs.admin.ch/bfs/de/home/statistiken/bevoelkerung/sprachen-religionen/sprachen.assetdetail.21344032.html},
+	urldate = {17.06.2022},
+	year = 2020,
+	bdsk-url-1 = {https://www.bfs.admin.ch/bfs/de/home/statistiken/bevoelkerung/sprachen-religionen/sprachen.assetdetail.21344032.html}}
+
 @inproceedings{pires-etal-2019-multilingual,
-    title = "How Multilingual is Multilingual {BERT}?",
-    author = "Pires, Telmo  and
-      Schlinger, Eva  and
-      Garrette, Dan",
-    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/P19-1493",
-    doi = "10.18653/v1/P19-1493",
-    pages = "4996--5001",
-    abstract = "In this paper, we show that Multilingual BERT (M-BERT), released by Devlin et al. (2018) as a single language model pre-trained from monolingual corpora in 104 languages, is surprisingly good at zero-shot cross-lingual model transfer, in which task-specific annotations in one language are used to fine-tune the model for evaluation in another language. To understand why, we present a large number of probing experiments, showing that transfer is possible even to languages in different scripts, that transfer works best between typologically similar languages, that monolingual corpora can train models for code-switching, and that the model can find translation pairs. From these results, we can conclude that M-BERT does create multilingual representations, but that these representations exhibit systematic deficiencies affecting certain language pairs.",
-}
+	abstract = {In this paper, we show that Multilingual BERT (M-BERT), released by Devlin et al. (2018) as a single language model pre-trained from monolingual corpora in 104 languages, is surprisingly good at zero-shot cross-lingual model transfer, in which task-specific annotations in one language are used to fine-tune the model for evaluation in another language. To understand why, we present a large number of probing experiments, showing that transfer is possible even to languages in different scripts, that transfer works best between typologically similar languages, that monolingual corpora can train models for code-switching, and that the model can find translation pairs. From these results, we can conclude that M-BERT does create multilingual representations, but that these representations exhibit systematic deficiencies affecting certain language pairs.},
+	address = {Florence, Italy},
+	author = {Pires, Telmo and Schlinger, Eva and Garrette, Dan},
+	booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics},
+	doi = {10.18653/v1/P19-1493},
+	month = jul,
+	pages = {4996--5001},
+	publisher = {Association for Computational Linguistics},
+	title = {How Multilingual is Multilingual {BERT}?},
+	url = {https://aclanthology.org/P19-1493},
+	year = {2019},
+	bdsk-url-1 = {https://aclanthology.org/P19-1493},
+	bdsk-url-2 = {https://doi.org/10.18653/v1/P19-1493}}
 
 @misc{muller-et-al-2020,
-  doi = {10.48550/ARXIV.2010.12858},
-  url = {https://arxiv.org/abs/2010.12858},
-  author = {Muller, Benjamin and Anastasopoulos, Antonis and Sagot, Benoît and Seddah, Djamé},
-  keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  title = {When Being Unseen from mBERT is just the Beginning: Handling New Languages With Multilingual Language Models},
-  publisher = {arXiv},
-  year = {2020},
-  copyright = {Creative Commons Attribution Share Alike 4.0 International}
-}
+	author = {Muller, Benjamin and Anastasopoulos, Antonis and Sagot, Beno{\^\i}t and Seddah, Djam{\'e}},
+	copyright = {Creative Commons Attribution Share Alike 4.0 International},
+	doi = {10.48550/ARXIV.2010.12858},
+	keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
+	publisher = {arXiv},
+	title = {When Being Unseen from mBERT is just the Beginning: Handling New Languages With Multilingual Language Models},
+	url = {https://arxiv.org/abs/2010.12858},
+	year = {2020},
+	bdsk-url-1 = {https://arxiv.org/abs/2010.12858},
+	bdsk-url-2 = {https://doi.org/10.48550/ARXIV.2010.12858}}
 
 @article{artexte-schwenk-2019-laser,
-    author = {Artetxe, Mikel and Schwenk, Holger},
-    title = "{Massively Multilingual Sentence Embeddings for Zero-Shot Cross-Lingual Transfer and Beyond}",
-    journal = {Transactions of the Association for Computational Linguistics},
-    volume = {7},
-    pages = {597-610},
-    year = {2019},
-    month = {09},
-    abstract = "{We introduce an architecture to learn joint multilingual sentence representations for 93 languages, belonging to more than 30 different families and written in 28 different scripts. Our system uses a single BiLSTM encoder with a shared byte-pair encoding vocabulary for all languages, which is coupled with an auxiliary decoder and trained on publicly available parallel corpora. This enables us to learn a classifier on top of the resulting embeddings using English annotated data only, and transfer it to any of the 93 languages without any modification. Our experiments in cross-lingual natural language inference (XNLI data set), cross-lingual document classification (MLDoc data set), and parallel corpus mining (BUCC data set) show the effectiveness of our approach. We also introduce a new test set of aligned sentences in 112 languages, and show that our sentence embeddings obtain strong results in multilingual similarity search even for low- resource languages. Our implementation, the pre-trained encoder, and the multilingual test set are available at https://github.com/facebookresearch/LASER.}",
-    issn = {2307-387X},
-    doi = {10.1162/tacl_a_00288},
-    url = {https://doi.org/10.1162/tacl\_a\_00288},
-    eprint = {https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00288/1923278/tacl\_a\_00288.pdf},
-}
-
-
+	abstract = {{We introduce an architecture to learn joint multilingual sentence representations for 93 languages, belonging to more than 30 different families and written in 28 different scripts. Our system uses a single BiLSTM encoder with a shared byte-pair encoding vocabulary for all languages, which is coupled with an auxiliary decoder and trained on publicly available parallel corpora. This enables us to learn a classifier on top of the resulting embeddings using English annotated data only, and transfer it to any of the 93 languages without any modification. Our experiments in cross-lingual natural language inference (XNLI data set), cross-lingual document classification (MLDoc data set), and parallel corpus mining (BUCC data set) show the effectiveness of our approach. We also introduce a new test set of aligned sentences in 112 languages, and show that our sentence embeddings obtain strong results in multilingual similarity search even for low- resource languages. Our implementation, the pre-trained encoder, and the multilingual test set are available at https://github.com/facebookresearch/LASER.}},
+	author = {Artetxe, Mikel and Schwenk, Holger},
+	doi = {10.1162/tacl_a_00288},
+	eprint = {https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00288/1923278/tacl\_a\_00288.pdf},
+	issn = {2307-387X},
+	journal = {Transactions of the Association for Computational Linguistics},
+	month = {09},
+	pages = {597-610},
+	title = {{Massively Multilingual Sentence Embeddings for Zero-Shot Cross-Lingual Transfer and Beyond}},
+	url = {https://doi.org/10.1162/tacl\_a\_00288},
+	volume = {7},
+	year = {2019},
+	bdsk-url-1 = {https://doi.org/10.1162/tacl%5C_a%5C_00288},
+	bdsk-url-2 = {https://doi.org/10.1162/tacl_a_00288}}
 
 @inproceedings{joshi-etal-2020-state,
-    title = "The State and Fate of Linguistic Diversity and Inclusion in the {NLP} World",
-    author = "Joshi, Pratik  and
-      Santy, Sebastin  and
-      Budhiraja, Amar  and
-      Bali, Kalika  and
-      Choudhury, Monojit",
-    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2020",
-    address = "Online",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2020.acl-main.560",
-    doi = "10.18653/v1/2020.acl-main.560",
-    pages = "6282--6293",
-    abstract = "Language technologies contribute to promoting multilingualism and linguistic diversity around the world. However, only a very small number of the over 7000 languages of the world are represented in the rapidly evolving language technologies and applications. In this paper we look at the relation between the types of languages, resources, and their representation in NLP conferences to understand the trajectory that different languages have followed over time. Our quantitative investigation underlines the disparity between languages, especially in terms of their resources, and calls into question the {``}language agnostic{''} status of current models and systems. Through this paper, we attempt to convince the ACL community to prioritise the resolution of the predicaments highlighted here, so that no language is left behind.",
-}
-
+	abstract = {Language technologies contribute to promoting multilingualism and linguistic diversity around the world. However, only a very small number of the over 7000 languages of the world are represented in the rapidly evolving language technologies and applications. In this paper we look at the relation between the types of languages, resources, and their representation in NLP conferences to understand the trajectory that different languages have followed over time. Our quantitative investigation underlines the disparity between languages, especially in terms of their resources, and calls into question the {``}language agnostic{''} status of current models and systems. Through this paper, we attempt to convince the ACL community to prioritise the resolution of the predicaments highlighted here, so that no language is left behind.},
+	address = {Online},
+	author = {Joshi, Pratik and Santy, Sebastin and Budhiraja, Amar and Bali, Kalika and Choudhury, Monojit},
+	booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+	doi = {10.18653/v1/2020.acl-main.560},
+	month = jul,
+	pages = {6282--6293},
+	publisher = {Association for Computational Linguistics},
+	title = {The State and Fate of Linguistic Diversity and Inclusion in the {NLP} World},
+	url = {https://aclanthology.org/2020.acl-main.560},
+	year = {2020},
+	bdsk-url-1 = {https://aclanthology.org/2020.acl-main.560},
+	bdsk-url-2 = {https://doi.org/10.18653/v1/2020.acl-main.560}}
 
 @article{DBLP:journals/corr/cmp-lg-9805004,
-  author    = {I. Dan Melamed},
-  title     = {Annotation Style Guide for the Blinker Project},
-  journal   = {CoRR},
-  volume    = {cmp-lg/9805004},
-  year      = {1998},
-  url       = {http://arxiv.org/abs/cmp-lg/9805004},
-  timestamp = {Mon, 13 Aug 2018 16:46:37 +0200},
-  biburl    = {https://dblp.org/rec/journals/corr/cmp-lg-9805004.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org},
-  bdsk-file-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBQLi4vLi4vTGl0ZXJhdHVyL2dvbGRfc3RhbmRhcmQvQW5ub3RhdGlvbl9TdHlsZV9HdWlkZV9mb3JfdGhlX0JsaW5rZXJfUHJvamVjdC5wZGZPEQJ+AAAAAAJ+AAIAAAxNYWNpbnRvc2ggSEQAAAAAAAAAAAAAAAAAAAAAAAAAQkQAAf////8fQW5ub3RhdGlvbl9TdHlsZV9HI0ZGRkZGRkZGLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAACAAMAAAogY3UAAAAAAAAAAAAAAAAADWdvbGRfc3RhbmRhcmQAAAIAnC86VXNlcnM6ZXlhbGRvbGV2OkxpYnJhcnk6Q2xvdWRTdG9yYWdlOk9uZURyaXZlLVBlcnNvzIhubGljaDpVbmk6VVpIOk1hc3RlcmFyYmVpdDpMaXRlcmF0dXI6Z29sZF9zdGFuZGFyZDpBbm5vdGF0aW9uX1N0eWxlX0d1aWRlX2Zvcl90aGVfQmxpbmtlcl9Qcm9qZWN0LnBkZgAOAGYAMgBBAG4AbgBvAHQAYQB0AGkAbwBuAF8AUwB0AHkAbABlAF8ARwB1AGkAZABlAF8AZgBvAHIAXwB0AGgAZQBfAEIAbABpAG4AawBlAHIAXwBQAHIAbwBqAGUAYwB0AC4AcABkAGYADwAaAAwATQBhAGMAaQBuAHQAbwBzAGgAIABIAEQAEgCaVXNlcnMvZXlhbGRvbGV2L0xpYnJhcnkvQ2xvdWRTdG9yYWdlL09uZURyaXZlLVBlcnNvzIhubGljaC9VbmkvVVpIL01hc3RlcmFyYmVpdC9MaXRlcmF0dXIvZ29sZF9zdGFuZGFyZC9Bbm5vdGF0aW9uX1N0eWxlX0d1aWRlX2Zvcl90aGVfQmxpbmtlcl9Qcm9qZWN0LnBkZgATAAEvAAAVAAIAEP//AAAACAANABoAJAB3AAAAAAAAAgEAAAAAAAAABQAAAAAAAAAAAAAAAAAAAvk=}
-}
-	
+	author = {I. Dan Melamed},
+	bibsource = {dblp computer science bibliography, https://dblp.org},
+	biburl = {https://dblp.org/rec/journals/corr/cmp-lg-9805004.bib},
+	journal = {CoRR},
+	timestamp = {Mon, 13 Aug 2018 16:46:37 +0200},
+	title = {Annotation Style Guide for the Blinker Project},
+	url = {http://arxiv.org/abs/cmp-lg/9805004},
+	volume = {cmp-lg/9805004},
+	year = {1998},
+	bdsk-file-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBQLi4vLi4vTGl0ZXJhdHVyL2dvbGRfc3RhbmRhcmQvQW5ub3RhdGlvbl9TdHlsZV9HdWlkZV9mb3JfdGhlX0JsaW5rZXJfUHJvamVjdC5wZGZPEQJ+AAAAAAJ+AAIAAAxNYWNpbnRvc2ggSEQAAAAAAAAAAAAAAAAAAAAAAAAAQkQAAf////8fQW5ub3RhdGlvbl9TdHlsZV9HI0ZGRkZGRkZGLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAACAAMAAAogY3UAAAAAAAAAAAAAAAAADWdvbGRfc3RhbmRhcmQAAAIAnC86VXNlcnM6ZXlhbGRvbGV2OkxpYnJhcnk6Q2xvdWRTdG9yYWdlOk9uZURyaXZlLVBlcnNvzIhubGljaDpVbmk6VVpIOk1hc3RlcmFyYmVpdDpMaXRlcmF0dXI6Z29sZF9zdGFuZGFyZDpBbm5vdGF0aW9uX1N0eWxlX0d1aWRlX2Zvcl90aGVfQmxpbmtlcl9Qcm9qZWN0LnBkZgAOAGYAMgBBAG4AbgBvAHQAYQB0AGkAbwBuAF8AUwB0AHkAbABlAF8ARwB1AGkAZABlAF8AZgBvAHIAXwB0AGgAZQBfAEIAbABpAG4AawBlAHIAXwBQAHIAbwBqAGUAYwB0AC4AcABkAGYADwAaAAwATQBhAGMAaQBuAHQAbwBzAGgAIABIAEQAEgCaVXNlcnMvZXlhbGRvbGV2L0xpYnJhcnkvQ2xvdWRTdG9yYWdlL09uZURyaXZlLVBlcnNvzIhubGljaC9VbmkvVVpIL01hc3RlcmFyYmVpdC9MaXRlcmF0dXIvZ29sZF9zdGFuZGFyZC9Bbm5vdGF0aW9uX1N0eWxlX0d1aWRlX2Zvcl90aGVfQmxpbmtlcl9Qcm9qZWN0LnBkZgATAAEvAAAVAAIAEP//AAAACAANABoAJAB3AAAAAAAAAgEAAAAAAAAABQAAAAAAAAAAAAAAAAAAAvk=}}
 
 @book{price2008,
 	author = {Glanville Price},
@@ -299,3 +317,18 @@
 	publisher = {Helmut Buske Verlag},
 	title = {Die Romanischen Sprachen: Eine vergleichende Einf{\"u}hrung},
 	year = 1998}
+
+@book{haiman1992,
+	address = {Londn and New York},
+	author = {Haiman, John and Beninc{\`a}, Paola},
+	isbn = {0-415-04194-5},
+	publisher = {Routledge},
+	title = {The Rhaeto-Romance Languages},
+	year = 1992}
+
+@book{liver1999,
+	address = {T{\"u}bingen},
+	author = {Ricarda Liver},
+	publisher = {Narr},
+	title = {R{\"a}toromanisch: Eine Einf{\"u}hrung in das B{\"u}ndnerromanische},
+	year = 1999}
