@@ -1,0 +1,50 @@
+\chapter{Data Collection}
+\section{Introduction}
+
+The corpus at hand incorporates the press releases published by the Canton of Grisons/Graubünden. 
+These press releases are a means of the cantonal government to publish news and information about topics such as politics, economy, health and culture. 
+Graubünden, which is made up of German speaking, Italian speaking and Romansh speaking regions, is the only trilingual canton in Switzerland. 
+As such, virtually all press releases are published in German, Italian and Romansh. 
+This trilingual setting lends itself to be collected to a parallel trilingual corpus.
+
+\section{Data Collection}
+At first, I contacted the \emph{Standeskanzlei} (\enquote{State Chancellery of Grisons}) which is the \enquote{the general administrative authority for questions of office, coordination and liaison with the cantonal parliament (\enquote{Grosser Rat}), government and cantonal administration} \autocite{staka}. 
+The \emph{Standeskanzlei}, with its \emph{Übersetzungsdienst} (\enquote{Translation service}), is responsible for translating documents in service of the canton.
+I was hoping to receive the data directly from them -- after all, we are not talking about private or commercial data, but about public translation work financed with taxpayers' money.
+I spoke to Mr. Mirco Frepp from the communication sevices (\emph{Kommunaktionsdienst}), which, although very friendly, had to inform me that it would be impossible for me to receive the data. 
+The explanation was that the documents are not saved locally somewhere, but are saved in a database. 
+The documents are extracted from the database and are generated as ad-hoc HTML documents whenever the website is accessed. 
+It was also not possible to receive a dump of the database.
+
+\subsection{Web scraping}
+Not being able to receive a dump of the database meant I had to scrape the canton's website, extract the relevant content from the HTML files and construct my own database. In order to achieve this, I wrote a series of Pyhton scripts that would take care of these tasks. 
+All the scripts can be found on my GitHub/Gitlab repository. 
+The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}
+
+\subsubsection{\texttt{web\_scraper.py}}
+This script downloads all the HTML pages containing press releases and saves each year in a seperate directory.
+
+\begin{figure}
+\dirtree{%
+.1 html.
+.2 1997.
+.2 1998.
+.2 1999.
+.2 {...}.
+.2 2022.
+}
+\caption{Directory scheme for saving the HTML files}
+\end{figure} 
+
+\begin{figure}
+\dirtree{%
+.1 corpus\_builder.
+.2 corpus\_builder.
+.3 access\_db.py.
+.3 create\_corpus.py.
+.2 web\_scraper.
+.3 test\_web\_scraper.py.
+.3 web\_scraper.py.
+}
+\caption{Directory tree of \texttt{corpus\_builder}}
+\end{figure} 
