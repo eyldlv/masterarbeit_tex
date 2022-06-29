@@ -4,8 +4,9 @@
 %\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fontspec}
-\setmainfont[Ligatures={TeX}]{Linux Libertine O}
+% \setmainfont[Ligatures={TeX}]{Linux Libertine O}
 % \usepackage{times}
+\usepackage[]{newtxtext} %Times New Roman
 \usepackage{csquotes}
 
 %IPA
@@ -39,6 +40,7 @@
 
 \usepackage[style=authoryear]{biblatex}
 \addbibresource{bibliography/bibliography.bib}
+\addbibresource{bibliography/urls.bib}
 
 
 
@@ -58,5 +60,12 @@
 % \newcommand{\TtoB}[3][]{% \TtoB{<top>}{<bottom}
 %   \ncdiag[arm=1em,angleA=-90,angleB=90,linestyle=solid,linecolor=black,linewidth=0.5pt,#1]{#2}{#3}}%
 
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\rmdefault}{ptm}
+\renewcommand{\ttdefault}{pcr}
+
+\usepackage{dirtree}
 
 \usepackage{hyperref}
+
+
