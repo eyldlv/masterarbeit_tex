@@ -8,7 +8,7 @@
 
 % \usepackage{times}
 \usepackage[]{newtxtext} %Times New Roman
-\setmonofont{Menlo}
+\setmonofont[Scale=0.8]{Menlo}
 \usepackage{csquotes}
 
 %IPA
@@ -62,9 +62,25 @@
 % \newcommand{\TtoB}[3][]{% \TtoB{<top>}{<bottom}
 %   \ncdiag[arm=1em,angleA=-90,angleB=90,linestyle=solid,linecolor=black,linewidth=0.5pt,#1]{#2}{#3}}%
 
-\renewcommand{\sfdefault}{phv}
-\renewcommand{\rmdefault}{ptm}
-\renewcommand{\ttdefault}{pcr}
+% \renewcommand{\sfdefault}{phv}
+% \renewcommand{\rmdefault}{ptm}
+% \renewcommand{\ttdefault}{pcr}
+
+% colors
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{background}{HTML}{EEEEEE}
+% json listings
+\lstdefinelanguage{json}{
+    basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    backgroundcolor=\color{background},
+    frame=lines}
 
 \usepackage{dirtree}
 
