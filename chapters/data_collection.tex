@@ -20,7 +20,7 @@ It was also not possible to receive a dump of the database.
 \section{Web Scraping}
 Not being able to receive a dump of the database meant I had to scrape the canton's website, extract the relevant content from the HTML files and construct my own database. In order to achieve this, I wrote a series of Pyhton scripts that would take care of these tasks. 
 All the scripts can be found on my GitHub/Gitlab repository. 
-The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}
+The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}.
 
 \begin{figure}
 \dirtree{%
@@ -35,9 +35,9 @@ The scripts relevant for the database building are saved under the folder \textt
 
 \caption{Directory tree of \texttt{corpus\_builder}}
 \end{figure} 
-\subsubsection{\texttt{web\_scraper.py}}
-The script goes to the main page for each year and language. 
-That page contains a links pointing to all the press releases that were released that year. 
+\subsubsection{Web Scraper}
+The script \texttt{web\_scraper.py} goes to the index web page for each year and language. 
+This page contains a links pointing to all the press releases that were released that year. 
 It collects all those links and then downloads the HTML from each link. 
 The HTML pages are saved to seperate folders for each year. 
 The filenames have the following format: \texttt{year\_file-id\_language}, e.g., \texttt{1997\_12924\_DE.html}. 
@@ -166,11 +166,14 @@ These CSV files can be used for manually aligning the corresponding documents.
 This is done by enumerating the documents while using the same digit for corresponding documents. 
 The CSV files containing the now enumerated documents can be given to the script \texttt{create\_corpus.py} using the argument \texttt{add-from-csv} to combine the enumerated documents as linked documents into the JSON file.
 
-\section{sqlite database}
-Finally, since SQL queries offer complex and flexible ways to query databases, the JSON files, both the ones containing the \enquote{raw} document (i.e., before alignemnt), as well as the ones containing the aligned documents, are fed into an sqlite\footnotemark database. 
-The sqlite database contains two tables, \texttt{corpus} and \texttt{raw} with the exact same structure as the two JSON files described in listings~\ref{lst:json} and \ref{lst:json-aligned}.
+\section{SQLite database}
+The query language SQL offers flexible and complex way to query datbases. 
+For this reason, I decided to save the resulting corpus in an SQLite database. 
+I opted for SQLite because it doesn't require running a seperate server and can be SQLite databases can be easily built, edited and accessed using \texttt{sqlite3}\footnote{\url{https://docs.python.org/3/library/sqlite3.html}}, a Python module delivered in the Python standard library\footnote{\url{https://docs.python.org/3/tutorial/stdlib.html}}.
 
-\footnotetext{I opted for sqlite instead of mySQL since sqlite does not require installing any specialy software or running an SQL server locally and is shipped with Python as a standard package.}
+The SQLite database contains two tables, \texttt{corpus} and \texttt{raw} with the exact same structure as the two JSON files described in listings~\ref{lst:json} and \ref{lst:json-aligned}.
+
+% \footnotetext{I opted for SQLite instead of mySQL since SQLite does not require installing any special software or running a server locally. The Python library sqlite3 is shipped with Python as a standard package.}
 
 \section{Summary}
 For compiling the corpus, the following steps were taken:
