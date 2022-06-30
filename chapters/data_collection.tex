@@ -1,4 +1,4 @@
-\chapter{Data Collection}
+\chapter{Compiling the Corpus}
 \section{Introduction}
 
 The corpus at hand incorporates the press releases published by the Canton of Grisons/Graubünden. 
@@ -7,16 +7,17 @@ Graubünden, which is made up of German speaking, Italian speaking and Romansh s
 As such, virtually all press releases are published in German, Italian and Romansh. 
 This trilingual setting lends itself to be collected to a parallel trilingual corpus.
 
-\section{Data Collection}
+\section{Collecting the Data}
 At first, I contacted the \emph{Standeskanzlei} (\enquote{State Chancellery of Grisons}) which is the \enquote{the general administrative authority for questions of office, coordination and liaison with the cantonal parliament (\enquote{Grosser Rat}), government and cantonal administration} \autocite{staka}. 
 The \emph{Standeskanzlei}, with its \emph{Übersetzungsdienst} (\enquote{Translation service}), is responsible for translating documents in service of the canton.
 I was hoping to receive the data directly from them -- after all, we are not talking about private or commercial data, but about public translation work financed with taxpayers' money.
-I spoke to Mr. Mirco Frepp from the communication sevices (\emph{Kommunaktionsdienst}), which, although very friendly, had to inform me that it would be impossible for me to receive the data. 
+
+I spoke to Mr.~Mirco Frepp from the communication sevices (\emph{Kommunaktionsdienst}), which, although very friendly, had to inform me that it would be impossible for me to receive the data. 
 The explanation was that the documents are not saved locally somewhere, but are saved in a database. 
 The documents are extracted from the database and are generated as ad-hoc HTML documents whenever the website is accessed. 
 It was also not possible to receive a dump of the database.
 
-\subsection{Web scraping}
+\section{Web Scraping}
 Not being able to receive a dump of the database meant I had to scrape the canton's website, extract the relevant content from the HTML files and construct my own database. In order to achieve this, I wrote a series of Pyhton scripts that would take care of these tasks. 
 All the scripts can be found on my GitHub/Gitlab repository. 
 The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}
@@ -75,14 +76,18 @@ This can be limited by using the following optional arguments:
 	\item \texttt{-{}-lang} -- limit the scraping to one or more languages (comma seperated), e.g., \texttt{-{}-lang de,it}
 \end{itemize}
 
-\subsection{Content extraction}
-After creating a local copy of the HTML files containing the press releases, the content needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
+\section{Building the Corpus}
+All the scripts responsible for buidling the corpus can be found under the folder \texttt{corpus\_builder}.
 
-Using the Python package BeautifulSoup, I extracted from each HTML file thethe title and the text of the press release, as well as some meta data: date, language and the original file-id. 
-Each year was then saved to a JSON file with the following format.
+\subsection{HTML Parsing}
+After the creation of a local copy of the HTML files containing the press releases, the content needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
+
+Using the Python package BeautifulSoup to parse the HTML files, I extracted from each HTML file the title and the text of the press release, as well as some meta data: date, language and the original file-id and the original file name (for debugging purposes).  
+The data was then saved to a JSON file, one per each year.
+See listing~\ref{lst:json} for an example.
 
 
-\begin{lstlisting}[language=json]
+\begin{lstlisting}[caption={Example for a JSON file}, captionpos=b, label=lst:json, language=json]
 {
     "0": {
         "id": "12924",
@@ -110,16 +115,99 @@ Each year was then saved to a JSON file with the following format.
     },
 \end{lstlisting}
 
-
 \subsection{Document Alignment}
-The next stage after saving all of the press releases locally is to align them. 
-For all releases published after mid 2002 this is pretty simple. 
-The file-id extracted from the URLs is common to all three releases in the three languages (see figure~\ref{fig:html-scheme}). 
-This file-id can be used to link the press releases with each other.
+After extracting the relevant data from the HTML files and saving them in JSON files, the core task can begin: aligning the documents to get document-triples which are translations of each other.
 
-For releases published prior to that, each release carries a unique file-id. 
+\subsubsection{Linked vs.~unlinked}
+\label{sec:linked-unlinked}
+For all releases published after mid-2009 this is pretty simple. 
+The file-id extracted from the URLs is common to all three releases in the three languages (see figure~\ref{fig:html-scheme}). 
+This file-id can be used to link the press releases with each other. 
+I shall refer to these press releases as \enquote{linked releases}.
+
+For releases published prior to that, each release has a unique file-id. 
 This means it can't be used for document alignment. 
-Here, I used a simple heuristic: if on one date three releases were published in three different languages, I assume they are translations of each other. 
+I shall refer to these releases as \enquote{unlinked releases}.
+For unlinked releases I used a simple heuristic: if on one single date exactly three releases were published in three different languages, I assume they are translations of each other. 
 The titles of press releases that weren't aligned are saved to a CSV file which can be used for manual alignment.
+
+Unfortunately, this means around 40\% (TODO: what is the exact average?) of the releases each year prior to 2009 cannot be automatically added to the corpus, cf.~figure~\ref{fig:linked-unlinked}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics{graphics/linked-unlinked.png}
+	\label{fig:linked-unlinked}
+	\caption{Portion of automatically aligned press releases up to 2009}
+\end{figure}
+
+Since the year 2009 contains both linked and unlinked releases, I wrote the script \texttt{split\_2009.py} to split the data accordingly. 
+It uses a very simple heuristic: if the file-id of a press release is longer than 5 digits, it is a linked press releases.
+
+\subsubsection{Aligned corpus}
+The aligned press releases are saved again to JSON files, with each row containing the three press releases in the three languages, along with metadata such as date and file-id. 
+In the rare case that one language is missing (TODO: how rare?), i.e., the press releases wasn't translated into that language for some reason, it is simply left blank. 
+Press releases that are available only in one language are discarded from the corpus.
+
+The script \texttt{create\_corpus.py} deals with this task.
+Using the Python library Pandas, the JSON files are read into a Dataframe. 
+For linked releases, all the unique ID's are taken, and then for each ID the three languages are collected and saved into a new row. 
+The dates are converted from their original format (DD.MM.YY) to an ISO 8601 format (YYYY-MM-DD) \autocite{enwiki:1095673391} for better compatibility and easier processing later.
+
+For JSON files contatining unlinked documents, the script \texttt{create\_corpus} has to be run with the switch \texttt{-{}-by-date}, which tells the program to use the date for aligning the documents instead of the file ID.
+
+For an example of the resulting JSON files, with each row containing the aligned documents, see listing~\ref{lst:json-aligned}.
+\input{listings/aligned_json}
+
+\section{Manual alignment of unlinked documents}
+As can be seen in figure~\ref{fig:linked-unlinked}, a big portion of the unlinked documents cannot be automatically aligned using the simple heuristic described in section~\ref{sec:linked-unlinked}. 
+To deal with that, the script \texttt{create\_corpus.py} will write the titles and file IDs of all the discarded documents to a CSV file, one for each year. 
+
+These CSV files can be used for manually aligning the corresponding documents. 
+This is done by enumerating the documents while using the same digit for corresponding documents. 
+The CSV files containing the now enumerated documents can be given to the script \texttt{create\_corpus.py} using the argument \texttt{add-from-csv} to combine the enumerated documents as linked documents into the JSON file.
+
+\section{sqlite database}
+Finally, since SQL queries offer complex and flexible ways to query databases, the JSON files, both the ones containing the \enquote{raw} document (i.e., before alignemnt), as well as the ones containing the aligned documents, are fed into an sqlite\footnotemark database. 
+The sqlite database contains two tables, \texttt{corpus} and \texttt{raw} with the exact same structure as the two JSON files described in listings~\ref{lst:json} and \ref{lst:json-aligned}.
+
+\footnotetext{I opted for sqlite instead of mySQL since sqlite does not require installing any specialy software or running an SQL server locally and is shipped with Python as a standard package.}
+
+\section{Summary}
+For compiling the corpus, the following steps were taken:
+\begin{enumerate}
+	\item Scrape website and save HTML documents locally
+	\item Extract relevant content from HTML files (date, language, title and content) and save to JSON files
+	\item Read the JSON files using Pandas Dataframe, align the documents and save to new JSON files
+	\item Feed both types of JSON files to an sqlite database
+\end{enumerate}
+
+The final result is an sqlite database (\texttt{corpus.db}) containing two tables:
+\begin{itemize}
+	\item \texttt{corpus}: all the aligned documents from 1997 until today. 
+	Each row contains following columns:
+	\begin{itemize}
+		\item id: automatically incremented unique ID
+		\item file\_id: original file ID
+		\item date: Release date
+		\item DE\_title: Title of German document
+		\item DE\_content: Content of German document
+		\item IT\_title: Title of Italian document
+		\item IT\_content: Content of Italian document
+		\item RM\_title: Title of Romansh document
+		\item RM\_content: Content of Romansh document
+	\end{itemize}
+	\item \texttt{raw}: all the documents contained in the HTML files scraped from the website. 
+	Each row contains the following columns:
+	\begin{itemize}
+		\item id: Automatically incremented unique ID
+		\item file\_id: Original file ID
+		\item orig\_file: Original filename
+		\item lang: Document language (DE for German, IT for Italian, RM for Romansh)
+		\item title: Document title
+		\item date: Release date
+		\item content: Document content
+	\end{itemize}
+\end{itemize}
+
 
 
