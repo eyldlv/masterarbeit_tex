@@ -5,8 +5,42 @@
 The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, that is it is a corpus of aligned documents without any further processing. 
 In order to use the corpus for tasks such as training a machine translation model, another processing step is needed: sentence alignment \autocite[55]{koehn2009}.
 
+Formally, the task can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
+(Note that the number of sentences in each language is not necessarily identical.) 
+A sentence alignment \(S\) consists of a list of sentence pairs \(s_1, ..., s_n\), such that each sentence pair \(s_i\) is a pair of sets:
+
+\[
+	s_i = ( \{ e_{\text{start-e}(i)},... , e_{\text{end-e}(i)}\}, \{f_{\text{start-f}(i)},... , f_{\text{end-f}(i)}\} )
+\]
+\autocite[56]{koehn2009}
+
+This means each set in the pair of set can consist of one or more sentences. 
+The numer of sentences in each set is referred to as alignment type. 
+A 1-1 alignment is an alignment where exactly one sentence of language \(e\)
+is aligned to exactly one sentence of language \(f\). 
+In a 1-2 alignemnt, one sentence in lanauge \(e\) is a aligned to two sentences in langauge \(f\). 
+There are also 0-1 alignments, in which a sentence of language \(f\) is not aligned to anything of language \(e\). 
+Sentences may not be left out and each sentence may only occur in one sentence pair \autocite[57]{koehn2009}. 
+
+
+\section{Methods}
+One early method for sentence alignment is the one described in \cite{gale-church-1991-program} which is \enquote{based on a simple satistical model of character lengths} \autocite{gale-church-1991-program}. The method arose out of the need to design a faster, computationally more efficient algorithm\footnotemark.
+
+\footnotetext{With the algorithms that existed up to that time, it took 10 days to extract 3 million sentence pairs, 12,500 sentences per hour.}
+
+The method uses the fact that longer sentences in language \(e\) are usually translated into longer sentences in language \(f\) and vice-versa -- shorter sentences correspond to shorter sentences.
+
+The method combines a distance measure based on the lengths of the sentence with a prior probility of the alignment type (1-1, 1-0 or 0-1, 2-1 or 1-2, 2-2) to a probabilistic score. 
+It assigns this score to possible sentence pairs in a dynamic programming framework to find the best (most probable) pairs. 
+A program based on this method was tested against a human-made alignment on two pairs of languages: English-German and English-French. 
+The program made a total of 55 errors out of a total of 1316 alignments (4.2\%). 
+By taking the best scoring 80\% of the alignments, the error rate could be reduced to 0.7\%
+
+The method was also much faster than the algorithms that existed up to that time. 
+It took 20 hours to extract around 890,000 sentence pairs, around 44,500 sentence pairs per hour, around 3.5 times faster than former algorithms.
 
 
 \section{Statistical methods}
+
 
 \section{Recent methods}
