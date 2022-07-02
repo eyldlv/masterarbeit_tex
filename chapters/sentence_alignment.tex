@@ -23,7 +23,10 @@ There are also 0-1 alignments, in which a sentence of language \(f\) is not alig
 Sentences may not be left out and each sentence may only occur in one sentence pair \autocite[57]{koehn2009}. 
 
 
-\section{Methods}
+\section{Overview}
+There are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based and partial similarity-based \autocite{hunalign}. 
+
+\subsection{Length Based}
 One early method for sentence alignment is the one described in \cite{gale-church-1991-program} which is \enquote{based on a simple satistical model of character lengths} \autocite{gale-church-1991-program}. The method arose out of the need to design a faster, computationally more efficient algorithm\footnotemark.
 
 \footnotetext{With the algorithms that existed up to that time, it took 10 days to extract 3 million sentence pairs, 12,500 sentences per hour.}
@@ -39,8 +42,21 @@ By taking the best scoring 80\% of the alignments, the error rate could be reduc
 The method was also much faster than the algorithms that existed up to that time. 
 It took 20 hours to extract around 890,000 sentence pairs, around 44,500 sentence pairs per hour, around 3.5 times faster than former algorithms.
 
+\subsection{Partial Similarity Based}
+Another method is similarity based such as the one presented in \cite{simard-plamondon-1996-bilingual}. 
+Here, alignment follows two steps. 
+In the first step, isolated cognates are used to mark sort of \emph{anchors} in the texts. 
+The term cognate refers here to two word-forms of different language whose four first characters are identical. 
+Isolated cognates are cognates with no resmebling word forms within a context window.
+It follows the assumption that two isolated cognates of different languages are parts of segments that are mutual translations and should be aligned with each other. 
+These cognates are used as anchors and the process is repeated recursively between the anchors until no more anchor points can be found.
 
-\section{Statistical methods}
+In an intermediate step, segmentation into sentence boundaries takes place and the search space is determined, i.e., it is determined, based on the anchors found in the first step, which sentences could be aligned with each other. 
+Only sentence-pairs that are within the same search space boundaries are alignment candidates.
+
+In the second step, the final alignment takes place. 
+Theoretically, any sentence alignment program that can operate within the restricted search space defined in the previous steps can take over the job. 
+In \cite{simard-plamondon-1996-bilingual}, the authors use a statistical lexical translation mdoel (commonly known as IBM Model 1), to measure how probable it is to observe one sentence given another sentence and so find the sentences that are most probably mutual translations.
 
 
 \section{Recent methods}
