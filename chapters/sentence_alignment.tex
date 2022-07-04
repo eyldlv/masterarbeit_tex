@@ -99,6 +99,8 @@ Stichpunkte:
 \section{More Recent methods}
 While the statisics based methods described in section~\ref{sec:overview_senalign} date back to the 1990's, more recently different methods were suggested.
 
+\subsection{Bleualign}
+
 One of these methods was presented in \cite{sennrich-volk-2010-mt} and has been cited since as Bleualign. 
 It rose as a method addressing to the problem of aligning less \enquote{easily} alignable corpora. 
 Sentence alignment methods up to that time perform excellent on well-strctured corpora with a high language similarity such as the Canadian Hansards (transcriptions of parliamentary debates which exist in English and in French) which are considered easy to align  or the Europarl (parliamentary proceedings of the EU Parliament) because they are well-structured, they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
@@ -118,4 +120,32 @@ Then, a new SMT system is trained using the current alignments.
 
 \cite{sennrich-volk-2011-iterative} do not recommend this iterative sentence alignment using Bleualign for all purposes. 
 It should be used mainly where conventional sentence alignment algorithms such as Gale \& Church have lower accuracy or where language-specific resources such as dictionaries (used for hunalign \autocite{hunalign}) or machine translation systems are unavailable or lacking in quality.
+
+\subsection{Vecalign}
+The wish for  sentence alignment of even higher quality rose with the insight that while misaligned sentences have small effect on SMT performance, they have a crucial effect on neural MT (NMT) systems. 
+This is especially true in scenarios with less data for low-resource MT \autocite{thompson-koehn-2019-vecalign}. .
+
+Vecalign uses a novel method which is based on the similarity of bilingual sentence embeddings. 
+Sentence embeddings are, in a manner similar to word embeddings (cf. section TODO), numerical representation of sentences that are learned by and can be extracted from a neural language model. 
+This numerical vector representation is said to represent the meaning of a sentence. 
+If two sentences are similar, they will lie close to each other in the vector space. 
+A function that is most often used for measuring vector similarity is the cosine similarity.
+
+
+DISADVANTAGE: LASER model has to contain the language.
+
+\section{Sentence alignment pipeline}
+
+I shall now describe the pipeline I used for retrieving sentence pairs for the corpus I compiled in section~\ref{chap:compiling}.
+
+My tool of choice was \texttt{hunalign} \autocite{hunalign}. 
+It is presented as a software package on GitHub, it is free to use (and contrary to the Microsoft TODO, corpora produced by it are also free to distribute), is well documented, was easy to compile on my system (MacBook Air M1, 2020 running MacOS Monterey 12.3.1) and runs fast. 
+
+I tried, just for the sake of interst, to use \texttt{Vecalign} on a small portion of my corpus. 
+Veclaign requires that all adjacent sentences be concetanted first (to consider 1-to-many alignments). 
+Then for each sentence-concetanation the sentence embeddings have to be obtained from the LASER language model. 
+Only then sentence alignment can be calculated. 
+The process of obtaining the sentence alignment took quite some time---around 10 minutes for 300 sentences---and by quick inspection by eye the result wasn't better than that gained with \texttt{hunalign}, but rather worse. 
+Obviously, this may be due to the fact that Romansh is not one of the languages LASER was trained on. 
+However, LASER has been observed to work well also in zero-shot scenarios with unseen languages that are similar to the ones the model was trained on.
 
