@@ -6,7 +6,7 @@ The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, t
 In order to use the corpus for tasks such as training a machine translation model, another processing step is needed: sentence alignment \autocite[55]{koehn2009}.
 
 A bilingual, sentence-aligned corpus can be useful for a variety of tasks. 
-Probably the most important task bilngual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocite{moore2002fast}.
+Probably the most important task bilngual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocites{moore2002fast,gale-church-1991-program}.
 
 Formally, the task can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
 (Note that the number of sentences in each language is not necessarily identical.) 
@@ -99,11 +99,23 @@ Stichpunkte:
 \section{More Recent methods}
 While the statisics based methods described in section~\ref{sec:overview_senalign} date back to the 1990's, more recently different methods were suggested.
 
-One of these methods is Bleualign. 
-It uses BLEU as a similarity score to find sentences alignments.
+One of these methods was presented in \cite{sennrich-volk-2010-mt} and has been cited since as Bleualign. 
+It rose as a method addressing to the problem of aligning less \enquote{easily} alignable corpora. 
+Sentence alignment methods up to that time perform excellent on well-strctured corpora with a high language similarity such as the Canadian Hansards (transcriptions of parliamentary debates which exist in English and in French) which are considered easy to align  or the Europarl (parliamentary proceedings of the EU Parliament) because they are well-structured, they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
+However, when aligning pairs of languages which are fundementally different and/or of less structured texts, the alignment task becomes more difficult \autocite{sennrich-volk-2010-mt}.
 
+Bleualign uses BLEU as a similarity score to find sentences alignments. 
 BLEU, which satands for Bilingual Evaluation Understudy, is a popular automatic metric for evaluating machine translation models. It measures the similarity between two sentences by considering matches of several n-grams (sequences of tokens of length \(n\); usually scores are combined for n-grams of order 1--4). 
 The higher the BLEU score, the higher the similarity between two sentences \autocite[226]{koehn2009}.
 
-Although it has been criticized as a measure of translation quality, it can be used for deciding weather two sentences are mutual translations---BLEU scores for two unrelated sentences is usually 0 \autocite{sennrich-volk-2010-mt}. 
+Although BLEU has been criticized as a measure of translation quality, BLEU scores can be used for deciding weather two sentences are mutual translations---BLEU scores for two unrelated sentences is usually 0 \autocite{sennrich-volk-2010-mt}. 
+
+Instead of aligning sentences of the source and the target language with each other, Bleualign aligns a machine translated version of the target side of the corpus with the source side to find the most reliable alignments. However, this approach requires an already existing machine translation system with reasonable performance. 
+This problem was addressed in \cite{sennrich-volk-2011-iterative} by suggesting an iterative method for alignment combining length-based and BLEU score-based methods which doesn't require an already existing machine translation system. 
+In the first iteration, sentences are aligned using an implementation of the Gale \& Church algorithm, then an SMT (statistical machine translation) system is trained on the sentence-aligned corpus. 
+In the following iterations, the corpus (target side) is machine translated using the SMT system trained in the last iteration and is then aligned to the source side using Bleualign. 
+Then, a new SMT system is trained using the current alignments.
+
+\cite{sennrich-volk-2011-iterative} do not recommend this iterative sentence alignment using Bleualign for all purposes. 
+It should be used mainly where conventional sentence alignment algorithms such as Gale \& Church have lower accuracy or where language-specific resources such as dictionaries (used for hunalign \autocite{hunalign}) or machine translation systems are unavailable or lacking in quality.
 
