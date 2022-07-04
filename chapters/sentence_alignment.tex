@@ -2,8 +2,11 @@
 
 \section{Introduction}
 
-The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, that is it is a corpus of aligned documents without any further processing. 
+The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, that is, it is a corpus of aligned documents without any further processing. 
 In order to use the corpus for tasks such as training a machine translation model, another processing step is needed: sentence alignment \autocite[55]{koehn2009}.
+
+A bilingual, sentence-aligned corpus can be useful for a variety of tasks. 
+Probably the most important task bilngual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocite{moore2002fast}.
 
 Formally, the task can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
 (Note that the number of sentences in each language is not necessarily identical.) 
@@ -16,15 +19,16 @@ A sentence alignment \(S\) consists of a list of sentence pairs \(s_1, ..., s_n\
 
 This means each set in the pair of set can consist of one or more sentences. 
 The numer of sentences in each set is referred to as alignment type. 
-A 1-1 alignment is an alignment where exactly one sentence of language \(e\)
+A 1--1 alignment is an alignment where exactly one sentence of language \(e\)
 is aligned to exactly one sentence of language \(f\). 
-In a 1-2 alignemnt, one sentence in lanauge \(e\) is a aligned to two sentences in langauge \(f\). 
-There are also 0-1 alignments, in which a sentence of language \(f\) is not aligned to anything of language \(e\). 
+In a 1--2 alignemnt, one sentence in lanauge \(e\) is a aligned to two sentences in langauge \(f\). 
+There are also 0--1 alignments, in which a sentence of language \(f\) is not aligned to anything of language \(e\). 
 Sentences may not be left out and each sentence may only occur in one sentence pair \autocite[57]{koehn2009}. 
 
 
 \section{Overview}
-There are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based and partial similarity-based \autocite{hunalign}. 
+\label{sec:overview_senalign}
+Traditionally, there are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based and partial similarity-based \autocite{hunalign}. 
 
 \subsection{Length Based}
 One early method for sentence alignment is the one described in \cite{gale-church-1991-program} which is \enquote{based on a simple satistical model of character lengths} \autocite{gale-church-1991-program}. The method arose out of the need to design a faster, computationally more efficient algorithm\footnotemark.
@@ -33,7 +37,7 @@ One early method for sentence alignment is the one described in \cite{gale-churc
 
 The method uses the fact that longer sentences in language \(e\) are usually translated into longer sentences in language \(f\) and vice-versa -- shorter sentences correspond to shorter sentences.
 
-The method combines a distance measure based on the lengths of the sentence with a prior probility of the alignment type (1-1, 1-0 or 0-1, 2-1 or 1-2, 2-2) to a probabilistic score. 
+The method combines a distance measure based on the lengths of the sentence with a prior probility of the alignment type (1--1, 1--0 or 0--1, 2--1 or 1--2, 2--2) to a probabilistic score. 
 It assigns this score to possible sentence pairs in a dynamic programming framework to find the best (most probable) pairs. 
 A program based on this method was tested against a human-made alignment on two pairs of languages: English-German and English-French. 
 The program made a total of 55 errors out of a total of 1316 alignments (4.2\%). 
@@ -58,5 +62,48 @@ In the second step, the final alignment takes place.
 Theoretically, any sentence alignment program that can operate within the restricted search space defined in the previous steps can take over the job. 
 In \cite{simard-plamondon-1996-bilingual}, the authors use a statistical lexical translation mdoel (commonly known as IBM Model 1), to measure how probable it is to observe one sentence given another sentence and so find the sentences that are most probably mutual translations.
 
+\subsection{Translation based}
 
-\section{Recent methods}
+Another possibility for aligning sentences is translation based. 
+Here, the alignment algorithm constructs a statistical word-to-word translation model of the corpus. 
+It then finds the sentence alignment that maximizes the probability of of generating the corpus with this translation model. 
+In other words, it aligns sentences that are most likely translations of each other, given the translation model \autocite{chen-1993-aligning}. 
+
+\subsection{Hybrid models}
+There are also hybrid sentence-alignment methods, combining several methods.
+
+
+\cite{moore2002fast} presents a method in which sentence lengths are combined with word correspondences to find the best alignments. 
+It works in three steps:
+First sentences are aligned using a sentence-length-based model. 
+Then, the sentence pairs with the highest probabiltiy, i.e., those that are most likely real correspondences of each other, are taken to train a translation model. 
+The translation model is then used to augment the initial alignment, so that the result is length- and translation-based.
+
+Another hybrid method was presented in \cite{hunalign}. 
+It combines a dictionary- and a length-based method.
+Here a sort of a dummy translation of the source text is produced using a translation dictionary by simply converting each token into its corresponding dictinoary translation. 
+Then, for each sentence pair a similarity score is computed. 
+It consists of two components: a score based the number of shared words in the sentnce pair (token based);  a score based on the ratio of character counts between sentences. 
+The program treats paragraph boundaries as sentences with special scoring. 
+The similarity score of a paragraph-boundary  and a real sentence is always minus infinity, which makes sure they never align. This way, paragraph boundaries always align with themselves and can be used as anchors to make sure paragraphs remain aligned.
+
+\subsection{Summary}
+Stichpunkte:
+\begin{itemize}
+	\item All models perform well.
+	\item Already the model described in \cite{gale-church-1991-program} achieved a precision of 95.8\%.
+	\item The motivaiton was rather design a faster model rather than a better performing model \autocite{chen-1993-aligning}.
+\end{itemize}
+
+
+\section{More Recent methods}
+While the statisics based methods described in section~\ref{sec:overview_senalign} date back to the 1990's, more recently different methods were suggested.
+
+One of these methods is Bleualign. 
+It uses BLEU as a similarity score to find sentences alignments.
+
+BLEU, which satands for Bilingual Evaluation Understudy, is a popular automatic metric for evaluating machine translation models. It measures the similarity between two sentences by considering matches of several n-grams (sequences of tokens of length \(n\); usually scores are combined for n-grams of order 1--4). 
+The higher the BLEU score, the higher the similarity between two sentences \autocite[226]{koehn2009}.
+
+Although it has been criticized as a measure of translation quality, it can be used for deciding weather two sentences are mutual translations---BLEU scores for two unrelated sentences is usually 0 \autocite{sennrich-volk-2010-mt}. 
+
