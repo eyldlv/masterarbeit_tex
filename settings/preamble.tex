@@ -44,15 +44,24 @@
 
 % \usepackage{times} % Times New Roman
 
+% Bibliography
 \usepackage[style=authoryear]{biblatex}
 \addbibresource{bibliography/bibliography.bib}
 \addbibresource{bibliography/urls.bib}
+
+% Graphics
+\usepackage{graphicx}
+
 
 
 
 % Create word alignment graphs
 \usepackage{tikz}
 \usetikzlibrary{tikzmark}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
 \tikzset{every tikzmarknode/.style={inner sep = 1pt,execute at end node={\vphantom{bg}}}}
 
 % Attempts to plot word alignments
@@ -85,6 +94,18 @@
     breaklines=true,
     backgroundcolor=\color{background},
     frame=lines}
+
+\lstdefinelanguage{txt}{
+    basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    backgroundcolor=\color{background},
+    frame=lines}
+
 
 \usepackage{dirtree}
 

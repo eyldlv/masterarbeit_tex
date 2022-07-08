@@ -1,14 +1,18 @@
 % !TEX program = xelatex
 
 \include{settings/preamble}
-
+\include{settings/json-lang}
+% \includeonly{chapters/romansh}
+\includeonly{chapters/sentence_alignment}
 \begin{document}
 
 \tableofcontents
+
 \include{chapters/introduction}
 \include{chapters/romansh}
 \include{chapters/compiling_the_corpus}
 \include{chapters/sentence_alignment}
+\chapter{Word alignment}
 \include{chapters/gold_standard}
 \chapter{Evaluation}
 \chapter{Contributions}
