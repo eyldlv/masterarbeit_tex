@@ -97,6 +97,8 @@
 
 \lstdefinelanguage{txt}{
     basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
+    showtabs=true,
+    tab=\rightarrowfill,
     numbers=left,
     numberstyle=\scriptsize,
     stepnumber=1,
@@ -107,8 +109,12 @@
     frame=lines}
 
 
+\usepackage{numprint}
+\npthousandsep{,}
+
 \usepackage{dirtree}
 
+\usepackage{nameref}
 \usepackage{hyperref}
 
 
