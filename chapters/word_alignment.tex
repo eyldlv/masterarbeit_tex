@@ -1,0 +1,116 @@
+\chapter{Word Alignment}
+We now reach the core of thesis, computing word alignments using the novel method SimAlign suggested by \cite{jalili-sabet-etal-2020-simalign} and evaluating it against a baseline method.
+
+\section{Introduction}
+Following the success statistical models had in the task of sentecne alignemnt, word alignment was seen as a natural extension of that work. 
+This work had two main goals: offer a valuable resource in bilingual lexicography and develop a system for automatic translation \autocite{brown-etal-1993-mathematics}. Word alignments are objects indicating for each word in a string in the target language \(f\) which word in the source language \(e\) it arose from\autocite{brown-etal-1993-mathematics}. 
+In other words, it is a mapping of words in a string of the source language \(e\) to the words in a string of the target language \(f\) \autocite[84]{koehn2009}.
+
+A simple example for an alignment for a pair of sentences from the corpus I compiled are the German sentence \emph{Die Beratungen sind kostenlos} \enquote{The consultations are gratuitous} and its Romansh counterpart \emph{Las cussegliaziuns èn gratuitas}. 
+
+
+\begin{figure}[h]
+\centering
+
+\tikzmarknode{s0}{1: Die} \tikzmarknode{s1}{2: Beratungen} \tikzmarknode{s2}{3: sind} \tikzmarknode{s3}{4: kostenlos} 
+
+\vspace*{1cm}
+
+\tikzmarknode{t0}{1: Las} \tikzmarknode{t1}{2: cussegliaziuns} \tikzmarknode{t2}{3: èn} \tikzmarknode{t3}{4: gratuitas}
+\begin{tikzpicture}[remember picture, overlay, scale=0.6, every node/.style={scale=0.6}]
+\draw
+(s0) -- (t0)
+(s1) -- (t1)
+(s2) -- (t2)
+(s3) -- (t3)
+;
+\end{tikzpicture}
+\end{figure}
+
+
+In this example, each word in German is aligned to exactly one word in Romansh and the words follow exactly the same order, such that the resulting alignment is the set of mappings $\{1\to1, 2\to2,3\to3,4\to4\}$. 
+Such alignments, in which each word in the source sentence is aligned exactly one word in the target sentence in which the words follow the same order are considered simple \autocite[85]{koehn2009}.
+
+Things become more compliacted when word order differs between languages or when several words in one sentence are mapped to one or several words in the other sentence. 
+A word in the target language may be aligned to several words in the source language (1-to-many), or several words in the target language may be aligned to one word in the source language (many-to-1). 
+Sometimes words in the target have no realtion to the source (for instance in case of untranslatable words, but words might also generally be omitted in the translation). 
+In that case, they will be aligned to a special \texttt{NULL} token \autocite[85]{koehn2009}. 
+
+%There is an assymetry in classical alignment models between the source and the target language. 
+%Each target word is connected to exactly one source word; but source words can be linked to multiple target words or to no words at all. 
+%This difficulty will not bother us 
+
+In order to deal with these challenges of different word order and alignments that are not 1-to-1 alignments, \cite{brown-etal-1993-mathematics} developed their pipeline of translation models, the IBM Models 1-5.
+
+\section{Overview of Methods}
+I shall now give a quick review of word alignment methods, that is of the IBM Models, of \texttt{fastalign}, which is an improved version of the IBM Model 2 and serves as a baseline model in my experiment, and of \texttt{SimAlign}, the model based on the novel method of word embeddings. 
+Since I am not a mathematician, I will not go into the mathematics of these models. 
+I will rather attempt to explain their principle of operation in a more intuitive way to allow the reader some basic understanding of the mechanics behind the scenes.
+
+\subsection{IBM Model 1}
+The IBM models are translation models. 
+They were developed in order to compute the conditional probability of a sentence in the target language $f$ given a sentence in the source langauge $e$: $P(f|e)$ \autocite{brown-etal-1993-mathematics}. 
+In layman terms, they compute how likely a given sentence in the target language is a translation of a sentence in the source language.
+By modeling these probabilities, the models can generate a number of different translations for a sentence. 
+However, there are infinitely many sentences in a language and most sentences occur even in large corpora only once. 
+This makes modeling the probability distribution for full sentences hard and not promising. 
+Instead, the problem is broken up into smaller steps: the model models the probability disributions for individual words---it computes how likely a word in one sentence is a translation of a word in that sentence's translation. 
+The IBM Model 1 is therefore based solely on modeling the probability distributions of lexical translations, i.e., of individual words \autocite[88]{koehn2009}.
+
+\subsubsection{Incomplete Data}
+There is, however, a problem. 
+We can compute the probability distributions of lexical translations given their counts. 
+That is, by counting how often a word $w_e$ in language $e$ was translated as a word $w_f$ in language $f$, we can compute the desired probability distributions. 
+For example, by counting how many times the German word \emph{das} was translated as \emph{the}, how many times it was translated as \emph{that}, etc., we can compute each word's translation probability distribution. 
+With these individual probability distributions we can compute the likelihood of a sentence in language $f$ given a sentence in language $e$.
+
+Unfortunately, while sentence alignment is a realtively easy task (at least for well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. 
+This problem, dubbed as a \emph{chicken and egg problem}, is basically the following: If we had word alignments, it wouldn't be a problem to estimate the lexical translation model and compute the probability distributions for words and sentences. 
+And if we had a model, we could easily estimate the most likely correspondences between words in the source and the target languages. 
+Unfortunately, we have none of the above \autocite[88]{koehn2009}.
+
+\subsubsection{EM Algorithm} 
+In order to solve the problem of incomplete data, an iterative learning algorithm, the expectation-maximization algorithm (EM algorithm) comes into play. 
+The EM algorithm is mathematically intricate. 
+I shall try to explain in simple words the idea behind it. 
+
+In the very first iteration, the values of the model parameters are unkown and are initialized with a uniform distribution. 
+This means all words are equally likely to be translations of each other.
+Then, in the estimation step, the model is applied to the data to compute the most likely alignments. 
+In the maximization step, the model is learned from the data based on counts collected from it. 
+The algorithm counts co-occurences of words in the source and the target languages, which are then weighted with the probabilities that were computed in the estimation step.
+These weighted counts are used to compute again the probabilities in the estimation step. 
+These two steps, estimation and maximization, are then repeated until convergence---until a global minimum is reached and the probabilities computed stop changing.
+
+In simple words, the model does not know in the beginning which words in the source language correspond to which words in the target language. 
+In the very first iteration, all alignments are equally likely---any word in a sentence in the target language is equally likely a translation of any word in the source language.
+In order to find the most probable correspondences (or alignments), the model counts how often words are aligned with each other, that is, how often they co-occur in parallel sentences (maximization step). 
+These counts are weighted with the probabilities computed in the previous estimation step to refine the values in the next estimation step. 
+Likely links between words are strengthened, while less likely links are weekened. 
+This goes on until the model converges and the most likely word alignments have been learned by the model \autocites[88-92]{koehn2009}{brown-etal-1993-mathematics}. 
+
+
+\section{SimAlign}
+
+
+\subsection{Word Embeddings}
+Word embeddings are simply put vector representations of words. 
+Embeddings are learned as a sort of byproduct of a neural language model.
+A language model is a model that assigns probabilities to sentences of a given language---it can say how probable a given sentence is in a language. 
+A language model can also be used to generate sentences by concatenating words based on their probability distributions.
+
+Without going too much into details, when a simple neural language models learns the probabilty distributions for words given all the previous words, the weights in the hidden layer are adapted. 
+We can then use the language model not for generating language, but extract the weights for a specific word from the inner layer, which are an $n$-dimensional vector.
+We call this vector word embedding.
+
+It has been shown that words that occur in similar contexts have similar word embeddings. 
+This vector similarity can be measured with the cosine similarity.
+
+\subsection{SimAlign}
+
+
+\section{Computing the Word Alignments}
+
+
+
+
