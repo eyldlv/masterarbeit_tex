@@ -89,7 +89,31 @@ These counts are weighted with the probabilities computed in the previous estima
 Likely links between words are strengthened, while less likely links are weekened. 
 This goes on until the model converges and the most likely word alignments have been learned by the model \autocites[88-92]{koehn2009}{brown-etal-1993-mathematics}. 
 
+\subsection{Higher IBM Models}
+Without going too much into details, I will shortly mention the other IBM models, Models 2-5. 
 
+Model 1 makes the unrealistic assumption that all connections for each position are equally likely. 
+This means, word order is not modeled by Model 1. 
+In other words, the word order does not influence the likelihood of word alignments.
+Therefore, for Model 2 does depend on word order. 
+It adds an explicit model for alignment based on the positions of the source and the target words \autocites{brown-etal-1993-mathematics}[99]{koehn2009}.
+
+Model 3 adds a probability distribution of the number of words a source word is usually translated to (dubbed \emph{fertility}). 
+It is able to model alignments of types other than 1-to-1 \autocite[100]{koehn2009}. 
+% In Model 4, the probability of alignments depends in addition on the positions of any other target words that are connected with the same source word.
+
+Models 4 and 5 add more complexity and take into account for instance the positions of any other target words that are connected with the same source word \autocite{brown-etal-1993-mathematics}, since words that are next to each other in the source sentence tend to be next to each other in the target sentence (large phrases tend to move together as units) \autocite[107]{koehn2009}.
+
+Models 1-4 serve as stepping stones towards the training of Model 5. 
+Model 1 has a simple mathematical form and a one unique local minimum, which means the parameters learned by it do not depend on the starting point\footnote{The other models have several minima; this means according to the starting parameters, different minima can be arrived at.}. 
+The estimates learned by Model 1 are used to intialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on and so forth---each model is initiailized from the parameters of the model before it. 
+This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}.
+
+% In other words, while the higher models may converge at different minima, Model 1 will always converge at the same minimum, regardless of the parameters it was initialized with. 
+% Passing the parameters learned by each model to the next model allows us to not simply start training with some random parameters, 
+
+\section{fastalign}
+ 
 \section{SimAlign}
 
 
