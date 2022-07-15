@@ -107,18 +107,58 @@ Models 4 and 5 add more complexity and take into account for instance the positi
 Models 1-4 serve as stepping stones towards the training of Model 5. 
 Model 1 has a simple mathematical form and a one unique local minimum, which means the parameters learned by it do not depend on the starting point\footnote{The other models have several minima; this means according to the starting parameters, different minima can be arrived at.}. 
 The estimates learned by Model 1 are used to intialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on and so forth---each model is initiailized from the parameters of the model before it. 
-This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}.
+This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}. 
+
+These models have been playing a key role in word alignment tasks and in stastitical and phrase based machine translation. 
+Put together in a pipeline of models, they serve as the groundwork for Giza++, a toolkit for training word-basewd translation models. 
+Using these alignments, phrase alignments can be learned in order to train a statistical phrase-based machine translation \autocites{och-ney-2000-improved,och-ney-2003-smt}
 
 % In other words, while the higher models may converge at different minima, Model 1 will always converge at the same minimum, regardless of the parameters it was initialized with. 
 % Passing the parameters learned by each model to the next model allows us to not simply start training with some random parameters, 
 
-\section{fastalign}
+
+
+\section{Embedding Base Word Alignment}
+A different approach to word alignment is based on word embeddings. 
+But what are word embeddings?
  
-\section{SimAlign}
+
+\subsection{Excursion: Words}
+Before we discuss word embeddings, I would like to write a few words about words and their meaning.
+
+Words are actually an arbitrary way to split linguistic material into units. 
+What we refer to as words are usually units seperated by a whitespace in writing, but the use of whitespaces is arbitrary and incosistent. 
+Some words sound exactly like two other words (\emph{a maze} sounds like \emph{amaze} and \emph{in sight} like \emph{incite}). 
+\emph{someone} and \emph{anyone} are written as one word, while \emph{no one} is written as two words \autocite[92-95]{Jespersen1924}.
+
+For the sake of simplicity, I will stick to the term \emph{word}, referring to any linguistic unit, made up of one or several morphemes (or words), divided in writing by whitespaces from its neighboring units.
+
+\subsubsection{Meaning of Words}
+The question of describing the meanings of words is an entire field---semantics. But already in his posthumously published work \emph{Cours de linguistique générale} (\enquote{Course in General Linguistics}) from 1916, the Swiss linguist and semiotician Fredinand de Sassure came to an important conclusion. 
+Linguistic elements receive their value only by being arranged in a sequence, which de Saussure calls \emph{syntagm}: 
+\enquote{A term in the syntagm acquires its value only because it stands in opposition to everyhting that percedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. Further, each term in the syntagm, in the sequence of terms, has associative relations. 
+These relations reside in the memory of the speakers. 
+For instance the German word \emph{zudrehen} \enquote{close something by turning} unconciously calls to mind related words, such as other words beginning with \emph{zu-}: \emph{zumachen} \enquote{close}, \emph{zumauern} \enquote{wall something up}, \emph{zuklappen} \enquote{close something shut}. 
+But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course}.
+
+Each term in the syntagm stands in opposition not only to the perceding and following parts in the syntagm, but also to terms called to mind by the associative series. 
+The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic one, the vertical axis.
+
+In the sentence \emph{I am drinking coffee} the word \emph{coffee} gets its  \textbf{syntagmatic} value from the perceding word \emph{drinking}, which stands in \textbf{paradigmatic} opposition to other words (\emph{plant}, \emph{grow}) which would give \emph{coffee} a different meaning.
+We know that by \emph{coffee} hot-drink is meant because it follow the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{fine-grained coffee} it would mean beans and in \emph{coffee ice-cream} it would describe a flavor.
+
+The Austrian-British philosopher, Ludwig Wittgenstein, summed the meaning of the word \emph{meaning} (German \emph{Bedeutung}) in two sentences in his Philosophical Investigations, no. 43:
+
+
+\begin{displayquote}\emph{
+Man kann für eine große Klasse von Fällen der Benützung des Wortes \enquote{Bedeutung} – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache}\footnote{{For a large class of cases of the use of the word \emph{meaning} -- and maybe for all of its use cases -- one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
+\end{displayquote}
 
 
 \subsection{Word Embeddings}
-Word embeddings are simply put vector representations of words. 
+
+Word embeddings are, simply put, vector representations of words. 
+
 Embeddings are learned as a sort of byproduct of a neural language model.
 A language model is a model that assigns probabilities to sentences of a given language---it can say how probable a given sentence is in a language. 
 A language model can also be used to generate sentences by concatenating words based on their probability distributions.
