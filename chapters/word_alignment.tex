@@ -118,7 +118,7 @@ Using these alignments, phrase alignments can be learned in order to train a sta
 
 
 
-\section{Embedding Base Word Alignment}
+\section{Word Embeddings}
 A different approach to word alignment is based on word embeddings. 
 But what are word embeddings?
  
@@ -145,30 +145,77 @@ Each term in the syntagm stands in opposition not only to the perceding and foll
 The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic one, the vertical axis.
 
 In the sentence \emph{I am drinking coffee} the word \emph{coffee} gets its  \textbf{syntagmatic} value from the perceding word \emph{drinking}, which stands in \textbf{paradigmatic} opposition to other words (\emph{plant}, \emph{grow}) which would give \emph{coffee} a different meaning.
-We know that by \emph{coffee} hot-drink is meant because it follow the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{fine-grained coffee} it would mean beans and in \emph{coffee ice-cream} it would describe a flavor.
+We know that by \emph{coffee} a hot-drink is meant, because it follows the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{I bought one pound of coffee} it would mean beans and in \emph{coffee ice-cream} it would describe a flavor.
 
 The Austrian-British philosopher, Ludwig Wittgenstein, summed the meaning of the word \emph{meaning} (German \emph{Bedeutung}) in two sentences in his Philosophical Investigations, no. 43:
 
 
 \begin{displayquote}\emph{
-Man kann für eine große Klasse von Fällen der Benützung des Wortes \enquote{Bedeutung} – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache}\footnote{{For a large class of cases of the use of the word \emph{meaning} -- and maybe for all of its use cases -- one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
+Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutung« – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache.}\footnote{{For a large class of cases of the use of the word \emph{meaning} -- and maybe for all of its use cases -- one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
 \end{displayquote}
 
-
 \subsection{Word Embeddings}
+These ideas, which were further developed by linguists in the 1950's, that a word can be defined by its environment or distribution, i.e., by its set of contexts in which it occurs and its grammatical environments, is the inspriation for what is called vector semantics.  
+The idea of vector semantics is to represent a word as a point in some $n$-dimensional vector space. 
+These vectors are called \textbf{embeddings}. 
+There are different ways and versions of word embeddings, but in each case the values of the vectors are based in some way on counts of neighboring words \autocite[98-99]{jurafsky-2019}.
 
-Word embeddings are, simply put, vector representations of words. 
+One version of word embeddings comes from neural language models.
+Language modeling is the task of assigning probabilities to a sequence of words, that is, modeling how likely it is that a sequence of words in a language would be uttered/written by a spaker of that language \autocite[181]{koehn2009}. 
+In practice, the task of a language model is predicting upcoming words from prior word context \autocite[137]{jurafsky-2019}.
 
-Embeddings are learned as a sort of byproduct of a neural language model.
-A language model is a model that assigns probabilities to sentences of a given language---it can say how probable a given sentence is in a language. 
-A language model can also be used to generate sentences by concatenating words based on their probability distributions.
+Without going too much into details, a neural network is a complex non-linear function. 
+It is made up of layers, which are vectors, and weights, which are matrices. 
+The numbers (a vector) from each layer are passed on to the next layer by means of matrix multiplication with the weights between those layers. 
+The vector resulting from this matrix multiplication (plus usually some non-linear activation function), is the next layer in the neural net. 
+The output of a neural network can be for instance a single value, for example in cases of a binary classification task, the output is either 0 or 1, or it can be a vector representing some probability distribution.
 
-Without going too much into details, when a simple neural language models learns the probabilty distributions for words given all the previous words, the weights in the hidden layer are adapted. 
-We can then use the language model not for generating language, but extract the weights for a specific word from the inner layer, which are an $n$-dimensional vector.
-We call this vector word embedding.
+In the course of the training of a language neural model, i.e., while the neural net learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
+The weights connecting the input layer with the first hidden layer are our said word embeddings. 
+When inputting a word into the net (in form of a one-hot vector), we can get its vector representation, i.e., its embedding, from the so-called embedding layer. 
+Since this representation is conditioned on context, similar words should have similar embeddings \autocite[104-105]{koehn-2020}.
 
-It has been shown that words that occur in similar contexts have similar word embeddings. 
-This vector similarity can be measured with the cosine similarity.
+There are different ways of learning word embeddings. 
+One of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
+These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn good word vector representations, not generating language.
+
+\subsection{Word Similarity}
+If words are represented by vectors, we need a measure for taking two such vectors and measuring how similar they are. 
+The most common similarity metric is the \textbf{cosine similarity} -- measuring the angle between the vectors. 
+
+Again, without going into too much mathematical details, using the dot product for measuring similarity, i.e., multipliying the vectors with each other, favors long vectors, that is vectors with high values in each dimension. 
+To solve this problem, we need to normalize the dot product by dividing it by the lengths of the vectors. 
+Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf{w}$ can be computed as:
+
+\begin{equation}
+	\text{cosine}(\mathbf{v}, \mathbf{w}) =
+	\frac{
+	\mathbf{v} \cdot \mathbf{w}
+	}{|\mathbf{v}||\mathbf{w}|}
+	=
+	\frac{
+	\sum_{i=1}^N v_i w_i
+	}
+	{
+	\sqrt{\sum_{i=1}^N v_i^2} \sqrt{\sum_{i=1}^N w_i^2}
+	}	
+\end{equation}
+\autocite[103-104]{jurafsky-2019}
+
+\subsection{Summary}
+Word embeddings are vector representations of words learned by a neural language model or by a more simple embeddings model. 
+These vectors' dimensions usually range between 100 and 1000 dimensions. 
+Similar words (words that appear in the same context) have similar word embeddings. 
+To measure word similarity, we measure the similarity between their embeddings using the cosine similarity.
+
+\section{Embedding Based Word Alignment}
+
+% Without going too much into details, when a simple neural language models learns the probabilty distributions for words given all the previous words, the weights in the hidden layer are adapted. 
+% We can then use the language model not for generating language, but extract the weights for a specific word from the inner layer, which are an $n$-dimensional vector.
+% We call this vector word embedding.
+
+% It has been shown that words that occur in similar contexts have similar word embeddings. 
+% This vector similarity can be measured with the cosine similarity.
 
 \subsection{SimAlign}
 
