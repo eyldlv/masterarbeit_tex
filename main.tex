@@ -1,10 +1,12 @@
 % !TEX program = xelatex
 
-\include{settings/preamble}
-\include{settings/json-lang}
+\input{settings/preamble}
+\input{settings/json-lang}
 % \includeonly{chapters/romansh}
 % \includeonly{chapters/sentence_alignment}
-\includeonly{chapters/word_alignment}
+% \includeonly{chapters/word_alignment}
+% \includeonly{chapters/compiling_the_corpus}
+% \includeonly{chapters/gold_standard}
 \begin{document}
 
 \tableofcontents
@@ -15,11 +17,16 @@
 \include{chapters/sentence_alignment}
 \include{chapters/word_alignment}
 \include{chapters/gold_standard}
-\chapter{Evaluation}
-\chapter{Contributions}
-\chapter{Summary}
+\include{chapters/results}
+%\chapter{Contributions}
+\include{chapters/summary}
 
 %\include{tikz_test}
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
 \addcontentsline{toc}{chapter}{Bibliography}
 \printbibliography
 \end{document}

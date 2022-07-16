@@ -11,7 +11,15 @@
 
 \usepackage{fontspec}
 % \setmainfont[Ligatures={TeX}]{Linux Libertine O}
-\setmainfont{Times New Roman}
+% \setmainfont{Times New Roman}
+\setmainfont{texgyretermes-regular} % best new times roman?
+  [Extension      = .otf,
+  BoldFont       = texgyretermes-bold,
+  ItalicFont    = texgyretermes-italic,
+  BoldItalicFont = texgyretermes-bolditalic
+  ]
+% \setmainfont{Tex Gyre Termes}
+
 
 % \usepackage[]{newtxtext} %Times New Roman
 
@@ -34,7 +42,8 @@
 
 \usepackage{amsmath}
 
-
+% Control the width of captions of figures
+\usepackage{caption}
 
 % Schönere Tabellen
 \usepackage{booktabs}
