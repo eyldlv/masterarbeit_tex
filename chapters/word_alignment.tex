@@ -25,6 +25,7 @@ A simple example for an alignment for a pair of sentences from the corpus I comp
 (s3) -- (t3)
 ;
 \end{tikzpicture}
+\caption[Word alignment example]{Example of a word alignment between two sentences in German and Romansh}
 \end{figure}
 
 
@@ -217,11 +218,118 @@ To measure word similarity, we measure the similarity between their embeddings u
 % It has been shown that words that occur in similar contexts have similar word embeddings. 
 % This vector similarity can be measured with the cosine similarity.
 
+
+
+There are also methods for creating multilingual word embeddings. 
+Multilingual word embeddings are word embeddings for words in different languages and share the same vector space. 
+This can be achieved by learning word embeddings for each language separately on monolingual data, and then map these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
+They can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
+
+The idea behind multilingual word embeddings is that two equivalent words in different languages should have a similar distribution, thus their vector representations should also be similar. 
+
+
 \subsection{SimAlign}
+This similarity between embeddings in different languages can be leveraged in order to find word alignments without the need for parallel data, which is the idea that forms the basis of SimAlign.
+
+\subsubsection{Method}
+SimAlign takes two parallel sentences $s^e$ and $s^f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
+For this sentence pair a \emph{similarity matrix} is defined as $S \in [0,1]^{l_e\times l_f}$. 
+It is a matrix in the size of the lengths of sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
+This means that for each combination of two words from sentence $s_e$ and sentence $s_f$, their similarity measure is filled into the corresponding cell in the matrix (Figure~\ref{fig:sim-matrix}).
+From this similarity matrix $S$, a binary alignment matrix $A \in \{0,1\}^{l_e \times l_f}$ is extracted. 
+The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentnce $s^e$ is the most similar to the word $s_j^f$ in the sentence $s^f$ (Figure~\ref{fig:al-matrix}).
 
 
-\section{Computing the Word Alignments}
+
+\begin{figure}
+\[
+	\begin{array}{rl|c|c|c|c}
+& &0 & 1 & 2 & 3\\
+& &\text{Ich} & \text{liebe} & \text{ja} & \text{Äpfel} \\
+\hline
+0 & \text{I} & 0.9 & 0.2 & 0 &0.2 \\ 
+\hline
+1 & \text{love} & 0.1 & 0.9 &0 & 0.1 \\
+\hline
+2 & \text{apples } & 0.1& 0.1 & 0 & 0.9\\
+\end{array}
+\]
+\captionsetup{width=.6\linewidth}
+\caption[Similarity matrix]{Similarity matrix $S \in [0,1]^{l_e \times l_x}$, filled with values between 0 and 1 corresponding to the similarity measure between the embeddings of the words. 
+The numbers are fictive.}
+\label{fig:sim-matrix}
+\end{figure}
+
+\begin{figure}
+\[
+	\begin{array}{rl|c|c|c|c}
+& &0 & 1 & 2 & 3\\
+& &\text{Ich} & \text{liebe} & \text{ja} & \text{Äpfel} \\
+\hline
+0 & \text{I} & 1 & 0 & 0 & 0 \\ 
+\hline
+1 & \text{love} & 0 & 1 &0 & 0 \\
+\hline
+2 & \text{apples } & 0& 0 & 0 & 1\\
+\end{array}
+\]
+\captionsetup{width=.6\linewidth}
+\caption[Alignment matrix]{Alignment matrix $A \in \{0,1\}^{l_e \times l_f}$ extracted from the similarity matrix S. The two most similar words in row $i$ and column $j$ of S will receive a score of 1; the rest 0.}
+\label{fig:al-matrix}
+\end{figure}
+\begin{figure}
+\centering
+
+\tikzmarknode{s0}{Ich} \tikzmarknode{s1}{liebe} \tikzmarknode{s2}{ja} \tikzmarknode{s3}{Äpfel} 
+
+\vspace*{1cm}
+
+\tikzmarknode{t0}{I} \tikzmarknode{t1}{love} \tikzmarknode{t2}{apples} 
+\begin{tikzpicture}[remember picture, overlay, scale=0.6, every node/.style={scale=0.6}]
+\draw
+(s0) -- (t0)
+(s1) -- (t1)
+(s3) -- (t2)
+;
+\end{tikzpicture}
+\caption{The resulting word alignment}
+\label{fig:resulting-alignment}
+\end{figure}
+
+
+That is, a cell $A_{ij}$ in the matrix $A$ is set to 1 if
+\[
+	(i= \arg \max_l S_{l,j}) \land (j=\arg\max_l S_{i,l})
+\]
+
+% The expression $\arg \max_l S_{l,j}$ returns the row $i$ in the column $j$ of the matrix $S$ with the highest value. 
+% If the current $A_i$ equals to the $\arg\max$ expression \textbf{and} 
+
+If all entries in a row $i$ or a column $j$ of S are 0, $A_{ij}$ will be set to 0.
+The resulting alignment can be seen in Figure~\ref{fig:resulting-alignment}.
+
+This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}.
 
 
 
+
+
+Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
+To remedey this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
+In each iteration, the model focuses on still unaligned pairs and tries to align them. 
+If the similarity with an already aligned word is very high, the model can add another alignment edge. 
+This allows for one word to be aligned to multiple other words, i.e., 1-to-many alignment.
+
+Argmax finds a local optimum and Itermax is a greedy algorithm. 
+A third alignemnt method, called \textbf{Match}, which finds global optima. 
+The alignments generated with this the Match method is inherently bidrectional.
+
+For the task for word alignment, SimAlign can use multilingual embeddings which learned in advanced from monolingual data and then mapped to a shared vector spaced. 
+SimAlign can also use the embddings from two multilingual language models,  out-of-the-box: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
+
+\subsection{Summary}
+By measuring the similarity between multingiual word embeddings, word alignments for sentence pairs can be computed. 
+Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of data.
+Indeed, the quality of the alignments detriorates quickly when the size of data diminishes (see Table 4 in \cite{och-ney-2000-improved}).
+Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce.
 
