@@ -1,9 +1,12 @@
 \chapter{Word Alignment}
-We now reach the core of thesis, computing word alignments using the novel method SimAlign suggested by \cite{jalili-sabet-etal-2020-simalign} and evaluating it against a baseline method.
+We now reach the core of my thesis, computing word alignments using the novel method SimAlign suggested by \cite{jalili-sabet-etal-2020-simalign} and evaluating it against a baseline method. 
+In the following pages, I shall give a short introduction on the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity based word alignment.
 
 \section{Introduction}
-Following the success statistical models had in the task of sentecne alignemnt, word alignment was seen as a natural extension of that work. 
-This work had two main goals: offer a valuable resource in bilingual lexicography and develop a system for automatic translation \autocite{brown-etal-1993-mathematics}. Word alignments are objects indicating for each word in a string in the target language \(f\) which word in the source language \(e\) it arose from\autocite{brown-etal-1993-mathematics}. 
+Following the success statistical models had in the task of sentence alignment, word alignment was seen as a natural extension of that work. 
+This work had two main goals: offer a valuable resource in bilingual lexicography and develop a system for automatic translation \autocite{brown-etal-1993-mathematics}. 
+
+Word alignments are objects indicating for each word in a string in the target language \(f\) which word in the source language \(e\) it arose from \autocite{brown-etal-1993-mathematics}. 
 In other words, it is a mapping of words in a string of the source language \(e\) to the words in a string of the target language \(f\) \autocite[84]{koehn2009}.
 
 A simple example for an alignment for a pair of sentences from the corpus I compiled are the German sentence \emph{Die Beratungen sind kostenlos} \enquote{The consultations are gratuitous} and its Romansh counterpart \emph{Las cussegliaziuns èn gratuitas}. 
@@ -30,11 +33,12 @@ A simple example for an alignment for a pair of sentences from the corpus I comp
 
 
 In this example, each word in German is aligned to exactly one word in Romansh and the words follow exactly the same order, such that the resulting alignment is the set of mappings $\{1\to1, 2\to2,3\to3,4\to4\}$. 
-Such alignments, in which each word in the source sentence is aligned exactly one word in the target sentence in which the words follow the same order are considered simple \autocite[85]{koehn2009}.
+Such alignments, in which each word in the source sentence is aligned to exactly one word in the target sentence and in which the words follow the same order are considered simple \autocite[85]{koehn2009}.
 
-Things become more compliacted when word order differs between languages or when several words in one sentence are mapped to one or several words in the other sentence. 
-A word in the target language may be aligned to several words in the source language (1-to-many), or several words in the target language may be aligned to one word in the source language (many-to-1). 
-Sometimes words in the target have no realtion to the source (for instance in case of untranslatable words, but words might also generally be omitted in the translation). 
+Things become more complicated when word order differs between languages or when several words in one sentence are mapped to one or several words in the other sentence. 
+The latter gives rise to a variety of alignment types. 
+A word in the target language may be aligned to several words in the source language (1-to-many alignment), or several words in the target language may be aligned to one word in the source language (many-to-1 alignment). 
+Sometimes words in the target have no relation to the source (for instance in case of untranslatable words, or words that were omitted in the translation). 
 In that case, they will be aligned to a special \texttt{NULL} token \autocite[85]{koehn2009}. 
 
 %There is an assymetry in classical alignment models between the source and the target language. 
@@ -44,28 +48,28 @@ In that case, they will be aligned to a special \texttt{NULL} token \autocite[85
 In order to deal with these challenges of different word order and alignments that are not 1-to-1 alignments, \cite{brown-etal-1993-mathematics} developed their pipeline of translation models, the IBM Models 1-5.
 
 \section{Overview of Methods}
-I shall now give a quick review of word alignment methods, that is of the IBM Models, of \texttt{fastalign}, which is an improved version of the IBM Model 2 and serves as a baseline model in my experiment, and of \texttt{SimAlign}, the model based on the novel method of word embeddings. 
+I shall now give a quick explanation of word alignment methods, namely of the IBM Models, and of \texttt{SimAlign}, an alignment model based on word embeddings. 
 Since I am not a mathematician, I will not go into the mathematics of these models. 
-I will rather attempt to explain their principle of operation in a more intuitive way to allow the reader some basic understanding of the mechanics behind the scenes.
+I will rather attempt to explain their \emph{modus operandi} in a more intuitive way, so as to to allow the reader some basic understanding of the mechanics behind the scenes.
 
 \subsection{IBM Model 1}
 The IBM models are translation models. 
 They were developed in order to compute the conditional probability of a sentence in the target language $f$ given a sentence in the source langauge $e$: $P(f|e)$ \autocite{brown-etal-1993-mathematics}. 
 In layman terms, they compute how likely a given sentence in the target language is a translation of a sentence in the source language.
 By modeling these probabilities, the models can generate a number of different translations for a sentence. 
-However, there are infinitely many sentences in a language and most sentences occur even in large corpora only once. 
-This makes modeling the probability distribution for full sentences hard and not promising. 
-Instead, the problem is broken up into smaller steps: the model models the probability disributions for individual words---it computes how likely a word in one sentence is a translation of a word in that sentence's translation. 
+However, there are infinitely many sentences in a language and most sentences occur, even in large corpora, only once. 
+This makes the task of modeling the probability distribution for full sentences hard and not promising. 
+Instead, the problem is broken up into smaller steps: the model models the probability distributions for individual words---it computes how likely a word in one sentence is a translation of a word in that sentence's translation. 
 The IBM Model 1 is therefore based solely on modeling the probability distributions of lexical translations, i.e., of individual words \autocite[88]{koehn2009}.
 
 \subsubsection{Incomplete Data}
 There is, however, a problem. 
 We can compute the probability distributions of lexical translations given their counts. 
-That is, by counting how often a word $w_e$ in language $e$ was translated as a word $w_f$ in language $f$, we can compute the desired probability distributions. 
+That is, by counting how often a word $s^e_i$ in the sentence $s^e$ in language $e$ was translated as a word $s^f_j$ in a sentence $s^f$ in language $f$, we can compute the desired probability distributions. 
 For example, by counting how many times the German word \emph{das} was translated as \emph{the}, how many times it was translated as \emph{that}, etc., we can compute each word's translation probability distribution. 
-With these individual probability distributions we can compute the likelihood of a sentence in language $f$ given a sentence in language $e$.
+With these individual probability distributions we can compute the likelihood of a sentence in language $f$ being a translation of a sentence in language $e$ \autocite[88]{koehn2009}.
 
-Unfortunately, while sentence alignment is a realtively easy task (at least for well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. 
+Unfortunately, while sentence alignment is a relatively easy task (at least of well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. 
 This problem, dubbed as a \emph{chicken and egg problem}, is basically the following: If we had word alignments, it wouldn't be a problem to estimate the lexical translation model and compute the probability distributions for words and sentences. 
 And if we had a model, we could easily estimate the most likely correspondences between words in the source and the target languages. 
 Unfortunately, we have none of the above \autocite[88]{koehn2009}.
@@ -79,24 +83,24 @@ In the very first iteration, the values of the model parameters are unkown and a
 This means all words are equally likely to be translations of each other.
 Then, in the estimation step, the model is applied to the data to compute the most likely alignments. 
 In the maximization step, the model is learned from the data based on counts collected from it. 
-The algorithm counts co-occurences of words in the source and the target languages, which are then weighted with the probabilities that were computed in the estimation step.
+The algorithm counts co-occurrences of words in the source and the target languages, which are then weighted with the probabilities that were computed in the estimation step.
 These weighted counts are used to compute again the probabilities in the estimation step. 
-These two steps, estimation and maximization, are then repeated until convergence---until a global minimum is reached and the probabilities computed stop changing.
+These two steps, estimation and maximization, are then repeated until convergence---until a global minimum is reached and the probabilities computed stop changing \autocites[88-92]{koehn2009}{brown-etal-1993-mathematics}.
 
 In simple words, the model does not know in the beginning which words in the source language correspond to which words in the target language. 
 In the very first iteration, all alignments are equally likely---any word in a sentence in the target language is equally likely a translation of any word in the source language.
 In order to find the most probable correspondences (or alignments), the model counts how often words are aligned with each other, that is, how often they co-occur in parallel sentences (maximization step). 
 These counts are weighted with the probabilities computed in the previous estimation step to refine the values in the next estimation step. 
-Likely links between words are strengthened, while less likely links are weekened. 
-This goes on until the model converges and the most likely word alignments have been learned by the model \autocites[88-92]{koehn2009}{brown-etal-1993-mathematics}. 
+Likely links between words are strengthened, while less likely links are weakened. 
+This goes on until the model converges and the most likely word alignments have been learned by the model. 
 
 \subsection{Higher IBM Models}
 Without going too much into details, I will shortly mention the other IBM models, Models 2-5. 
 
 Model 1 makes the unrealistic assumption that all connections for each position are equally likely. 
 This means, word order is not modeled by Model 1. 
-In other words, the word order does not influence the likelihood of word alignments.
-Therefore, for Model 2 does depend on word order. 
+Simply put, the word order does not influence the likelihood of word alignments.
+Therefore, Model 2 does depend on word order. 
 It adds an explicit model for alignment based on the positions of the source and the target words \autocites{brown-etal-1993-mathematics}[99]{koehn2009}.
 
 Model 3 adds a probability distribution of the number of words a source word is usually translated to (dubbed \emph{fertility}). 
@@ -107,11 +111,11 @@ Models 4 and 5 add more complexity and take into account for instance the positi
 
 Models 1-4 serve as stepping stones towards the training of Model 5. 
 Model 1 has a simple mathematical form and a one unique local minimum, which means the parameters learned by it do not depend on the starting point\footnote{The other models have several minima; this means according to the starting parameters, different minima can be arrived at.}. 
-The estimates learned by Model 1 are used to intialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on and so forth---each model is initiailized from the parameters of the model before it. 
+The estimates learned by Model 1 are used to initialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on and so forth---each model is initialized from the parameters of the model before it. 
 This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}. 
 
-These models have been playing a key role in word alignment tasks and in stastitical and phrase based machine translation. 
-Put together in a pipeline of models, they serve as the groundwork for Giza++, a toolkit for training word-basewd translation models. 
+These models have been playing a key role in word alignment tasks and in statistical and phrase based machine translation. 
+Put together in a pipeline of models, they serve as the groundwork for Giza++, a toolkit for training word-based translation models. 
 Using these alignments, phrase alignments can be learned in order to train a statistical phrase-based machine translation \autocites{och-ney-2000-improved,och-ney-2003-smt}
 
 % In other words, while the higher models may converge at different minima, Model 1 will always converge at the same minimum, regardless of the parameters it was initialized with. 
@@ -125,34 +129,35 @@ But what are word embeddings?
  
 
 \subsection{Excursion: Words}
-Before we discuss word embeddings, I would like to write a few words about words and their meaning.
+Before we discuss word embeddings, I would like to write a few words about words and their meanings.
 
 Words are actually an arbitrary way to split linguistic material into units. 
-What we refer to as words are usually units seperated by a whitespace in writing, but the use of whitespaces is arbitrary and incosistent. 
-Some words sound exactly like two other words (\emph{a maze} sounds like \emph{amaze} and \emph{in sight} like \emph{incite}). 
-\emph{someone} and \emph{anyone} are written as one word, while \emph{no one} is written as two words \autocite[92-95]{Jespersen1924}.
+What we refer to as words are usually units separated by a whitespace in writing, but the use of whitespaces is arbitrary and inconsistent. 
+There is no real phonetic motivation for splitting units into words. 
+Some single words sound exactly like two other words (\emph{a maze} sounds like \emph{amaze} and \emph{in sight} like \emph{incite}). 
+The words \emph{someone} and \emph{anyone} are written as one word, while \emph{no one} is written as two words, although there is obviously no difference in character between them \autocite[92-95]{Jespersen1924}.
 
-For the sake of simplicity, I will stick to the term \emph{word}, referring to any linguistic unit, made up of one or several morphemes (or words), divided in writing by whitespaces from its neighboring units.
+For the sake of simplicity, I will stick to the term \emph{word}, referring to any linguistic unit, made up of one or several morphemes (or words), divided in written form by whitespaces from its neighboring units.
 
 \subsubsection{Meaning of Words}
 The question of describing the meanings of words is an entire field---semantics. But already in his posthumously published work \emph{Cours de linguistique générale} (\enquote{Course in General Linguistics}) from 1916, the Swiss linguist and semiotician Fredinand de Sassure came to an important conclusion. 
 Linguistic elements receive their value only by being arranged in a sequence, which de Saussure calls \emph{syntagm}: 
-\enquote{A term in the syntagm acquires its value only because it stands in opposition to everyhting that percedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. Further, each term in the syntagm, in the sequence of terms, has associative relations. 
+\enquote{A term in the syntagm acquires its value only because it stands in opposition to everything that precedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. Further, each term in the syntagm, in the sequence of terms, has associative (or paradigmatic) relations. 
 These relations reside in the memory of the speakers. 
 For instance the German word \emph{zudrehen} \enquote{close something by turning} unconciously calls to mind related words, such as other words beginning with \emph{zu-}: \emph{zumachen} \enquote{close}, \emph{zumauern} \enquote{wall something up}, \emph{zuklappen} \enquote{close something shut}. 
-But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course}.
+But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course} (my examples).
 
-Each term in the syntagm stands in opposition not only to the perceding and following parts in the syntagm, but also to terms called to mind by the associative series. 
+Each term in the syntagm stands in opposition not only to the preceding and following parts in the syntagm, but also to terms in the paradigm, which are called to mind by the associative series. 
 The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic one, the vertical axis.
 
-In the sentence \emph{I am drinking coffee} the word \emph{coffee} gets its  \textbf{syntagmatic} value from the perceding word \emph{drinking}, which stands in \textbf{paradigmatic} opposition to other words (\emph{plant}, \emph{grow}) which would give \emph{coffee} a different meaning.
+Take, for instance, the sentence \emph{I am drinking coffee}. The word \emph{coffee} gets its  \textbf{syntagmatic} value from the perceding word \emph{drinking}, which stands in \textbf{paradigmatic} opposition to other words (\emph{plant}, \emph{grow}) which would give \emph{coffee} a different meaning.
 We know that by \emph{coffee} a hot-drink is meant, because it follows the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{I bought one pound of coffee} it would mean beans and in \emph{coffee ice-cream} it would describe a flavor.
 
 The Austrian-British philosopher, Ludwig Wittgenstein, summed the meaning of the word \emph{meaning} (German \emph{Bedeutung}) in two sentences in his Philosophical Investigations, no. 43:
 
 
 \begin{displayquote}\emph{
-Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutung« – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache.}\footnote{{For a large class of cases of the use of the word \emph{meaning} -- and maybe for all of its use cases -- one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
+Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutung« – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache.}\footnote{{For a large class of cases of the use of the word \emph{meaning}---and maybe for all of its use cases---one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
 \end{displayquote}
 
 \subsection{Word Embeddings}
@@ -169,7 +174,7 @@ Without going too much into details, a neural network is a complex non-linear fu
 It is made up of layers, which are vectors, and weights, which are matrices. 
 The numbers (a vector) from each layer are passed on to the next layer by means of matrix multiplication with the weights between those layers. 
 The vector resulting from this matrix multiplication (plus usually some non-linear activation function), is the next layer in the neural net. 
-The output of a neural network can be for instance a single value, for example in cases of a binary classification task, the output is either 0 or 1, or it can be a vector representing some probability distribution.
+The output of a neural network can be for instance a single value, as in the cases of a binary classification task, in which the output is either 0 or 1, but it can also be a vector representing some probability distribution.
 
 In the course of the training of a language neural model, i.e., while the neural net learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
 The weights connecting the input layer with the first hidden layer are our said word embeddings. 
@@ -178,13 +183,14 @@ Since this representation is conditioned on context, similar words should have s
 
 There are different ways of learning word embeddings. 
 One of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
-These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn good word vector representations, not generating language.
+These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn high quality word vector representations, not to generate language.
 
 \subsection{Word Similarity}
 If words are represented by vectors, we need a measure for taking two such vectors and measuring how similar they are. 
-The most common similarity metric is the \textbf{cosine similarity} -- measuring the angle between the vectors. 
+The most common similarity metric is the \textbf{cosine similarity}---measuring the angle between the vectors. 
 
-Again, without going into too much mathematical details, using the dot product for measuring similarity, i.e., multipliying the vectors with each other, favors long vectors, that is vectors with high values in each dimension. 
+Again, without going into too much mathematical details, using the dot product for measuring similarity, i.e., multiplying the vectors with each other, favors long vectors, that is, vectors with high values in each dimension, which represents the frequency of words. 
+This means more frequent words have higher values, but we want to measure the similarity between words regardless of their frequency.
 To solve this problem, we need to normalize the dot product by dividing it by the lengths of the vectors. 
 Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf{w}$ can be computed as:
 
@@ -201,15 +207,33 @@ Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf
 	\sqrt{\sum_{i=1}^N v_i^2} \sqrt{\sum_{i=1}^N w_i^2}
 	}	
 \end{equation}
+
+with $\sum_{i=1}^Nv_iw_i$ being the dot product of the vectors $\mathbf{v}$ and $\mathbf{w}$ and $\sqrt{\sum_{i=1}^N v_i^2}$ being the length of the vector $\mathbf{v}$.
+
 \autocite[103-104]{jurafsky-2019}
+
+The cosine similarity returns a value between $-1$ and $1$. 
+The highest  similarity is \(1\): the vectors are parallel and pointing in the same direction. 
+If it is $0$, the angle between the vectors is a $90^\circ$ angle. 
+The lowest similarity is $-1$: the vectors point in opposite directions.
+
+\subsection{Multilingual Word Embeddings}
+There are also methods for computing multilingual word embeddings. 
+Multilingual word embeddings are word embeddings for words in different languages that share the same vector space. 
+This can be achieved by learning word embeddings for each language separately on monolingual data, and then map these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
+They can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
+
+The idea behind multilingual word embeddings is that two equivalent words in different languages should have a similar distribution, thus their vector representations should also be similar \autocite{artetxe-etal-2018-robust}. 
 
 \subsection{Summary}
 Word embeddings are vector representations of words learned by a neural language model or by a more simple embeddings model. 
 These vectors' dimensions usually range between 100 and 1000 dimensions. 
 Similar words (words that appear in the same context) have similar word embeddings. 
 To measure word similarity, we measure the similarity between their embeddings using the cosine similarity.
+Multilingual word embeddings are word embeddings for words in different languages which share the same vector space. 
+Similar words of different languages should have similar embeddings.
 
-\section{Embedding Based Word Alignment}
+\section{Similarity Based Word Alignment}
 
 % Without going too much into details, when a simple neural language models learns the probabilty distributions for words given all the previous words, the weights in the hidden layer are adapted. 
 % We can then use the language model not for generating language, but extract the weights for a specific word from the inner layer, which are an $n$-dimensional vector.
@@ -218,40 +242,30 @@ To measure word similarity, we measure the similarity between their embeddings u
 % It has been shown that words that occur in similar contexts have similar word embeddings. 
 % This vector similarity can be measured with the cosine similarity.
 
+With multilingual word embeddings, similar words in different languages should have similar embeddings. 
+This similarity between embeddings in different languages can be leveraged in order to find word alignments using a similarity matrix, without the need for parallel data, which is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
 
-
-There are also methods for creating multilingual word embeddings. 
-Multilingual word embeddings are word embeddings for words in different languages and share the same vector space. 
-This can be achieved by learning word embeddings for each language separately on monolingual data, and then map these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
-They can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
-
-The idea behind multilingual word embeddings is that two equivalent words in different languages should have a similar distribution, thus their vector representations should also be similar. 
-
-
-\subsection{SimAlign}
-This similarity between embeddings in different languages can be leveraged in order to find word alignments without the need for parallel data, which is the idea that forms the basis of SimAlign.
-
-\subsubsection{Method}
+\subsection{Method}
 SimAlign takes two parallel sentences $s^e$ and $s^f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
 For this sentence pair a \emph{similarity matrix} is defined as $S \in [0,1]^{l_e\times l_f}$. 
-It is a matrix in the size of the lengths of sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
+It is a matrix the size of the lengths of sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
 This means that for each combination of two words from sentence $s_e$ and sentence $s_f$, their similarity measure is filled into the corresponding cell in the matrix (Figure~\ref{fig:sim-matrix}).
 From this similarity matrix $S$, a binary alignment matrix $A \in \{0,1\}^{l_e \times l_f}$ is extracted. 
-The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentnce $s^e$ is the most similar to the word $s_j^f$ in the sentence $s^f$ (Figure~\ref{fig:al-matrix}).
+The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentence $s^e$ is the most similar to the word $s_j^f$ in the sentence $s^f$ and vice versa (Figure~\ref{fig:al-matrix}).
 
 
 
-\begin{figure}
+\begin{figure}[ht]
 \[
 	\begin{array}{rl|c|c|c|c}
-& &0 & 1 & 2 & 3\\
+& &1 & 2 & 3 & 4\\
 & &\text{Ich} & \text{liebe} & \text{ja} & \text{Äpfel} \\
 \hline
-0 & \text{I} & 0.9 & 0.2 & 0 &0.2 \\ 
+1 & \text{I} & 0.9 & 0.2 & 0 &0.2 \\ 
 \hline
-1 & \text{love} & 0.1 & 0.9 &0 & 0.1 \\
+2 & \text{love} & 0.1 & 0.9 &0 & 0.1 \\
 \hline
-2 & \text{apples } & 0.1& 0.1 & 0 & 0.9\\
+3 & \text{apples } & 0.1& 0.1 & 0 & 0.9\\
 \end{array}
 \]
 \captionsetup{width=.6\linewidth}
@@ -260,17 +274,17 @@ The numbers are fictive.}
 \label{fig:sim-matrix}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
 \[
 	\begin{array}{rl|c|c|c|c}
-& &0 & 1 & 2 & 3\\
+& &1 & 2 & 3 & 4\\
 & &\text{Ich} & \text{liebe} & \text{ja} & \text{Äpfel} \\
 \hline
-0 & \text{I} & 1 & 0 & 0 & 0 \\ 
+1 & \text{I} & 1 & 0 & 0 & 0 \\ 
 \hline
-1 & \text{love} & 0 & 1 &0 & 0 \\
+2 & \text{love} & 0 & 1 &0 & 0 \\
 \hline
-2 & \text{apples } & 0& 0 & 0 & 1\\
+3 & \text{apples } & 0& 0 & 0 & 1\\
 \end{array}
 \]
 \captionsetup{width=.6\linewidth}
@@ -297,7 +311,7 @@ The numbers are fictive.}
 \end{figure}
 
 
-That is, a cell $A_{ij}$ in the matrix $A$ is set to 1 if
+That is, a cell $A_{ij}$ in the matrix $A$ is set to 1 if:
 \[
 	(i= \arg \max_l S_{l,j}) \land (j=\arg\max_l S_{i,l})
 \]
@@ -305,31 +319,30 @@ That is, a cell $A_{ij}$ in the matrix $A$ is set to 1 if
 % The expression $\arg \max_l S_{l,j}$ returns the row $i$ in the column $j$ of the matrix $S$ with the highest value. 
 % If the current $A_i$ equals to the $\arg\max$ expression \textbf{and} 
 
-If all entries in a row $i$ or a column $j$ of S are 0, $A_{ij}$ will be set to 0.
+If all entries in a row $i$ or a column $j$ of S are 0 (as is the case in column 3 of Figure~\ref{fig:sim-matrix}), $A_{ij}$ will be set to 0.
 The resulting alignment can be seen in Figure~\ref{fig:resulting-alignment}.
 
-This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}.
-
-
-
-
-
-Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
+This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}. Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
 To remedey this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
 In each iteration, the model focuses on still unaligned pairs and tries to align them. 
 If the similarity with an already aligned word is very high, the model can add another alignment edge. 
-This allows for one word to be aligned to multiple other words, i.e., 1-to-many alignment.
+This allows for one word to be aligned to multiple other words, i.e., create 1-to-many alignment.
 
 Argmax finds a local optimum and Itermax is a greedy algorithm. 
-A third alignemnt method, called \textbf{Match}, which finds global optima. 
-The alignments generated with this the Match method is inherently bidrectional.
+There is a third alignemnt method, called \textbf{Match}, which finds global optima. 
+The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source).
 
-For the task for word alignment, SimAlign can use multilingual embeddings which learned in advanced from monolingual data and then mapped to a shared vector spaced. 
-SimAlign can also use the embddings from two multilingual language models,  out-of-the-box: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
+For the task for word alignment, SimAlign can use multilingual embeddings which were learned in advanced from monolingual data and then mapped to a shared vector spaced. 
+SimAlign can also use out-of-the-box the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
 
 \subsection{Summary}
-By measuring the similarity between multingiual word embeddings, word alignments for sentence pairs can be computed. 
-Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of data.
-Indeed, the quality of the alignments detriorates quickly when the size of data diminishes (see Table 4 in \cite{och-ney-2000-improved}).
-Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce.
+By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs can be computed. 
 
+Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce, which makes similarity based word alignment a competitive method against statistical methods. 
+
+Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of data to perform well.
+The quality of the alignments deteriorates quickly when the size of data diminishes\footnotemark. 
+
+\footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning 1.5M sentence pairs is $9.4\%$. 
+When aligning only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
+ (see Table 4 in \cite{och-ney-2000-improved})}.
