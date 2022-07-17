@@ -1,5 +1,14 @@
 \chapter{Gold standard}
+\label{chap:gold-standard}
 \section{Introduction}
+In the previous chapter, I discussed SimAlign, a method for computing word alignment based on measuring similarity between multilingual word embeddings. 
+The clear advantage of this method is that it does not rely on the existence of large amounts of parallel data. 
+The multilingual word embeddings can be learned from monolingual data. 
+\cite{jalili-sabet-etal-2020-simalign} evaluated their method on language pairs which were all part of the training data for the language models in use (mBERT and XLM-R). 
+In the course of this work, I was able to extract \numprint{79109} sentence pairs for German-Romansh. 
+I shall now proceed to test how well SimAlign performs on this language pair, considering the fact the Romansh wasn't included in the training data for these models. 
+
+
 In order to measure the quality of words alignments, a model's performance is measured on a test set which is a gold standard created by human annotators. 
 For the gold standard to be of good quality and consistent with itself, annotators have to follow strict guidelines.
 These guidelines address issues of ambiguity in word alignments. \autocite[115]{koehn2009}. 

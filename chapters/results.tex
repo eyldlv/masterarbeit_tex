@@ -1,1 +1,15 @@
 \chapter{Results}
+
+After having created a gold standard (see Chapter~\ref{chap:gold-standard}) for evaluating the quality of the alignments, I compared the alignments computed by SimAlign with the alignments computed by a baseline system.
+I shall now proceed present the results of the experiment.
+
+\section{Baseline System}
+As a baseline system, I chose \texttt{fast\_align}. 
+\texttt{fast\_align} is a re-parameterization of the IBM Model 2. 
+It has become a popular seccessor to Giza++, serves as a baseline system in other works, and is even recommended by WHO? as an alternative for Giza++ for computing the word alignments for Moses SMT. 
+It outperforms Giza++ in many scenarios.
+
+\texttt{fast\_align} is extremely fast---computing the word alignments for the around \numprint{80000} sentence pairs took around 50 seconds. 
+It is well documented and is extremely easy to compile and to operate. 
+All of this makes \texttt{fast\_align} the most attractive system to use as a baseline system.
+

@@ -346,3 +346,11 @@ The quality of the alignments deteriorates quickly when the size of data diminis
 \footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning 1.5M sentence pairs is $9.4\%$. 
 When aligning only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
  (see Table 4 in \cite{och-ney-2000-improved})}.
+
+Similarity based word alignment using embeddings extracted from mBERT or XLM-R outperforms any state-of-the-art statistical method for the language pairs Czech, German, French and Hindi, paired with English. 
+But all of these languages are part of mBERT's and XLM-R's training data. 
+\cite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method performing well also on a small amount of parallel data.
+But will SimAlign perform just as well for data unseen by said language models?
+
+
+
