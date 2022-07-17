@@ -33,14 +33,16 @@
 % \usepackage{tipx}
 
 
-% Create glosses
-\usepackage{gb4e}
 
-% 
 
-\noautomath
-
+% Math
 \usepackage{amsmath}
+\usepackage{unicode-math}
+\setmathfont{texgyretermes-math.otf}
+
+% A package for  glosses (load after math!!)
+\usepackage{gb4e}
+\noautomath
 
 % Control the width of captions of figures
 \usepackage{caption}
@@ -143,4 +145,10 @@
 \usepackage{nameref}
 \usepackage{hyperref}
 
+% Acronyms
+% \usepackage{acro}
+% \input{settings/acronyms}
+\usepackage[acronym]{glossaries}
+% \makeglossaries
+\input{settings/glossary}
 
