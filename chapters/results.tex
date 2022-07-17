@@ -4,7 +4,7 @@ After having created a gold standard (see Chapter~\ref{chap:gold-standard}) for 
 I shall now proceed present the results of the experiment.
 
 \section{Baseline System}
-As a baseline system, I chose \texttt{fast\_align}. 
+As a baseline system, I chose \texttt{fast\_align} \autocite{dyer-etal-2013-simple}. 
 \texttt{fast\_align} is a re-parameterization of the IBM Model 2. 
 It has become a popular seccessor to Giza++, serves as a baseline system in other works, and is even recommended by WHO? as an alternative for Giza++ for computing the word alignments for Moses SMT. 
 It outperforms Giza++ in many scenarios.
@@ -12,4 +12,27 @@ It outperforms Giza++ in many scenarios.
 \texttt{fast\_align} is extremely fast---computing the word alignments for the around \numprint{80000} sentence pairs took around 50 seconds. 
 It is well documented and is extremely easy to compile and to operate. 
 All of this makes \texttt{fast\_align} the most attractive system to use as a baseline system.
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{llllll}
+\toprule
+&Dataset size 			& Percision & Recall & F1    & AER \\
+\midrule 
+\multirow{6}{1em}{\rotatebox{90}{Baseline}} & $\sim$80k	& 0.625		& 0.786	 & 0.696 & 0.304 \\
+									    	& 50k &blah		& blah	&	blah & blah\\
+									    	& 25k \\
+									    	& 10k \\
+									    	& 5k \\
+									    	& 600 \\
+\midrule
+
+
+\end{tabular}
+
+\end{table}
+
+
 
