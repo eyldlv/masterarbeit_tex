@@ -19,7 +19,7 @@ All of this makes \texttt{fast\_align} the most attractive system to use as a ba
 \centering
 \begin{tabular}{lllllll}
 \toprule
-											&Method &Dataset Size & Percision & Recall & F1    & AER \\
+											&Method &Dataset Size & Percision & Recall & $F_1$    & AER \\
 \midrule 
 \multirow{6}{1em}{\rotatebox{90}{Baseline}}& fast\_align & \numprint{79109}	  & \textbf{0.625}	  & \textbf{0.786}  & \textbf{0.696} & \textbf{0.304} \\
 									    	& " &50k         & 0.622	  & 0.775  & 0.69  & 0.31  \\
@@ -30,9 +30,33 @@ All of this makes \texttt{fast\_align} the most attractive system to use as a ba
 \bottomrule
 \end{tabular}
 \caption{Evaluation metrics for word alignments with the baseline model (fast\_align) for different dataset sizes.
-\enquote{Dataset Size} refers to number of sentence pairs. }
+\enquote{Dataset Size} refers to the number of sentence pairs. }
 \end{table}
 
 
-Some more text.
+\begin{table}
+\centering
+\begin{tabular}{llllcccc}
+\toprule
+	                                       &	 Embedding	     & Level		              & Method & Percision & Recall & $F_1$     & AER \\
+\midrule
+\multirow{9}{1em}{\rotatebox{90}{SimAlign}} & \multirow{3}{*}{mBert} & \multirow{3}{*}{BPE}  &  Argmax & \textbf{0.894}    & 0.622	& 0.734  & 0.266 \\
+											&							&				     &  Itermax & 0.832  		  & 0.731	& 0.778  & 0.222 \\
+											&						  &						 &  Match   & 0.795   		 & \textbf{0.767}  & \textbf{0.781}  & \textbf{0.219} \\	
+											\cmidrule{2-8}
+											& \multirow{6}{*}{XLM-R} & \multirow{3}{*}{Word} &  Argmax  & \textbf{0.848}	  		 & 0.399  & 0.543  & 0.457 \\
+											&						&						 & Itermax  & 0.767  		  & 0.504  & 0.608  & 0.391 \\
+											&						&					     & Match    & 0.67   		  & 0.647	& \textbf{0.658}	 & \textbf{0.342} \\
+																	\cmidrule{3-8}
+											&						& \multirow{3}{*}{BPE}	 &	Argmax  & 0.773   		 & 0.488  & 0.598  & 0.402 \\
+											&					    &						 & Itermax  & 0.671  		  & 0.595  & 0.631  & 0.369 \\
+											&						&						& Match		& 0.558	 		  & \textbf{0.719}  & 0.628  & 0.372 \\
+
+
+\bottomrule
+\end{tabular}
+\caption{Evaluation metrics for word alignments using SimAlign, with different embeddings and word/sub-word level. 
+Best result per embedding type in bold.}
+\label{tab:simalign}
+\end{table}
 
