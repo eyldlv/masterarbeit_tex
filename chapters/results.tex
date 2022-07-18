@@ -17,22 +17,22 @@ All of this makes \texttt{fast\_align} the most attractive system to use as a ba
 
 \begin{table}
 \centering
-\begin{tabular}{llllll}
+\begin{tabular}{lllllll}
 \toprule
-&Dataset size 			& Percision & Recall & F1    & AER \\
+											&Method &Dataset Size & Percision & Recall & F1    & AER \\
 \midrule 
-\multirow{6}{1em}{\rotatebox{90}{Baseline}} & $\sim$80k	& 0.625		& 0.786	 & 0.696 & 0.304 \\
-									    	& 50k &blah		& blah	&	blah & blah\\
-									    	& 25k \\
-									    	& 10k \\
-									    	& 5k \\
-									    	& 600 \\
-\midrule
-
-
+\multirow{6}{1em}{\rotatebox{90}{Baseline}}& fast\_align & \numprint{79109}	  & \textbf{0.625}	  & \textbf{0.786}  & \textbf{0.696} & \textbf{0.304} \\
+									    	& " &50k         & 0.622	  & 0.775  & 0.69  & 0.31  \\
+									    	& " & 25k         & 0.602	  & 0.751  & 0.668 & 0.332 \\
+									    	& " & 10k   	  & 0.58	  & 0.725  & 0.644 & 0.355 \\
+									    	& " & 5k 		  & 0.565	  & 0.709  & 0.629 & 0.371 \\
+									    	& " & 600 		  & 0.515	  & 0.644  & 0.572 & 0.427 \\
+\bottomrule
 \end{tabular}
-
+\caption{Evaluation metrics for word alignments with the baseline model (fast\_align) for different dataset sizes.
+\enquote{Dataset Size} refers to number of sentence pairs. }
 \end{table}
 
 
+Some more text.
 
