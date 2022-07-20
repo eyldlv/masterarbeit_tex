@@ -246,6 +246,7 @@ With multilingual word embeddings, similar words in different languages should h
 This similarity between embeddings in different languages can be leveraged in order to find word alignments using a similarity matrix, without the need for parallel data, which is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
 
 \subsection{Method}
+\label{subsec:simalign-method}
 SimAlign takes two parallel sentences $s^e$ and $s^f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
 For this sentence pair a \emph{similarity matrix} is defined as $S \in [0,1]^{l_e\times l_f}$. 
 It is a matrix the size of the lengths of sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
