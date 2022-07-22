@@ -71,23 +71,28 @@ Since statistical word alignment models heavily rely on a minimal amount of data
 The results are shown in Table~\ref{tab:baseline}.
 \begin{table}
 \centering
-\begin{tabular}{llccccc}
+\begin{tabular}{cccccc}
 \toprule
-											&Method &Dataset Size & Percision & Recall & $F_1$    & AER \\
+											Method &Dataset Size & Precision & Recall & $F_1$    & AER \\
 \midrule 
-\multirow{5}{1em}{\rotatebox{90}{Baseline}}& \multirow{2}{*}{fast\_align} & \numprint{79548}	  & \textbf{0.622}	  & \textbf{0.782}  & \textbf{0.693} & \textbf{0.307} \\
-									    	%& " &50k         & 0.62	  & 0.775  & 0.689  & 0.311  \\
-									    	&  & 25k         & 0.603	  & 0.754  & 0.67 & 0.33 \\
-									    	%& " & 10k   	  & 0.581	  & 0.727  & 0.646 & 0.354 \\
-									    	%& " & 5k 		  & 0.564	  & 0.709  & 0.628 & 0.372 \\
-									    	%& " & 1k          & 0.529     & 0.664 & 0.589 & 0.411 \\
-									    	&  & 600 		  & 0.515	  & 0.644  & 0.572 & 0.427 \\
-										 \cmidrule{2-7}
-										 & \multirow{2}{*}{eflomal} & \numprint{79548} & 0.827 & 0.877 & 0.851 & 0.148 \\
-										 & 		& 600 & 			0.707 & 0.724 &  0.715 & 0.284\\
+%\multirow{12}{1em}{\rotatebox{90}{Baseline}}& 
+\multirow{6}{*}{\rotatebox{90}{fast\_align}} & \numprint{79548}	  & \textbf{0.622}	  & \textbf{0.782}  & \textbf{0.693} & \textbf{0.307} \\
+																												    	  &50k         & 0.62	  & 0.775  & 0.689  & 0.311  \\
+																												    	  & 25k         & 0.603	  & 0.754  & 0.67 & 0.33 \\
+																												    	  & 10k   	  & 0.581	  & 0.727  & 0.646 & 0.354 \\
+																												    	  & 5k 		  & 0.564	  & 0.709  & 0.628 & 0.372 \\
+																												    	% &  & 1k          & 0.529     & 0.664 & 0.589 & 0.411 \\
+																												    	  & 600 		  & 0.515	  & 0.644  & 0.572 & 0.427 \\
+										 \cmidrule{1-6}
+										  \multirow{6}{*}{\rotatebox{90}{eflomal}} & \numprint{79548} & \textbf{0.827} & \textbf{0.877} & \textbf{0.851} & \textbf{0.148} \\
+										 													&						50k		 & 0.828 & 0.86 & 0.844 & 0.156 \\
+										 														&						25k		& 0.812  &0.836 & 0.824 & 0.176 \\
+										 														&						10k		&	0.798 & 0.805 & 0.801 & 0.199 \\
+										 														&						5k    & 0.776 & 0.78 & 0.778 & 0.222\\
+										 											 		& 600              & 0.707 & 0.724 &  0.715 & 0.284\\
 \bottomrule
 \end{tabular}
-\caption{Evaluation metrics for word alignments with the baseline model (fast\_align) for different dataset sizes.
+\caption{Evaluation metrics for word alignments with the baseline models for different dataset sizes.
 \enquote{Dataset Size} refers to the number of sentence pairs. }
 \label{tab:baseline}
 \end{table}
@@ -165,6 +170,25 @@ The best value in each column is in bold.}
 \label{tab:comparison}
 \end{table}
 
+\begin{figure}
+\centering
+\includegraphics{graphics/charts/precision.png}
+\caption{Comparing precision between the systems for different dataset sizes.}
+\label{fig:precision}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics{graphics/charts/recall.png}
+\caption{Comparing recall between the systems for different dataset sizes.}
+\label{fig:recall}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{graphics/charts/aer.png}
+\caption{Comparing \acrshort{aer} between the systems for different dataset sizes.}
+\label{fig:aer}
+\end{figure}
 
 \subsection{General Problems with Evaluation}
 \label{sec:problems-evaluation}
