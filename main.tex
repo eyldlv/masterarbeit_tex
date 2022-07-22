@@ -8,10 +8,16 @@
 % \includeonly{chapters/compiling_the_corpus}
 % \includeonly{chapters/gold_standard}
 % \includeonly{chapters/results}
-\begin{document}
-\include{chapters/titlepage_phil}
-\tableofcontents
+% \includeonly{chapters/summary}
 
+\begin{document}
+\pagenumbering{roman}
+\include{chapters/titlepage_phil}
+\include{chapters/abstract}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
 \include{chapters/introduction}
 \include{chapters/romansh}
 \include{chapters/compiling_the_corpus}
