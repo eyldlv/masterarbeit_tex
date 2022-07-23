@@ -36,6 +36,9 @@ The corpus I collected might be used by future students in a variety of ways.
 One way that comes to mind is training a neural machine translation model using the $\sim80,000$ sentence pairs I extracted and testing a variety of methods for enriching using monolingual data, such as back-translation (an automatic translation of the monolingual target text into the source language) \autocite{sennrich-etal-2016-improving}. 
 See also \cite{https://doi.org/10.48550/arxiv.2107.04239}.
 
+Another possibility would be to fine-tune or extend mBERT with Romansh data. 
+Enlarging the vocabulary of mBERT to accomodate an unseen language and then continue training the model on this language was shown to significantly improve performance in an NER task for that lanauge compared to a zero-shot setting \autocite{wang-etal-2020-extending}. 
+
 It would also be desirable that a future student would repeat my annotations of the 600 sentences as a second annotator. 
 This would make the gold standard more sensible, reliable and acceptable, and would introduce a set of Possible alignments to it (see Section~\ref{sec:gold-flaws}).
 

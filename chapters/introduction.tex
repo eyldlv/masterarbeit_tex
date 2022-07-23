@@ -1,29 +1,86 @@
 \chapter{Introduction}
 \section{Motivation}
-The Romansh language is a Romance language spoken in Switzerland, primarily in the Canton of Grisons (henceforth \emph{Graubünden}), by around 60,000 speakers. 
-Graubünden is the only canton in Switzerland with three official languages -- German, Italian and Romansh.
+The Romansh language is a Romance language spoken in Switzerland, primarily in the Canton of Grisons (henceforth \gls{graubuenden}). 
+Graubünden is the only canton in Switzerland with three official languages---German, Italian and Romansh. 
+The number of Romansh speakers, 40,000, has been sinking in the last decades \autocite{bundesamt2020}. 
+In order to protect Romansh from extinction, Graubünden braced the protection and the promotion of multilinguality within its borders in its constituion:
 
-When traveling by train, the announcements are heard in German, Romansh or Italian according to which part of the canton one is currently at. 
-It is enough to travel to the next valley to suddenly be greeted on the street in a different language.
-Newspapers, radio and television exist in all three languages, but also official documents, laws and press releases are published trinlingually.
-While I was resident in Graubünden, I was fascinated by this multilinguality and it was my wish to somehow capture it and make it available to others. 
-This is why I decided to build a multilingual corpus, a parallel collection of  sentences in German, Romansh and Italian, in which the sentences are translations of each other.
 
-Having such a low number of speakers makes it a so-called low resource language. 
-Having so little speakers means there is also little data, be it corpora or research data.
-Most of the reasearch in NLP focuses on high resource languages. 
+\begin{displayquote}
+Kanton und Gemeinden unterstützen und ergreifen die erforderlichen Massnahmen zur Erhaltung und Förderung der rätoromanischen und der italienischen Sprache\footnote{The canton and the communities shall support and take the required measures to maintain and promote the Romansh language and the Italian language.}. 
+(Art.~3 Abs.~2 der Bündner Verfassung\footnote{\url{https://www.gr-lex.gr.ch/app/de/texts_of_law/110.100}}) 
+\end{displayquote}
+
+Additionally, in 2006 a language law (\emph{Sprachengesetz}) with the aim of further promoting and protecting the multilinguality of the canton:
+\begin{displayquote}
+Dieses Gesetz bezweckt:
+...
+e)~~~die  bedrohte  Landessprache  Rätoromanisch  mit  besonderen  Massnahmen zu unterstützen\footnote{The law of languages of the Canton Graubünden is meant to: e) to support the endangered national language Romansh.} (Abs.~1 Art.~1 Bst.~e des Sprachengesetz des Kantons Graubündens\footnote{\url{https://www.gr-lex.gr.ch/app/de/texts_of_law/492.100\#structured_documentingress_foundation_fn_4417_2_2_c}}); 
+\end{displayquote}
+
+
+Since 1997, the majority of all press releases published by the Canton Graubünden were released in these three langauges. 
+This existence of such parallel documents in three langauges lends itself to the collection and the compliation of a trilingual parallel corpus. 
+Of special interest is here the Romansh language, which, having such a low number of speakers, may be considered a  \enquote{low resource language}.
+
+
+% When traveling by train, the announcements are heard in German, Romansh or Italian according to which part of the canton one is currently at. 
+% It is enough to travel to the next valley to suddenly be greeted on the street in a different language.
+% Newspapers, radio and television exist in all three languages, but also official documents, laws and press releases are published trinlingually.
+% While I was resident in Graubünden, I was fascinated by this multilinguality and it was my wish to somehow capture it and make it available to others. 
+% This is why I decided to build a multilingual corpus, a parallel collection of  sentences in German, Romansh and Italian, in which the sentences are translations of each other.
+
+% Having such a low number of speakers makes it a so-called low resource language. 
+% Having so little speakers means there is also little data, be it corpora or research data.
+% Most of the reasearch in NLP focuses on high resource languages. 
 
 
 \section{Research Question and Goals}
-\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment outperforms all the statistical baseline models. 
-Contrary to statistical models, their model uses vectors of word representations learned by a neural net (also commonly known as word embeddings) and, by using some sort of similarity measurement (e.g., cosine similarity), aligns the most similar words in the source and the target sentence. 
+\subsection{Research Questions}
+\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment, which is similarity based and uses word embeddings to compute similarity, outperforms all the statistical baseline models. 
 
 But not only that the model outperforms the existing stastical models, its biggest advantage as propogated by \cite{jalili-sabet-etal-2020-simalign} is that it requires no training data. 
-Statistical models will only reach a threshold of good performance with enough training data (TODO: cite numbers from SimAlign). 
-Using word embeddings can be used to align words in just a single sentence with high precision. 
-Of course, all of this works persuming we already have a trained model whose learned embeddings we can use for this task. 
+Statistical models will only reach a threshold of good performance with enough training data \autocites{jalili-sabet-etal-2020-simalign,och-ney-2000-improved}. 
+With word embeddings, words in just one single sentence can be aligned with high precision, without the need of a large set of sentence pairs for training a word alignment model.
+However, all of this works persuming we already have trained a multingual language model, whose learned embeddings we can leverage for this task. 
 There exist some language models that were trained on multi-lingual data. 
-mBERT was trained on 104 languages and LASER was trained on 93 languages. 
-But will word embeddings based word alignment will work in zero-shot settings? 
-That is, can the embeddings learned by a multilingual language model be used for word alignment for a language that wasn't included in the training data?
+mBERT was trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, LASER was trained on 93 languages\autocite{artexte-schwenk-2019-laser} and XLM-RoBERTa base was trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
+
+Multilingual language models were shown to perform also well on unseen languages, dubbed as \enquote{zero-shot setting}. 
+Although the LASER model was pretrained on 93 languges, it obtained strong results for sentence embeddings in 112 languages \autocite{artexte-schwenk-2019-laser}. 
+It was also shown that mBERT performs well on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}.
+
+There is, then, good reason to believe that similarity based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh. 
+Especially since vocabulary overlaps between unseen and seen languages favor performance in zero-shot settings \autocite{pires-etal-2019-multilingual}, and since Romansh displays a high similarity with other seen Romance languages, e.g., Italian, French, Spanish. 
+English also has a large portion of Romance-based vocabulary.
+
+% Will word embeddings based word alignment will work in zero-shot settings? 
+% That is, can the embeddings learned by a multilingual language model be used for word alignment for a language that wasn't included in the training data?
+
+
+\subsection{Goals}
+My goals for this thesis are twofold:
+\begin{itemize}
+	\item Test whether similarity based word alignment using multilingual word embeddings will perform on par with statistical word alignment models on the uneen language Romansh;
+
+	\item Collect the press releases of the canton Graubünden, published in German, Romansh and Italian, and compile a parallel trilingual corpus. 
+
+\end{itemize}
+To test the quality of the word alignments, I will create a gold standard and manually annotate word alignment for German-Romansh sentence pairs.
+
+After finishing my work, I will make my gold standard and the corpus I compiled available for further research by future students.
+
+\section{Structure}
+In the course of the following pages I will first give a short introduction to the Romansh language (Chapter ??), then describe how I collected the data and aligned the documents (Chapter ??) and how I further aligned the sentences to create sentence pairs (Chapter ??). 
+In Chapter ?? 
+I will shortly explain the mechanism behind word alignment methods. 
+Finally, I will explain how and according to which guidelines I created the gold standard (Chapter ??) and show the results my experiments comparing different word aligning systems (Chapter ??).
+
+Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow Linguistics student, such that this work, if it ever falls in the hands a future student, will be comprhensible and readable. 
+I hope that it will be read by and inspire future students, the way I was inspired by master's theses written before me.
+
+\section{GitHub repository}
+The code I wrote and the data I collected in the course of this work is available on my GitHub repository. 
+Please contact me in order to gain access to it.
+
 
