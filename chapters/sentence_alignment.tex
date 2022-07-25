@@ -175,10 +175,10 @@ This corresponds to a precision of 98.2\%.
 \centering
 \scalebox{0.9}{
 \begin{tikzpicture}[node distance=2cm]
-	\node (a) [startstop] {Extract multicorpus};
-	\node (b) [startstop, right of=a, xshift=2.3cm] {Sentence segmentation};
-	\node (c) [startstop, right of=b, xshift=2.3cm] {Align language pairs};
-	\node (d) [startstop, right of=c, xshift=2cm] {Filter and tokenize};
+	\node (a) [startstop, align=center] {Query Documents \\From Database};
+	\node (b) [startstop, right of=a, xshift=2cm] {Segment Sentences};
+	\node (c) [startstop, right of=b, xshift=2cm, align=center] {Align \\ Language Pairs};
+	\node (d) [startstop, right of=c, xshift=2cm] {Filter and Tokenize};
 	\draw [arrow] (a) -- (b);
 	\draw [arrow] (b) -- (c);
 	\draw [arrow] (c) -- (d);
@@ -289,9 +289,9 @@ Romansh--Italian & \numprint{78030} & \numprint{1758448} & \numprint{42235} &  \
 \vspace*{1cm}
 
 \begin{lstlisting}[language=txt, caption={An excerpt from the file containing sentence pairs in German--Romansh}, captionpos=b, label={lst:bicorpus}]
-Das kantonale Personal und die Volksschullehrerinnen und -lehrer müssen auf einen Teuerungsausgleich verzichten .	Il persunal chantunal e las scolastas ed ils scolasts da las scolas popularas ston desister d'ina gulivaziun da la chareschia .
+Das kantonale Personal und die Volksschullehrerinnen und -lehrer müssen auf einen Teuerungsausgleich verzichten .	Il persunal chantunal e las scolastas ed ils scolasts da las scolas popularas ston desister d' ina gulivaziun da la chareschia .
 Mit diesem Lohnopfer leisten sie in Würdigung der angespannten Finanzlage des Kantons und der schwachen Wirtschaftslage einen Beitrag dazu , die Kosten einzudämmen .	Cun quest sacrifizi da salari prestan els , a vista da la situaziun precara da las finanzas chantunalas e da la flaivla economia , ina contribuziun per franar ils custs .
-Die Teilrevision des Behindertengesetzes wird auf Anfang 1998 in Kraft gesetzt .	La revisiun parziala da la lescha dals impedids vegn messa en vigur cun l'entschatta da 1998 
+Die Teilrevision des Behindertengesetzes wird auf Anfang 1998 in Kraft gesetzt .	La revisiun parziala da la lescha dals impedids vegn messa en vigur cun l' entschatta da 1998 
 
 \end{lstlisting}
 
