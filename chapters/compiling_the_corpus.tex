@@ -253,20 +253,36 @@ Column & Description \\
 % \footnotetext{I opted for SQLite instead of mySQL since SQLite does not require installing any special software or running a server locally. The Python library sqlite3 is shipped with Python as a standard package.}
 
 \section{Summary}
-For compiling the corpus, the following steps were taken:
+For compiling the corpus, the following steps were taken (see also Figure~\ref{fig:corpus-creation-pipeline}):
 \begin{enumerate}
-	\item Scrape website and save HTML documents locally
-	\item Extract relevant content from HTML files (date, language, title and content) and save to JSON files
-	\item Read the JSON files using Pandas DataFrames, align the documents and save to new JSON files
-	\item Feed both types of JSON files into an SQLite database
+	\item Scrape website and save HTML documents locally.
+	\item Extract relevant content from HTML files (date, language, title and content) and save to JSON files.
+	\item Read the JSON files using Pandas DataFrames, align the documents and save to new JSON files.
+	\item Feed both types of JSON files into an SQLite database.
 \end{enumerate}
+
+\begin{figure}
+\centering
+\scalebox{0.9}{
+\begin{tikzpicture}[node distance=2cm]
+	\node (a) [startstop] {Scrape Website};
+	\node (b) [startstop, right of=a, xshift=2.3cm,  align=center] {Extract Information \\ From HTMLs};
+	\node (c) [startstop, right of=b, xshift=2.3cm] {Align Documents};
+	\node (d) [startstop, right of=c, xshift=2cm, align=center] {Create SQLite \\ Database};
+	\draw [arrow] (a) -- (b);
+	\draw [arrow] (b) -- (c);
+	\draw [arrow] (c) -- (d);
+\end{tikzpicture}}
+\caption{Corpus creation pipeline}
+\label{fig:corpus-creation-pipeline}
+\end{figure}
 
 
 \subsection{Statistics}
 The corpus contains \numprint{3536} parallel documents, with a yearly average of 56.8 documents prior to 2009 and a yearly average of 207.8 documents from 2009 onward\footnote{Not including 2022}. 
 See also Table~\ref{tab:docs-per-year}. Table~\ref{tab:docs-per-lang} breaks down the number of documents per each year and language. 
 
-The corpus contains \numprint{2484250} German tokens, \numprint{2760690} Romansh tokens and \numprint{2581168} Italian tokens\footnote{Punctuation included}. Table~\ref{tab:top-20} displays the 20 most frequent tokens for each language in the corpus.
+The corpus contains \numprint{2484250} German tokens, \numprint{2760690} Romansh tokens and \numprint{2581168} Italian tokens\footnote{Including punctuation tokens}. Table~\ref{tab:top-20} displays the 20 most frequent tokens for each language in the corpus.
 
 \begin{table}
 \centering
