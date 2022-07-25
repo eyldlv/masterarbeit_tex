@@ -53,6 +53,7 @@ Since I am not a mathematician, I will not go into the mathematics of these mode
 I will rather attempt to explain their \emph{modus operandi} in a more intuitive way, so as to to allow the reader some basic understanding of the mechanics behind the scenes.
 
 \subsection{IBM Model 1}
+\label{sec:ibm-model-1}
 The IBM models are translation models. 
 They were developed in order to compute the conditional probability of a sentence in the target language $f$ given a sentence in the source langauge $e$: $P(f|e)$ \autocite{brown-etal-1993-mathematics}. 
 In layman terms, they compute how likely a given sentence in the target language is a translation of a sentence in the source language.
@@ -124,6 +125,7 @@ Using these alignments, phrase alignments can be learned in order to train a sta
 
 
 \section{Word Embeddings}
+\label{sec:word-embeddings}
 A different approach to word alignment is based on word embeddings. 
 But what are word embeddings?
  
@@ -186,6 +188,7 @@ One of the most popular methods are \emph{word2vec} (actually made up of two dif
 These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn high quality word vector representations, not to generate language.
 
 \subsection{Word Similarity}
+\label{sec:word-similarity}
 If words are represented by vectors, we need a measure for taking two such vectors and measuring how similar they are. 
 The most common similarity metric is the \textbf{cosine similarity}---measuring the angle between the vectors. 
 

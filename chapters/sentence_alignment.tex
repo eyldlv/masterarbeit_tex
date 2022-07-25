@@ -6,10 +6,10 @@ The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, t
 In order to use the corpus for tasks such as training a machine translation model, another processing step is needed: sentence alignment \autocite[55]{koehn2009}.
 
 A bilingual, sentence-aligned corpus can be useful for a variety of tasks. 
-Probably the most important task bilngual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocites{moore2002fast,gale-church-1991-program}.
+Probably the most important task bilingual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocites{moore2002fast,gale-church-1991-program}.
 
 \subsection{Formal definition}
-Formally, the task can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
+Formally, the task of sentence alignment can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
 (Note that \(n_e\) the number of sentences in language $e$, is not necessarily identical to \(n_f\) the number of sentences in language \(f\).) 
 A sentence alignment \(S\) consists of a list of sentence pairs \(s_1, ..., s_n\), such that each sentence pair \(s_i\) is a pair of sets:
 
@@ -20,10 +20,10 @@ A sentence alignment \(S\) consists of a list of sentence pairs \(s_1, ..., s_n\
 
 This means that each set in this pair of sets can consist of one or more sentences. 
 The number of sentences in each set is referred to as \emph{alignment type}. 
-A 1--1 alignment is an alignment where exactly one sentence of language \(e\)
+A 1-to-1 alignment is an alignment where exactly one sentence of language \(e\)
 is aligned to exactly one sentence of language \(f\). 
-In a 1--2 alignemnt, one sentence in lanauge \(e\) is a aligned to two sentences in langauge \(f\). 
-There are also 0--1 alignments, in which a sentence of language \(f\) is not aligned to anything of language \(e\). 
+In a 1-to-2 alignment, one sentence in language \(e\) is a aligned to two sentences in language \(f\). 
+There are also 0-to-1 alignments, in which a sentence of language \(f\) is not aligned to anything of language \(e\). 
 Sentences may not be left out and each sentence may only occur in one sentence pair \autocite[57]{koehn2009}. 
 
 
@@ -36,16 +36,16 @@ One early method for sentence alignment is the one described in \cite{gale-churc
 
 \footnotetext{With the algorithms that existed up to that time, it took 10 days to extract 3 million sentence pairs, 12,500 sentences per hour.}
 
-The Gale \& Church method uses the fact that longer sentences in language \(e\) are usually translated into longer sentences in language \(f\) and vice-versa---shorter sentences in one language correspond to shorter sentences in the other language.
+The Gale \& Church method is based on the assumption that longer sentences in language \(e\) are usually translated into longer sentences in language \(f\) and vice-versa---shorter sentences in one language correspond to shorter sentences in the other language.
 
-The method combines a distance measure based on the lengths of the sentence with a prior probility of the alignment type (1--1; 1--0 or 0--1; 2--1 or 1--2; 2--2) to a probabilistic score. 
-It assigns this score to possible sentence pairs in a dynamic programming framework to find the best (most probable) pairs. 
+The method combines a distance measure based on the lengths of the sentence with a prior probability of the alignment type (1-to-1; 1-to-0 or 0-to-1; 2-to-1 or 1-to-2; 2-to-2) to a probabilistic score. 
+It assigns this score to possible sentence pairs in a dynamic programming framework to find the best (most probable) pairs \autocite[57]{koehn2009}. 
+
 A program based on this method was tested against a human-made alignment on two pairs of languages: English-German and English-French. 
 The program made a total of 55 errors out of a total of \numprint{1316} alignments (4.2\%). 
-By taking the best scoring 80\% of the alignments, the error rate could be reduced to 0.7\%
-
+By taking the best scoring 80\% of the alignments, the error rate could be reduced to 0.7\%.
 The method was also much faster than the algorithms that existed up to that time: 
-It took 20 hours to extract around 890,000 sentence pairs, around 44,500 sentence pairs per hour, around 3.5 times faster than previous algorithms.
+It took 20 hours to extract around \numprint{890000} sentence pairs, around \numprint{44500} sentence pairs per hour, which is around 3.5 times faster than previous algorithms \autocite{gale-church-1991-program}.
 
 \subsection{Partial Similarity Based}
 Another method is similarity based such as the one presented in \cite{simard-plamondon-1996-bilingual}. 
@@ -54,14 +54,15 @@ In the first step, \emph{isolated cognates} are used to mark sort of \emph{ancho
 The term \emph{cognate} refers here to two word-forms of different languages whose  first four characters are identical. 
 Isolated cognates are cognates with no resmebling word forms within a context window.
 It follows the assumption that two isolated cognates of different languages are parts of segments that are mutual translations and should be aligned with each other. 
-These cognates are used as anchors, and the process is repeated recursively between the anchors until no more anchor points can be found.
+These cognates are used as anchors, and the process is repeated recursively between the anchors, in order to find further isolated cognates within these boundaries, until no more anchor points can be found.
 
-In an intermediate step, segmentation into sentence boundaries takes place and the search space is determined, i.e., based on the anchors found in the first step, it is determined which sentences could be aligned with each other. 
+In an intermediate step, segmentation into sentence boundaries takes place and the search space is determined. 
+In other words, based on the anchors found in the first step, it is determined which sentences could be aligned with each other. 
 Only sentence-pairs that are within the same search space boundaries are alignment candidates.
 
 In the second step, the final alignment takes place. 
 Theoretically, any sentence alignment program that can operate within the restricted search space defined in the previous steps can take over the job. 
-In \cite{simard-plamondon-1996-bilingual}, the authors use a statistical lexical translation model (commonly known as IBM Model 1), to measure how probable it is to observe one sentence given another sentence and so find the sentences that are most probably mutual translations.
+In \cite{simard-plamondon-1996-bilingual}, the authors use a statistical lexical translation model (commonly known as IBM Model 1, see Section~\ref{sec:ibm-model-1}), to measure how probable it is to observe one sentence given another sentence, and so find the sentences that are most likely mutual translations.
 
 \subsection{Translation based}
 
@@ -78,133 +79,136 @@ There are also hybrid sentence-alignment methods, combining several methods.
 It works in three steps:
 First sentences are aligned using a sentence-length-based model. 
 Then, the sentence pairs with the highest probability, i.e., those that are most likely real correspondences of each other, are used to train a translation model. 
-The translation model is then used to augment the initial alignment, so that the result is length- and translation-based.
+The translation model is then used to augment the initial alignment, so that the result is length- and translation-based \autocite{moore2002fast}.
 
-Another hybrid method was presented in \cite{hunalign}. 
+Another hybrid method was presented by \cite{hunalign}. 
 It combines a dictionary- and a length-based method.
-Here a sort of a dummy translation of the source text is produced using a translation dictionary supplied to the program. 
+Here, a sort of a dummy translation of the source text is produced using a translation dictionary supplied to the program\footnote{Note that this is not a real restriction. See Section~\ref{sec:aligning-language-pairs}}. 
 The program then simply converts each token into its corresponding dictionary translation.
-
 After the dummy translation has been created, a similarity score is computed for each sentence pair.
 The similarity score consists of two components: a score based the number of shared words in the sentence pair (token based) and  a score based on the ratio of character counts between sentences (length based). 
-
 The program treats paragraph boundaries (special \texttt{<p>} tokens) as sentences with special scoring. 
-The similarity score of a paragraph-boundary  and a real sentence is always minus infinity, which makes sure they never align. This way, paragraph boundaries always align with themselves and can be used as anchors to keep  paragraphs mutually aligned.
+This similarity score of a paragraph-boundary  and a real sentence is always minus infinity, which makes sure they never align. This way, paragraph boundaries always align with themselves and can be used as anchors to keep  paragraphs mutually aligned \autocite{hunalign}.
 
 \subsection{Summary}
-All the methods presented here perform very well on clean, well-structured data in similar languages. Already the Gale \& Church algorithm from 1993 achieved a precision of 98\% on the Canadian Hansards\footnote{transcriptions of parliamentary debates which exist in English and in French}, which \citeauthor{gale-church-1991-program} acknowledge are easy to align. 
+All the methods presented here perform very well on clean, well-structured data in similar languages. Already the Gale \& Church algorithm from 1993 achieved a precision of 98\% on the Canadian Hansards\footnote{Transcriptions of parliamentary debates which exist in English and in French}, which \citeauthor{gale-church-1991-program} acknowledge are easy to align. 
 What seems to have led researchers to develop better sentence alignment algorithms are speed \autocites{chen-1993-aligning,hunalign} and better performance on noisy data (such as 1-to-many alignments and misrecognized paragraph boundaries \autocite{sennrich-volk-2010-mt}). 
 
-While speed might be considered a mundane issue, when working with noisy data, misalignments can be detected faster and filtering of texts that are less suitable for alignment (mixed order of chapters, different prefaces, etc.) 
-can be carried out earlier. 
-Pre-processing (tokenization, sentence segmentation) may also influence the alignment quality. 
-Tweaking and fine-tuning these parameters may also require several runs
-\autocite{hunalign}. 
+While speed might be considered a mundane issue, when working with noisy data or with a large amount of data, several alignment runs might be required until misalignments can be detected. 
+When the alignment process takes less time,  texts that are less suitable for alignment (mixed order of chapters, different prefaces, etc.) 
+can be filtered out earlier, and pre-processing steps such as tokenization and sentence segmentation, which may also influence the alignment quality, can be tested. 
+Tweaking and fine-tuning the model parameters may also require several runs \autocite{hunalign}. 
 
-In other words, sentence alignment for a big corpus often requires several passes or runs until misalignments due to less suitable texts or faulty tokenization and sentence segmentation are revealed. An algorithm that performs faster has an obvious advantage here.
+In other words, it may take several attempts until unsuitable texts can be filtered out, the best pre-processing steps are identified and the best model parameters are found. 
+An algorithm which performs faster has a clear advantage in such cases.
+
+% In other words, sentence alignment for a big corpus often requires several passes or runs until misalignments due to less suitable texts or faulty tokenization and sentence segmentation are revealed. An algorithm that performs faster has an obvious advantage here.
 
 \section{More Recent methods}
 While the statistics- and length-based  methods described in section~\ref{sec:overview_senalign} date back to the 1990's, more recently other methods were suggested.
 
 \subsection{Bleualign}
 
-One of these methods was presented in \cite{sennrich-volk-2010-mt} and has been cited since as Bleualign. 
-It rose as a method addressing to the problem of aligning less \enquote{easily} alignable corpora. 
-Sentence alignment methods up to that time perform excellent on well-strctured corpora with a high language similarity such as the Canadian Hansards  which are considered easy to align  or the Europarl\footnote{parliamentary proceedings of the EU Parliament} because they are well-structured---they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
+One of these methods was presented in \cite{sennrich-volk-2010-mt} and has been dubbed since as Bleualign. 
+It arose as a method addressing to the problem of aligning less \enquote{easily} alignable corpora. 
+Sentence alignment methods up to that time perform excellent on well-strctured corpora with a high language similarity such as the Canadian Hansards  or the Europarl\footnote{Parliamentary proceedings of the EU Parliament}  which are considered easy to align because they are well-structured---they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
 However, when aligning pairs of languages which are fundamentally different and/or of less structured texts, the alignment task becomes more difficult \autocite{sennrich-volk-2010-mt}.
 
 Bleualign uses BLEU as a similarity score to find sentence alignments. 
-BLEU, which stands for Bilingual Evaluation Understudy, is a popular automatic metric for evaluating machine translation models. It measures the similarity between two sentences by considering matches of several n-grams\footnote{sequences of tokens of length \(n\)}\,\footnote{usually scores are combined for n-grams of order 1--4}. 
+BLEU, which stands for Bilingual Evaluation Understudy, is a popular automatic metric for evaluating machine translation models. It measures the similarity between two sentences by considering matches of several n-grams\footnote{Sequences of tokens of length \(n\)}\,\footnote{Usually scores are combined for n-grams of order 1 to 4.}. 
 The higher the BLEU score, the higher the similarity between two sentences \autocite[226]{koehn2009}.
 
 Although BLEU has been criticized as a measure of translation quality, BLEU scores can be used for deciding whether two sentences are mutual translations:  
-The higher the BLEU score, the more probable two sentences are mutual translations. 
-BLEU scores for two unrelated sentences is usually 0 \autocite{sennrich-volk-2010-mt}. Instead of aligning sentences of the source and the target language with each other, Bleualign aligns a machine translated version of the target side of the corpus with the source side in order to find the most reliable alignments. 
+The higher the BLEU score, the more likely it is that two sentences are mutual translations. 
+BLEU scores for two unrelated sentences is usually 0. Instead of aligning sentences of the source and the target language with each other, Bleualign aligns a machine translated version of the target side of the corpus with the source side in order to find the most reliable alignments \autocite{sennrich-volk-2010-mt}. 
 
 However, this approach requires an already existing machine translation system with reasonable performance. 
-This problem was addressed in \cite{sennrich-volk-2011-iterative} by suggesting an iterative method for alignment combining length-based and BLEU score-based methods which doesn't require an already existing machine translation system. 
-In the first iteration, sentences are aligned using an implementation of the Gale \& Church algorithm, then an SMT (statistical machine translation) system is trained on the sentence-aligned corpus. 
-In the following iterations, the corpus (target side) is machine translated using the SMT system trained in the last iteration and is then aligned to the source side using Bleualign. 
-Then, a new SMT system is trained using the current alignments.
+This problem was addressed in \cite{sennrich-volk-2011-iterative} by suggesting an iterative method for alignment combining length-based and BLEU score-based methods which doesn't require an already existing machine translation system: 
+In the first iteration, sentences are aligned using an implementation of the Gale \& Church algorithm, then a \acrfull{smt} system is trained on the sentence-aligned corpus. 
+In the following iterations, the corpus (target side) is machine-translated using the \acrshort{smt} system trained in the last iteration and is then aligned to the source side using Bleualign. 
+Then, a new \acrshort{smt} system is trained using the current alignments.
 
 \cite{sennrich-volk-2011-iterative} do not recommend this iterative sentence alignment procedure for all purposes. 
-It should be used mainly where conventional sentence alignment algorithms such as Gale \& Church have lower accuracy or where language-specific resources such as dictionaries (needed for \texttt{hunalign} \autocite{hunalign}) or machine translation systems are unavailable or lacking in quality.
+It should be used mainly where conventional sentence alignment algorithms such as Gale \& Church have lower accuracy or where language-specific resources such as dictionaries (needed for hunalign \autocite{hunalign}) or machine translation systems are unavailable or lacking in quality.
 
 \subsection{Vecalign}
-The desire for  sentence alignment of even higher quality rose with the insight that while misaligned sentences have small effect on SMT performance, they have a crucial effect on neural MT (NMT) systems. 
-This is especially true in scenarios with less data for low-resource MT \autocite{thompson-koehn-2019-vecalign}. 
+The desire for  sentence alignment of even higher quality rose with the insight that while misaligned sentences have small effect on \acrshort{smt} performance, they have a crucial effect on \acrfull{nmt} systems. 
+This is especially true in scenarios with less data for low-resource \acrshort{nmt} \autocite{thompson-koehn-2019-vecalign}. 
 
 Vecalign uses a novel method which is based on the similarity of bilingual sentence embeddings. 
-Sentence embeddings are, in a manner similar to word embeddings (cf. section TODO), vector representation of sentences that are learned by and can be extracted from a neural language model. 
+Sentence embeddings are, in a manner similar to word embeddings (see Section~\ref{sec:word-embeddings}), vector representation of sentences that are learned by and can be extracted from a neural language model. 
 This vector representation is said to represent the meaning of a sentence. 
-The sentence embeddings are obtained from a language model that was trained on multiple languages, thus, the embeddings for all languages reside in the same vector space.
-This means, the embeddings are general to the input language; they are language agnostic.
-If two sentences are similar, their vector representations will lie close to each other in the vector space. 
-A function that is most often used for measuring vector similarity is the cosine similarity.
+The sentence embeddings are obtained from a language model that was trained on multiple languages, thus, the embeddings for all languages share the same vector space.
+This means that the embeddings are indifferent to the specific input language; they are language agnostic.
+If two sentences, regardless of their language, are similar, their vector representations will lie close to each other in the vector space. 
+A function that is most often used for measuring vector similarity is the cosine similarity (see Section~\ref{sec:word-similarity}.
 In this manner, similar sentences in different languages can be identified and aligned \autocite{artexte-schwenk-2019-laser}.
 
 
 \section{Sentence alignment pipeline}
 
-\begin{figure}[h]
+I shall now describe the pipeline I used for retrieving sentence pairs for the corpus I compiled in section~\ref{chap:compiling}.
+
+\subsection{Tool of choice}
+\label{subsec:tool}
+My tool of choice was hunalign \autocite{hunalign}. 
+It is presented as a software package on GitHub, it is free to use and contrary to the Microsoft program presented by \cite{moore2002fast}, its license allows corpora produced by it to be freely distributed. 
+It is also well documented, was easy to compile on my system (MacBook Air M1, 2020 running MacOS Monterey 12.3.1) and runs fast (aligning around \numprint{100000} sentences takes about three minutes). 
+
+I tried, just for the sake of interest, to use Vecalign on a small portion of my corpus. 
+Veclaign requires that all adjacent sentences be concatenated first (to consider 1-to-many alignments). 
+Then for each sentence-concatenation, the sentence embeddings have to be obtained from the LASER language model. 
+Only then, sentence alignment can be calculated \autocite{thompson-koehn-2019-vecalign}. 
+
+The process of obtaining the sentence alignment took quite some time---around 10 minutes for 300 sentences---and by quick inspection with the bare eye, the result wasn't better than the one achieved with hunalign, but rather worse. 
+Obviously, this may be due to the fact that Romansh is not one of the languages LASER was trained on. 
+That being said, LASER \emph{has} been said to generalize to unseen languages that are similar to the ones the model was trained on, e.g., Swiss German or West Frisian, which are similar to German and Dutch, respectively \autocite{artexte-schwenk-2019-laser} 
+\footnote{See also \url{https://github.com/facebookresearch/LASER}}.
+
+Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentneces---hunalign performed excellently. 
+I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard, I only had to discard 11 out of 600 sentences due to  misalignment. 
+This corresponds to a precision of 98.2\%.
+
+\subsection{Pipeline}
+
+\begin{figure}
 \centering
 \scalebox{0.9}{
 \begin{tikzpicture}[node distance=2cm]
 	\node (a) [startstop] {Extract multicorpus};
-	\node (b) [startstop, right of=a, xshift=2.2cm] {Sentence segmentation};
-	\node (c) [startstop, right of=b, xshift=2.2cm] {Align language pairs};
-	\node (d) [startstop, right of=c, xshift=2.2cm] {Filter and tokenize};
+	\node (b) [startstop, right of=a, xshift=2.3cm] {Sentence segmentation};
+	\node (c) [startstop, right of=b, xshift=2.3cm] {Align language pairs};
+	\node (d) [startstop, right of=c, xshift=2cm] {Filter and tokenize};
 	\draw [arrow] (a) -- (b);
 	\draw [arrow] (b) -- (c);
 	\draw [arrow] (c) -- (d);
 \end{tikzpicture}}
 \caption{Sentence alignment pipeline}
+\label{fig:sentence-alignment}
 \end{figure}
 
-I shall now describe the pipeline I used for retrieving sentence pairs for the corpus I compiled in section~\ref{chap:compiling}.
-
-\subsection{Tool of choice}
-\label{subsec:tool}
-My tool of choice was \texttt{hunalign} \autocite{hunalign}. 
-It is presented as a software package on GitHub, it is free to use and contrary to the Microsoft program presented by \cite{moore2002fast}, its license allows corpora produced by it to be freely distributed. 
-It is also well documented, was easy to compile on my system (MacBook Air M1, 2020 running MacOS Monterey 12.3.1) and runs fast (aligning the entire corpus takes around three minutes). 
-
-I tried, just for the sake of interest, to use \texttt{Vecalign} on a small portion of my corpus. 
-Veclaign requires that all adjacent sentences be concatenated first (to consider 1-to-many alignments). 
-Then for each sentence-concatenation, the sentence embeddings have to be obtained from the LASER language model. 
-Only then, sentence alignment can be calculated. 
-
-The process of obtaining the sentence alignment took quite some time---around 10 minutes for 300 sentences---and by quick inspection with the bare eye, the result wasn't better than that gained with \texttt{hunalign}, but rather worse. 
-Obviously, this may be due to the fact that Romansh is not one of the languages LASER was trained on. 
-That being said, LASER \emph{has} been said to generalize to unseen languages that are similar to the ones the model was trained on, e.g., Swiss German or West Frisian, which are similar to German and Dutch, respectively\footnote{\url{https://github.com/facebookresearch/LASER}}.
-
-Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentneces---\texttt{hunalign} performed excellently. 
-I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard, I merely had to discard 11 out of 600 sentences due to  misalignment. 
-This corresponds to a precision of 98.2\%.
-
-\subsection{Pipeline}
-In the first step, all aligned documents are extracted from the corpus and are written to monolingual files, one sentenc per line, and one file per year.
-This is done by querying the SQLite database for all the aligned documents for each year seperately. 
+In the first step, all aligned documents are extracted from the corpus and are written to monolingual files, one sentence per line, and one file per year.
+This is done by querying the SQLite database for all the aligned documents for each year separately. 
 
 \subsection{Sentence segmentation}
-Sentence segmentation (also called sentence tokenization) was done using NLTK's Punkt tokenizers. 
-Since I wasn't able to integrate a sentence tokenizer for Romansh into the pipeline, I used the NLTK's Punkt tokenizer model which was trained on Italian. 
-After instantiating both the German and the Italian models, I extended the list of abbrevations\footnotemark~to enhance the performance of the tokenizer and avoid wrong segmentation. 
+Sentence segmentation (also called sentence tokenization) was done using NLTK's Punkt tokenizers \autocite{bird-2009-nltk}. 
+Since I wasn't able to integrate a sentence tokenizer for Romansh into the pipeline, I used the an NLTK Punkt tokenizer model which was trained on Italian. 
+After instantiating both the German and the Italian models, I extended the list of abbreviations\footnotemark to enhance the performance of the tokenizer and avoid wrong segmentation. 
 
-\footnotetext{The abbreviations for Romansh were taken from Samuel Läubli's/Lisa Gasner GitHub repository}
+\footnotetext{The abbreviations for Romansh were kindly taken from Lisa Gasner's/Samuel Läubli's GitHub repository}
 
-In the course of sentence segmentation, paragraphs are retained by converting linebreaks into a special \texttt{<p>} token. 
+In the course of sentence segmentation, paragraphs are retained by converting line breaks into a special \texttt{<p>} token. 
 These tokens will serve \texttt{hunalign} as anchor points for sentence alignment.
 
 The result is three files for each year, one for each language, containing one sentence per line and \texttt{<p>} tokens marking paragraph borders. 
 Further, to keep the corpus well-structured, the file ID (see section~\ref{subsubsec:web-scraper} \nameref{subsubsec:web-scraper}) is included at the beginning of each document. 
 In case there is no mutual file ID, the date is included. 
-The file ID/date will be used by \texttt{hunalign} as anchor points for keeping the documents and the paragraphs aligned, see listing~\ref{lst:sentences}.
+The file ID/date will be used by \texttt{hunalign} as anchor points for keeping the documents and the paragraphs aligned, see Listing~\ref{lst:sentences} for an example.
 
 \vspace{0.5cm}
 
-\begin{lstlisting}[language=txt, caption={A file containing sentences for alignment. 
-In order to keep the file structured and increase alignment performance, each document starts with a date and paragraph are boundaries are marked with a special \texttt{<t>} token.}, captionpos=t, label={lst:sentences}]
+\begin{lstlisting}[language=txt, caption={[An excerpt from a file containing sentences for alignment.]An excerpt from a  file containing sentences for alignment. 
+In order to keep the file structured and increase alignment performance, each document starts with a date and paragraph are boundaries are marked with a special \texttt{<p>} token.}, captionpos=t, label={lst:sentences}]
 2004-01-27
 www.gr.ch neu mit Online-Schalter und mit Interessenbindungen des Grossen Rats
 Ein neues, zentrales Element von www.gr.ch ist der integrierte Behörden-Online-Schalter www.ch.ch.
@@ -229,9 +233,10 @@ Zudem verrät www.staka.gr.ch auch, warum ein Picasso und der Begriff "Light" oh
  Quelle: dt Standeskanzlei Graubünden
 \end{lstlisting}
 
-\subsection{Aligning language pairs}
-As described in Section~\ref{subsec:tool}, my tool of choice for aligning the sentence is \texttt{hunalign}. 
-\texttt{hunalign} can use a bilingual dictionary for alignment, but the existence of such a dictionary is not a real restriction. 
+\subsection{Aligning Language Pairs}
+\label{sec:aligning-language-pairs}
+As described in Section~\ref{subsec:tool}, my tool of choice for aligning the sentence is hunalign. 
+hunalign can use a bilingual dictionary for alignment, but the existence of such a dictionary is not a real restriction. 
 In the absence of such a dictionary, the program will first fall back to sentence-length information, then automatically build a dictionary based on this alignment, and finally use this automatically-built dictionary for alignment in a second pass\footnote{\url{https://github.com/danielvarga/hunalign}}.
 
 Although inspection with the bare eye revealed excellent precision (from the 600 sentences extracted for word alignment only 11 were misalignments) which means the absence of a pre-made dictionary is not obstacle, when aligning the entire corpus, I used the German--Rumantsch Grischun dictionary downloaded from the online dictionary \emph{Pledari Grond}\footnote{\url{https://www.pledarigrond.ch/rumantschgrischun}} to support \texttt{hunalign} even further.
@@ -240,33 +245,33 @@ Files for three language pairs are  then created: German--Romansh, German--Itali
 The files for each language combination are then concatenated.
 The result is three files containing all the sentence pairs for each language combination.
 
-\subsection{Filtering and tokenizing}
+\subsection{Filtering and Tokenizing}
 The press releases often contain sentences that are repeated throughout many of them, such as noting the source of the information at the end of the press release. 
 A very common sentence ending a press release in German is \emph{Quelle: dt Standeskanzlei Graubünden} \enquote{Source: German State Chancellory Grisons}. 
-Such duplicate sentences are not simply redundant in the corpus, but are also considered noise in the data which might negatively influence a machine translation model trained on this corpus. 
+Such duplicate sentences are not simply redundant in the corpus, but are also considered noise in the data which might negatively influence an \acrshort{nmt} model trained on this corpus \autocite{thompson-koehn-2019-vecalign}. 
 Therefore, the sentences are filtered for duplicates, as well as according to some other heuristics, to make sure the remaining pairs are of high quality.
 
-The script \texttt{filter\_bicorpus.py} takes a file generated by \texttt{hunalign} (containing three tab-seperated columns: source--target--score) and produces a tab-seperated file containing two columns (source and target) with the filtered corpus, one sentence per line and word-tokenized. 
-The script removes sentences containing E-Mails, URLs or phone numbers, as well as sentences where source and target languages are identical or where the sentence length ratio between source and target is too large, meaning the sentences are unlikely mutual translations.
+The script \texttt{filter\_bicorpus.py} takes a file generated by hunalign (containing three tab-seperated columns: source--target--score) and produces a tab-seperated file containing two columns (source and target) with the filtered sentences, one sentence per line and word-tokenized. 
+The script removes sentences containing E-Mails, URLs or phone numbers, as well as sentences where source and target languages are identical or where the difference in sentence length between source and target is too large (more than three times), meaning the sentences are unlikely mutual translations.
 
 Word tokenization is important for the next step---word alignment. 
-For the task of tokenization, I used NLTK's word tokeniziation functions, while applying the German model for German text and the Italian model for Romansh and Italian text. 
+For the task of tokenization, I used NLTK's \autocite{bird-2009-nltk} word tokeniziation functions, while applying the German model for German text and the Italian model for Romansh and Italian text. 
 The justification for the latter is that Romansh, in a manner very similar to Italian, uses apostrophes to attach enclitics (articles and pronouns) to neighboring words, which should be separated for word tokenization. 
 An inspection with the bare eye looked precise enough. 
-In the course of annotating the word alignment, I had to correct the tokenization less than 10 times out of 600 sentences.
+In the course of annotating the word alignment, I had to correct the tokenization less than 10 times for 600 sentences.
 
 
 \section{Results}
-The resulting final parallel corpus consists of three files containing around \numprint{80000} sentence pairs for each of the three language combinations: German--Romansh, German--Italian and Romansh--Italian. 
-Each line in the file contains a sentence pair, separated by a tab character (cf., listing~\ref{lst:bicorpus}). 
+The resulting final parallel corpus consists of three files containing around \numprint{80000} unique sentence pairs for each of the three language combinations: German--Romansh, German--Italian and Romansh--Italian. 
+Each line in the file contains a sentence pair, separated by a tab character (see Listing~\ref{lst:bicorpus}). 
 Table~\ref{tab:bicorpus-stats} elaborates on the number of sentences, tokens and type for each combination. 
 
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lccccc}
+\begin{tabular}{lcp{2cm}p{1.5cm}p{2cm}p{1.5cm}}
 \toprule 
-Combination    & Sentences        & Tokens Source      &  Types Source     & Tokens Target & Types Target \\
+Combination    & Sentences        & Tokens Source      &  Types Source     & Tokens \mbox{Target} & Types \mbox{Target} \\
 \midrule 
 German--Romansh & \numprint{79548} & \numprint{1399382} & \numprint{80239} & \numprint{1791511} & \numprint{42570} \\
 
@@ -275,13 +280,13 @@ German--Italian & \numprint{78108} &  \numprint{1396933} &   \numprint{80239} & 
 Romansh--Italian & \numprint{78030} & \numprint{1758448} & \numprint{42235} &  \numprint{1654165} & \numprint{48680} \\
 \bottomrule
 \end{tabular}
-\caption{Parallel corpus in numbers, as of July 20, 2022. 
-\enquote{Source} refers to the language on the left and \enquote{target} to the language on the right, and not necessarily to the actual source language of the translation.
-}
+\caption[Parallel corpus in numbers]{Parallel corpus in numbers, as of July 20, 2022. 
+\enquote{Sentences} are sentence pairs.
+\enquote{Source} refers to the language on the left and \enquote{Target} to the language on the right, not necessarily to the actual source language of the translation.}
 \label{tab:bicorpus-stats}
 \end{table}
 
-
+\vspace*{1cm}
 
 \begin{lstlisting}[language=txt, caption={An excerpt from the file containing sentence pairs in German--Romansh}, captionpos=b, label={lst:bicorpus}]
 Das kantonale Personal und die Volksschullehrerinnen und -lehrer müssen auf einen Teuerungsausgleich verzichten .	Il persunal chantunal e las scolastas ed ils scolasts da las scolas popularas ston desister d'ina gulivaziun da la chareschia .
