@@ -177,29 +177,10 @@ The SQLite database contains two tables, \texttt{corpus} and \texttt{raw} with t
 
 The final result is an SQLite database (\texttt{corpus.db}) containing two tables:
 \begin{itemize}
-	\item \texttt{corpus}: all the aligned documents from 1997 until today, see Table~\ref{tab:corpus.db-corpus}
+	\item \texttt{corpus}: all the aligned documents from 1997 until today, see Table~\ref{tab:corpus.db-corpus} for details.
 
 
-	\begin{table}
-	\centering
-	\begin{tabular}{ll}
-	\toprule
-	Column & Description \\
-	\midrule
-	id & Automatically incremented unique ID \\
-	file\_id & Original file ID \\
-	date&  Release date \\
-	DE\_title &  Title of German document \\
-	DE\_content &  Content of German document \\
-	IT\_title &  Title of Italian document \\
-	IT\_content &  Content of Italian document \\
-	RM\_title &  Title of Romansh document \\
-	RM\_content &  Content of Romansh document \\
-	\bottomrule
-	\end{tabular}
-	\caption{Description of the table \texttt{corpus} in \texttt{corpus.db}}
-	\label{tab:corpus.db-corpus}
-	\end{table}
+
 
 	% \begin{itemize}
 	% 	\item id: Automatically incremented unique ID
@@ -213,18 +194,61 @@ The final result is an SQLite database (\texttt{corpus.db}) containing two table
 	% 	\item RM\_content: Content of Romansh document
 	% \end{itemize}
 	\item \texttt{raw}: All the documents contained in the HTML files scraped from the website. 
-	The rows contain the following columns:
-	\begin{itemize}
-		\item id: Automatically incremented unique ID
-		\item file\_id: Original file ID
-		\item orig\_file: Original filename
-		\item lang: Document language (\texttt{DE} for German, \texttt{IT} for Italian, \texttt{RM} for Romansh)
-		\item title: Document title
-		\item date: Release date
-		\item content: Document content
-	\end{itemize}
+	See Table~\ref{tab:corpus.db-raw} for details. 
+% 	The rows contain the following columns:
+% 	\begin{itemize}
+% 		\item id: Automatically incremented unique ID
+% 		\item file\_id: Original file ID
+% 		\item orig\_file: Original filename
+% 		\item lang: Document language (\texttt{DE} for German, \texttt{IT} for Italian, \texttt{RM} for Romansh)
+% 		\item title: Document title
+% 		\item date: Release date
+% 		\item content: Document content
+% 	\end{itemize}
+% \end{itemize}
 \end{itemize}
 
+
+\begin{table}
+\centering
+\begin{tabular}{lp{7cm}}
+\toprule
+Column & Description \\
+\midrule
+	id & Automatically incremented unique ID \\
+	file\_id & Original file ID \\
+	date&  Release date \\
+	DE\_title &  Title of German document \\
+	DE\_content &  Content of German document \\
+	IT\_title &  Title of Italian document \\
+	IT\_content &  Content of Italian document \\
+	RM\_title &  Title of Romansh document \\
+	RM\_content &  Content of Romansh document \\
+\bottomrule
+\end{tabular}
+\caption{Description of the table \texttt{corpus} in \texttt{corpus.db}}
+\label{tab:corpus.db-corpus}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{l p{7cm}}
+\toprule
+Column & Description \\
+\midrule
+		id & Automatically incremented unique ID \\
+		file\_id &  Original file ID \\
+		orig\_file & Original filename \\
+		lang &  Document language (\texttt{DE} for German, \texttt{IT} for Italian, \texttt{RM} for Romansh) \\
+		title &  Document title \\
+		date & Release date \\
+		content &  Document content \\
+\bottomrule
+\end{tabular}
+\caption{Description of the table \texttt{raw} in \texttt{corpus.db}}
+\label{tab:corpus.db-raw}
+\end{table}
 
 % \footnotetext{I opted for SQLite instead of mySQL since SQLite does not require installing any special software or running a server locally. The Python library sqlite3 is shipped with Python as a standard package.}
 
