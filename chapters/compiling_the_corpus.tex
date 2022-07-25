@@ -173,7 +173,7 @@ The query language SQL offers flexible and complex way to query databases.
 For this reason, I decided to save the resulting corpus in an SQLite database. 
 I opted for SQLite because it doesn't require running a separate server and SQLite databases can be easily built, edited and accessed using \texttt{sqlite3}\footnote{\url{https://docs.python.org/3/library/sqlite3.html}}, a Python module delivered with the Python standard library\footnote{\url{https://docs.python.org/3/tutorial/stdlib.html}}.
 
-The SQLite database contains two tables, \texttt{corpus} and \texttt{raw} with the exact same structure as the two JSON files described in listings~\ref{lst:json} and \ref{lst:json-aligned}.
+The SQLite database contains two tables, \texttt{corpus} and \texttt{raw} with the exact same structure as the two JSON files described in Listings~\ref{lst:json} and \ref{lst:json-aligned}.
 
 The final result is an SQLite database (\texttt{corpus.db}) containing two tables:
 \begin{itemize}
@@ -215,15 +215,15 @@ The final result is an SQLite database (\texttt{corpus.db}) containing two table
 \toprule
 Column & Description \\
 \midrule
-	id & Automatically incremented unique ID \\
-	file\_id & Original file ID \\
-	date&  Release date \\
-	DE\_title &  Title of German document \\
-	DE\_content &  Content of German document \\
-	IT\_title &  Title of Italian document \\
-	IT\_content &  Content of Italian document \\
-	RM\_title &  Title of Romansh document \\
-	RM\_content &  Content of Romansh document \\
+	\texttt{id} & Automatically incremented unique ID \\
+	\texttt{file\_id} & Original file ID \\
+	\texttt{date}&  Release date \\
+	\texttt{DE\_title} &  Title of German document \\
+	\texttt{DE\_content} &  Content of German document \\
+	\texttt{IT\_title} &  Title of Italian document \\
+	\texttt{IT\_content} &  Content of Italian document \\
+	\texttt{RM\_title} &  Title of Romansh document \\
+	\texttt{RM\_content} &  Content of Romansh document \\
 \bottomrule
 \end{tabular}
 \caption{Description of the table \texttt{corpus} in \texttt{corpus.db}}
@@ -237,13 +237,13 @@ Column & Description \\
 \toprule
 Column & Description \\
 \midrule
-		id & Automatically incremented unique ID \\
-		file\_id &  Original file ID \\
-		orig\_file & Original filename \\
-		lang &  Document language (\texttt{DE} for German, \texttt{IT} for Italian, \texttt{RM} for Romansh) \\
-		title &  Document title \\
-		date & Release date \\
-		content &  Document content \\
+		\texttt{id} & Automatically incremented unique ID \\
+		\texttt{file\_id} &  Original file ID \\
+		\texttt{orig\_file} & Original filename \\
+		\texttt{lang} &  Document language (\texttt{DE} for German, \texttt{IT} for Italian, \texttt{RM} for Romansh) \\
+		\texttt{title} &  Document title \\
+		\texttt{date} & Release date \\
+		\texttt{content} &  Document content \\
 \bottomrule
 \end{tabular}
 \caption{Description of the table \texttt{raw} in \texttt{corpus.db}}
@@ -257,13 +257,16 @@ For compiling the corpus, the following steps were taken:
 \begin{enumerate}
 	\item Scrape website and save HTML documents locally
 	\item Extract relevant content from HTML files (date, language, title and content) and save to JSON files
-	\item Read the JSON files using Pandas Dataframe, align the documents and save to new JSON files
-	\item Feed both types of JSON files to an sqlite database
+	\item Read the JSON files using Pandas DataFrames, align the documents and save to new JSON files
+	\item Feed both types of JSON files into an SQLite database
 \end{enumerate}
 
 
 \subsection{Statistics}
-The corpus contains \numprint{3536} parallel documents.
+The corpus contains \numprint{3536} parallel documents, with a yearly average of 56.8 documents prior to 2009 and a yearly average of 207.8 documents from 2009 onward\footnote{Not including 2022}. 
+See also Table~\ref{tab:docs-per-year}. Table~\ref{tab:docs-per-lang} breaks down the number of documents per each year and language. 
+
+The corpus contains \numprint{2484250} German tokens, \numprint{2760690} Romansh tokens and \numprint{2581168} Italian tokens\footnote{Punctuation included}. Table~\ref{tab:top-20} displays the 20 most frequent tokens for each language in the corpus.
 
 \begin{table}
 \centering
@@ -284,6 +287,9 @@ Year & Documents & Year & Documents\\
 2007	&78 & 2020	&286 \\
 2008	&68 & 2021	&294 \\
 2009	&109&2022	&153\\
+		
+		\midrule
+		&   & \textbf{Total} & \textbf{\numprint{3536}} \\
 \bottomrule
 \end{tabular}
 \caption{Number of parallel documents per year, as of July 20, 2022.}
@@ -333,7 +339,7 @@ Total & 5616	&4529&	4551\\
 
 \begin{table}
 \centering
-\begin{tabular}{cc|cc|cc}
+\begin{tabular}{lc|lc|lc}
 \toprule
 \multicolumn{2}{c|}{German} &  \multicolumn{2}{c|}{Romansh} & \multicolumn{2}{c}{Italian} \\
 Type & Count & Type & Count & Type & Count\\
@@ -360,7 +366,7 @@ auf	&	15276	&	Grischun	&	16775	&	Governo	&	15592 \\
 das	&	14370	&	ed	&	16030	&	Grigioni	&	15337 \\ 
 \bottomrule 
 \end{tabular}
-\caption{Twenty most common tokens in each language in the corpus.}
+\caption{Twenty most frequent tokens in each language in the corpus.}
 \label{tab:top-20}
 \end{table}
 
