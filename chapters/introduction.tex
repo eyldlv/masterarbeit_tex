@@ -11,7 +11,7 @@ Kanton und Gemeinden unterstützen und ergreifen die erforderlichen Massnahmen z
 (Art.~3 Abs.~2 der Bündner Verfassung\footnote{\url{https://www.gr-lex.gr.ch/app/de/texts_of_law/110.100}}) 
 \end{displayquote}
 
-Additionally, in 2006 a language law (\emph{Sprachengesetz}) with the aim of further promoting and protecting the multilinguality of the canton:
+Additionally, in 2006 a language law (\emph{Sprachengesetz}) was passed, with the aim of further promoting and protecting the multilinguality of the canton:
 \begin{displayquote}
 Dieses Gesetz bezweckt:
 ...
@@ -19,7 +19,7 @@ e)~~~die  bedrohte  Landessprache  Rätoromanisch  mit  besonderen  Massnahmen z
 \end{displayquote}
 
 
-Since 1997, the majority of all press releases published by the Canton Graubünden were released in these three langauges. 
+Since 1998, the majority of all press releases published by the Canton Graubünden were released in these three langauges. 
 This existence of such parallel documents in three langauges lends itself to the collection and the compliation of a trilingual parallel corpus. 
 Of special interest is here the Romansh language, which, having such a low number of speakers, may be considered a  \enquote{low resource language}.
 
@@ -37,22 +37,25 @@ Of special interest is here the Romansh language, which, having such a low numbe
 
 \section{Research Question and Goals}
 \subsection{Research Questions}
-\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment, which is similarity based and uses word embeddings to compute similarity, outperforms all the statistical baseline models. 
+\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment, which is similarity based and uses word embeddings to compute similarity, outperforms statistical models. 
 
-But not only that the model outperforms the existing stastical models, its biggest advantage as propogated by \cite{jalili-sabet-etal-2020-simalign} is that it requires no training data. 
+But not only that the model outperforms the existing stastical models, its biggest advantage as propagated by \cite{jalili-sabet-etal-2020-simalign} is that it requires no training data. 
 Statistical models will only reach a threshold of good performance with enough training data \autocites{jalili-sabet-etal-2020-simalign,och-ney-2000-improved}. 
-With word embeddings, words in just one single sentence can be aligned with high precision, without the need of a large set of sentence pairs for training a word alignment model.
-However, all of this works persuming we already have trained a multingual language model, whose learned embeddings we can leverage for this task. 
-There exist some language models that were trained on multi-lingual data. 
-mBERT was trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, LASER was trained on 93 languages\autocite{artexte-schwenk-2019-laser} and XLM-RoBERTa base was trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
+Using word embeddings, words in just one single sentence pair can be aligned with high precision, without the need of a large set of sentence pairs for training a word alignment model.
+However, all of this works presuming we already have trained a multilingual language model, whose learned embeddings we can leverage for this task. 
+There exist some language models that were trained on multilingual data: 
+mBERT was trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, LASER was trained on 93 languages \autocite{artexte-schwenk-2019-laser} and XLM-RoBERTa base was trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
 
 Multilingual language models were shown to perform also well on unseen languages, dubbed as \enquote{zero-shot setting}. 
 Although the LASER model was pretrained on 93 languges, it obtained strong results for sentence embeddings in 112 languages \autocite{artexte-schwenk-2019-laser}. 
 It was also shown that mBERT performs well on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}.
 
-There is, then, good reason to believe that similarity based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh. 
+There is, thus, good reason to believe that similarity based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh. 
 Especially since vocabulary overlaps between unseen and seen languages favor performance in zero-shot settings \autocite{pires-etal-2019-multilingual}, and since Romansh displays a high similarity with other seen Romance languages, e.g., Italian, French, Spanish. 
 English also has a large portion of Romance-based vocabulary.
+
+The research question is therefore: \textbf{Will similarity based word alignment perform as well as statistical based word alignment for the language pair German-Romansh? 
+Will it outperform it?}
 
 % Will word embeddings based word alignment will work in zero-shot settings? 
 % That is, can the embeddings learned by a multilingual language model be used for word alignment for a language that wasn't included in the training data?
@@ -61,7 +64,7 @@ English also has a large portion of Romance-based vocabulary.
 \subsection{Goals}
 My goals for this thesis are twofold:
 \begin{itemize}
-	\item Test whether similarity based word alignment using multilingual word embeddings will perform on par with statistical word alignment models on the uneen language Romansh;
+	\item Test whether similarity based word alignment using multilingual word embeddings will perform on par with statistical word alignment models on the unseen language Romansh;
 
 	\item Collect the press releases of the canton Graubünden, published in German, Romansh and Italian, and compile a parallel trilingual corpus. 
 
@@ -71,13 +74,12 @@ To test the quality of the word alignments, I will create a gold standard and ma
 After finishing my work, I will make my gold standard and the corpus I compiled available for further research by future students.
 
 \section{Structure}
-In the course of the following pages I will first give a short introduction to the Romansh language (Chapter ??), then describe how I collected the data and aligned the documents (Chapter ??) and how I further aligned the sentences to create sentence pairs (Chapter ??). 
-In Chapter ?? 
-I will shortly explain the mechanism behind word alignment methods. 
-Finally, I will explain how and according to which guidelines I created the gold standard (Chapter ??) and show the results my experiments comparing different word aligning systems (Chapter ??).
+In the course of the following pages I will first give a short introduction to the Romansh language (Chapter~\ref{chap:romansh}), then describe how I collected the data and aligned the documents (Chapter~\ref{chap:compiling}) and how I further aligned the sentences to create sentence pairs (Chapter~\ref{chap:sentence-alignment}). 
+I will shortly explain the mechanism behind statistical and similarity based word alignment methods (Chapter~\ref{chap:word-alignment}. 
+Finally, I will explain how and according to which guidelines I created the gold standard (Chapter~\ref{chap:gold-standard}) and display the results my experiments comparing different word aligning systems (Chapter~\ref{chap:results}).
 
-Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow Linguistics student, such that this work, if it ever falls in the hands a future student, will be comprhensible and readable. 
-I hope that it will be read by and inspire future students, the way I was inspired by master's theses written before me.
+Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow Linguistics student, such that this work, if it ever falls in the hands a future student, will be comprehensible and readable. 
+I hope that it \emph{will} be read by and inspire future students, the way I was inspired by master's theses written before me.
 
 \section{GitHub repository}
 The code I wrote and the data I collected in the course of this work is available on my GitHub repository. 
