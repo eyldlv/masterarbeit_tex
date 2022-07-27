@@ -144,10 +144,12 @@ For the sake of simplicity, I will stick to the term \emph{word}, referring to a
 \subsubsection{Meaning of Words}
 The question of describing the meanings of words is an entire field---semantics. But already in his posthumously published work \emph{Cours de linguistique générale} (\enquote{Course in General Linguistics}) from 1916, the Swiss linguist and semiotician Fredinand de Sassure came to an important conclusion. 
 Linguistic elements receive their value only by being arranged in a sequence, which de Saussure calls \emph{syntagm}: 
-\enquote{A term in the syntagm acquires its value only because it stands in opposition to everything that precedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. Further, each term in the syntagm, in the sequence of terms, has associative (or paradigmatic) relations. 
+\enquote{A term in the syntagm acquires its value only because it stands in opposition to everything that precedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. 
+
+Additionally, each term in the syntagm, in the sequence of terms, has associative (or \emph{paradigmatic}) relations. 
 These relations reside in the memory of the speakers. 
 For instance the German word \emph{zudrehen} \enquote{close something by turning} unconciously calls to mind related words, such as other words beginning with \emph{zu-}: \emph{zumachen} \enquote{close}, \emph{zumauern} \enquote{wall something up}, \emph{zuklappen} \enquote{close something shut}. 
-But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course} (my examples).
+But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course}\footnote{My examples}.
 
 Each term in the syntagm stands in opposition not only to the preceding and following parts in the syntagm, but also to terms in the paradigm, which are called to mind by the associative series. 
 The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic one, the vertical axis.
@@ -165,22 +167,22 @@ Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutu
 \subsection{Word Embeddings}
 These ideas, which were further developed by linguists in the 1950's, that a word can be defined by its environment or distribution, i.e., by its set of contexts in which it occurs and its grammatical environments, is the inspriation for what is called vector semantics.  
 The idea of vector semantics is to represent a word as a point in some $n$-dimensional vector space. 
-These vectors are called \textbf{embeddings}. 
+These vectors are called \emph{embeddings}. 
 There are different ways and versions of word embeddings, but in each case the values of the vectors are based in some way on counts of neighboring words \autocite[98-99]{jurafsky-2019}.
 
 One version of word embeddings comes from neural language models.
-Language modeling is the task of assigning probabilities to a sequence of words, that is, modeling how likely it is that a sequence of words in a language would be uttered/written by a spaker of that language \autocite[181]{koehn2009}. 
+Language modeling is the task of assigning probabilities to a sequence of words, that is, modeling how likely it is that a sequence of words in a language would be uttered/written by a speaker of that language \autocite[181]{koehn2009}. 
 In practice, the task of a language model is predicting upcoming words from prior word context \autocite[137]{jurafsky-2019}.
 
-Without going too much into details, a neural network is a complex non-linear function. 
+Without going too much into detail, a neural network is a complex non-linear function. 
 It is made up of layers, which are vectors, and weights, which are matrices. 
-The numbers (a vector) from each layer are passed on to the next layer by means of matrix multiplication with the weights between those layers. 
-The vector resulting from this matrix multiplication (plus usually some non-linear activation function), is the next layer in the neural net. 
+The numbers (a vector) from each layer are passed on to the next layer by multiplying the it with the weights (a matrix) between the layers using matrix multiplication. 
+The vector resulting from this matrix multiplication (usually passed through some non-linear activation function), is the next layer in the neural network. 
 The output of a neural network can be for instance a single value, as in the cases of a binary classification task, in which the output is either 0 or 1, but it can also be a vector representing some probability distribution.
 
-In the course of the training of a language neural model, i.e., while the neural net learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
+In the course of the training of a language neural model, i.e., while the neural network learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
 The weights connecting the input layer with the first hidden layer are our said word embeddings. 
-When inputting a word into the net (in form of a one-hot vector), we can get its vector representation, i.e., its embedding, from the so-called embedding layer. 
+When inputting a word into the network (in form of a one-hot vector), we can get its vector representation, i.e., its embedding, from the so-called embedding layer. 
 Since this representation is conditioned on context, similar words should have similar embeddings \autocite[104-105]{koehn-2020}.
 
 There are different ways of learning word embeddings. 
@@ -211,9 +213,8 @@ Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf
 	}	
 \end{equation}
 
-with $\sum_{i=1}^Nv_iw_i$ being the dot product of the vectors $\mathbf{v}$ and $\mathbf{w}$ and $\sqrt{\sum_{i=1}^N v_i^2}$ being the length of the vector $\mathbf{v}$.
-
-\autocite[103-104]{jurafsky-2019}
+with $\sum_{i=1}^Nv_iw_i$ being the dot product of the vectors $\mathbf{v}$ and $\mathbf{w}$ and $\sqrt{\sum_{i=1}^N v_i^2}$ being the length of the vector $\mathbf{v}$ and $\sqrt{\sum_{i=1}^N w_i^2}$ the length of the vector $\mathbf{w}$
+\autocite[103-104]{jurafsky-2019}.
 
 The cosine similarity returns a value between $-1$ and $1$. 
 The highest  similarity is \(1\): the vectors are parallel and pointing in the same direction. 
@@ -234,7 +235,7 @@ These vectors' dimensions usually range between 100 and 1000 dimensions.
 Similar words (words that appear in the same context) have similar word embeddings. 
 To measure word similarity, we measure the similarity between their embeddings using the cosine similarity.
 Multilingual word embeddings are word embeddings for words in different languages which share the same vector space. 
-Similar words of different languages should have similar embeddings.
+Similar words in different languages should have similar embeddings.
 
 \section{Similarity Based Word Alignment}
 
@@ -250,12 +251,12 @@ This similarity between embeddings in different languages can be leveraged in or
 
 \subsection{Method}
 \label{subsec:simalign-method}
-SimAlign takes two parallel sentences $s^e$ and $s^f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
+SimAlign takes two parallel sentences $s_e$ and $s_f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
 For this sentence pair a \emph{similarity matrix} is defined as $S \in [0,1]^{l_e\times l_f}$. 
-It is a matrix the size of the lengths of sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
+It is a matrix the size of the lengths of both sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
 This means that for each combination of two words from sentence $s_e$ and sentence $s_f$, their similarity measure is filled into the corresponding cell in the matrix (Figure~\ref{fig:sim-matrix}).
 From this similarity matrix $S$, a binary alignment matrix $A \in \{0,1\}^{l_e \times l_f}$ is extracted. 
-The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentence $s^e$ is the most similar to the word $s_j^f$ in the sentence $s^f$ and vice versa (Figure~\ref{fig:al-matrix}).
+The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentence $s_e$ is the most similar to the word $s_j^f$ in the sentence $s_f$ and vice versa (Figure~\ref{fig:al-matrix}).
 
 
 
@@ -327,21 +328,20 @@ If all entries in a row $i$ or a column $j$ of S are 0 (as is the case in column
 The resulting alignment can be seen in Figure~\ref{fig:resulting-alignment}.
 
 This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}. Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
-To remedey this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
+To remedy this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
 In each iteration, the model focuses on still unaligned pairs and tries to align them. 
 If the similarity with an already aligned word is very high, the model can add another alignment edge. 
-This allows for one word to be aligned to multiple other words, i.e., create 1-to-many alignment.
+This allows for one word to be aligned to multiple other words, i.e., create 1-to-many alignments.
 
 Argmax finds a local optimum and Itermax is a greedy algorithm. 
-There is a third alignemnt method, called \textbf{Match}, which finds global optima. 
+There is a third alignment method, called \textbf{Match}, which finds global optima. 
 The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source).
 
-For the task for word alignment, SimAlign can use multilingual embeddings which were learned in advanced from monolingual data and then mapped to a shared vector spaced. 
-SimAlign can also use out-of-the-box the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
+For the task for word alignment, SimAlign can use multilingual embeddings which were learned in advance from monolingual data and then mapped to a shared vector space. 
+SimAlign can also use, out-of-the-box, the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
 
 \subsection{Summary}
 By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs can be computed. 
-
 Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce, which makes similarity based word alignment a competitive method against statistical methods. 
 
 Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of data to perform well.
@@ -349,12 +349,13 @@ The quality of the alignments deteriorates quickly when the size of data diminis
 
 \footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning 1.5M sentence pairs is $9.4\%$. 
 When aligning only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
- (see Table 4 in \cite{och-ney-2000-improved})}.
+ (see Table 4 in \cite{och-ney-2000-improved})}
 
-Similarity based word alignment using embeddings extracted from mBERT or XLM-R outperforms any state-of-the-art statistical method for the language pairs Czech, German, French and Hindi, paired with English. 
-But all of these languages are part of mBERT's and XLM-R's training data. 
-\cite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method performing well also on a small amount of parallel data.
-But will SimAlign perform just as well for data unseen by said language models?
+In experiments done by \cite{jalili-sabet-etal-2020-simalign}, their similarity based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
+However, all of these languages were included in mBERT's and XLM-R's training data. 
+\cite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method being high performance also in the case of little  parallel data.
+
+In the following two chapters I will describe the creation of a gold standard (Chapter~\ref{chap:gold-standard}) in order to answer my research question and test \textbf{whether SimAlign performs just as well on data unseen by said language models, specifically for the language pair German-Romansh} (Chapter~\ref{chap:results}).
 
 
 
