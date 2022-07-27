@@ -1,12 +1,38 @@
-% \newpage
+\newpage
 \phantomsection % to get the hyperlinks (and bookmarks in PDF) right for index, list of files, bibliography, etc.
 \addcontentsline{toc}{chapter}{Abstract}
 \begin{abstract}
-\section*{Abstract}
-This is the place to put the English version of the abstract.
+
+In this thesis I tested the performance of a similarity based word alignment method using word embeddings in a zero shot setting on the case of German--Romansh.
+Similarity based word alignments methods using multilingual word embeddings have been shown to perform as well as, or even outperform, statistical word alignment models \autocite{jalili-sabet-etal-2020-simalign}. 
+A clear advantage of using word embeddings for word alignment is that virtually no parallel data is required for first traning an alignment model, since the embeddings are learned from monolingual data.
+In this thesis I tested whether word alignment for sentence pairs in German-Romansh, using multilingual word embeddings, performs as well as statistical models, despite Romansh being an unseen language (it is not part of the data multilingual language models such as mBERT or XLM-R were trained on).
+Using the word embeddings from mBERT for aligning German--Romansh produces word alignemnts that are on par with the word alignments computed by a statistical model (fast\_align). 
+
+This thesis additionally describes the process of compiling a trilingual corpus containing press releases published by the Swiss Canton of Grisons in German, Italian and Romansh and producing around 80,000 sentence pairs for each language combination. 
+It also describes the creation of a gold standard for evaluating the quality of word alignments for German--Romansh.
+
+
 \end{abstract}
 
 \phantomsection
 \addcontentsline{toc}{chapter}{Acknowledgements}
 \section*{Acknowledgements}
 I would like to thank...
+
+Martin Volk
+
+Steinthor
+
+Rico Sennrich
+
+Lisa Gasner
+
+Samuel Läubli
+
+Emma 
+
+Gregoire
+
+
+
