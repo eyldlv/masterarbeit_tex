@@ -85,12 +85,7 @@ Since all alignments are seen as Sure alignments, 1-to-n alignments should be av
 This means alignments of phrases should be avoided. This is also due to the fact that we are testing models for automatic word alignment, and not phrase alignment.
 
 
-% \begin{tikzpicture}
-% \node[align=left, anchor=north]{Gastkanton}
-% 	child { node[anchor=north]{chantun}}
-% 	child { node[anchor=north]{ospitant}}
-% ;
-% \end{tikzpicture} 
+
 
 Words that are repeated in one language, but not in the other, should only be linked once, leaving the repetition unaligned.
 
@@ -114,13 +109,50 @@ I will now give some examples to illustrate the above principles.
 \subsubsection{Compound words}
 Compounding is the formation of new lexemes by adjoining two or more lexemes \autocite{bauer1988}. In German, compounds are productive and prominent means of word formation in German \autocite{clematide2018}. 
 In a sample of 4,500 types examined by \cite{clematide2018}, 80\% of German nouns were compounds.
-Romansh, in comparison, uses prepositions (usually \emph{da}) for linking nouns, with one noun modifying the other \autocite{valladers}. Other prepositions that can be found for linking words are \emph{cunter} and \emph{per}.
-\footnote{Typologically, this is inline with other Romance languages such as French, which uses prepositions (\emph{de}, \emph{en} and \emph{à}) for linking two nouns, e.g., \emph{une robe de soie} \enquote{a silk dress} \autocite{price2008}[510].}
+Romansh, in comparison, uses prepositions (usually \emph{da}) for linking nouns, with one noun modifying the other \autocite{valladers}. Some other prepositions used for linking words are \emph{cunter} and \emph{per}.
+\footnote{Typologically, this is inline with other Romance languages such as French, which uses prepositions (\emph{de}, \emph{en} and \emph{à}) for linking two nouns, e.g., \emph{une robe de soie} \enquote{a silk dress} \autocite[510]{price2008}.}
 In other cases, German compounds might be translated to Romansh using an adjective + noun, e.g., German \emph{Gastkanton} was translated to \emph{chantun ospitant} ~\enquote{hosting canton}.
-See table~\ref{tab:compounds} for examples.
+See Table~\ref{tab:compounds} for more examples.
 
-\textbf{German compounds will be aligned to their equivalent lexical words, but not to function words, resulting in a 1-n alignment}: \emph{Webseite} \textasciitilde  \emph{pagina [d'] internet}, \emph{Gebäudeversicherung} \textasciitilde \emph{Assicuranza [d'] edifizis}. 
-This is also inline with principles I, II and III in \cite{clematide2018}.
+\textbf{German compounds will be aligned to their equivalent lexical words, but not to function words, resulting in a 1-to-n alignment}: \emph{Webseite} \textasciitilde~\emph{pagina [d'] internet}, \emph{Gebäudeversicherung} \textasciitilde~\emph{Assicuranza [d'] edifizis}. 
+This is also inline with principles I, II and III in \cite{clematide2018}. 
+See Figure~\ref{fig:align-compounds} for alignment examples.
+
+% \begin{tikzpicture}
+% \node[align=left, anchor=north]{Gastkanton}
+% 	child { node[anchor=north]{chantun}}
+% 	child { node[anchor=north]{ospitant}}
+% ;
+% \end{tikzpicture} 
+
+\begin{figure}[ht]
+\begin{subfigure}{.5\textwidth}
+\centering
+        \tikzmarknode{WEBSEITE}{Webseite} 
+        \vspace*{1cm}
+        
+        \tikzmarknode{pagina}{pagina} \tikzmarknode{d}{d'} \tikzmarknode{internet}{internet} 
+    
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw    (WEBSEITE) -- (pagina)
+                (WEBSEITE) -- (internet);
+    \end{tikzpicture}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+\centering
+        \tikzmarknode{WEBSEITE}{Brandversicherung} 
+        \vspace*{1cm}
+        
+        \tikzmarknode{pagina}{assicuranza} \tikzmarknode{d}{cunter} \tikzmarknode{internet}{fieu} 
+    
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw    (WEBSEITE) -- (pagina)
+                (WEBSEITE) -- (internet);
+    \end{tikzpicture}
+\end{subfigure}
+\caption{Aligning German compounds to a Romansh noun phrases}
+\label{fig:align-compounds}
+\end{figure}
 
 \begin{table}
 	\begin{center}
@@ -145,9 +177,9 @@ This is also inline with principles I, II and III in \cite{clematide2018}.
 In the corpus at hand, two tenses are used in German for referring to past events: the preterite and the perfect. 
 The German preterite is a synthetic verb form, i.e., it is made up of a single conjugated form. 
 Some examples are \emph{nahm} (infinitive \emph{nehmen} \enquote{take}) or \emph{wurde} (infinitive \emph{werden} \enquote{become}). 
-The German perfect is an analytic construction made up of an auxiliary verb (\emph{haben} \enquote{have} or \emph{sein} \enquote{be}) and the past participle, e.g., \emph{Die Präsidentenkonferenz \textbf{hat} nun \textbf{entschieden}} \enquote{The conference has decided}. 
+The German perfect is an analytic construction made up of an auxiliary verb (\emph{haben} \enquote{have} or \emph{sein} \enquote{be}) and the past participle, e.g., \emph{Die Präsidentenkonferenz \textbf{hat} nun \textbf{entschieden}} \enquote{the presidential conference has decided}. 
 
-In contranst to German, Romansh only has one tense referring to past events: the perfect. 
+In contrast to German, Romansh only has one tense referring to past events: the perfect. 
 It is an analytic construction made, in a similar fashion as in German, of an auxiliary \emph{habere} \enquote{have} for transitive verbs or \emph{esse} \enquote{be} for intransitive verbs and the past participle \autocite[189]{bossong2008}. 
 The German sentence given above (\emph{Die Präsidentenkonferenz hat nun entschieden}) was translated as \emph{La conferenza da las presidentas e dals presidents \textbf{ha} usse \textbf{decidi}}. 
 \emph{ha} is the auxiliary and \emph{decidi} is the past participle. 
@@ -201,24 +233,25 @@ This poses no real problem since we can link the German auxiliary to the Romansh
 
 However, a German preterite is always translated using the Romansh perfect. 
 For example, in the sentence \emph{Der Kanton Graubünden war letzsmals 2003 Gastkanton} \enquote{The last time the Canton of Grisons was a host canton was in 2003} the verb \emph{war} \enquote{was} is translated as \emph{è stà}. 
-This theoretically results in a 1-2 link. 
-However, since the verb \emph{è} here only carries grammatical information of tense and number, but no real lexical information, it should reamin unaligned. 
+This theoretically results in a 1-to-2 link. 
+However, since Romansh \emph{è} only carries grammatical information of tense and number, but no real lexical information, it should remain unaligned. 
 
-\textbf{The German perfect should be aligned to the Romansh perfect using a 1-1 alignment}; auxiliary to auxiliary and participle to participle. 
-\textbf{The German preterite should also be aligned using a 1-1 alignment to the Romansh participle, leaving the auxiliary unaligned and avoiding a 1-2 alignment.}
+\textbf{The German perfect should be aligned to the Romansh perfect using a 1-to-1 alignment}; auxiliary to auxiliary and participle to participle. 
+\textbf{The German preterite should also be aligned using a 1-to-1 alignment to the Romansh participle, leaving the Romansh auxiliary unaligned and avoiding a 1-to-2 alignment.}
 
 \subsubsection{German present participle}
 German present participles (known in German as \emph{Partizip I}) are translated to Romansh using relative clauses. Moreover, adjectives (and participles in the function of adjectives), can be nominalized, meaning they become the head of a noun phrase and there is no need for an actual noun. 
-A good example for that in the corpus is the German noun phrase \emph{nichtarbeitslose Stellensuchende} (cf. ex.~\ref{ex:stellensuchende}), which was translated as a noun phrase with a relative clause: \emph{persunas che tschertgan ine plazza che n'èn betg dischoccupadas} \enquote{persons who look for a job who are not unemployed}.
+A good example for that in the corpus is the German noun phrase \emph{nichtarbeitslose Stellensuchende} (cf. Ex.~\ref{ex:stellensuchende}), which was translated as a noun phrase with a relative clause: \emph{persunas che tschertgan ine plazza che n'èn betg dischoccupadas} \enquote{persons who look for a job (and) who are not unemployed}.
+
 
 \begin{exe}
    \ex\label{ex:stellensuchende} 
    \gll nicht-arbeit-s-los-e Stellen-such-end-e  \\
-        not-work-\textsc{gen}-less-\textsc{Pl} job-search-\textsc{pres.part}-\textsc{pl} \\
+        not-work-\textsc{\acrshort{gen}}-less-\textsc{\acrshort{pl}} job-search-\textsc{\acrshort{pres}.\acrshort{part}}-\textsc{\acrshort{pl}} \\
         \trans \enquote{People looking for jobs who are not unemployed}
 \end{exe}
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \tikzmarknode{s3}{nichtarbeitslose} \tikzmarknode{s4}{Stellensuchende} \
 
@@ -233,45 +266,44 @@ A good example for that in the corpus is the German noun phrase \emph{nichtarbei
 (s4.south) -- (t9)
 ;
 \end{tikzpicture}
-\caption{Aligning German present participles to Romansh relative clauses}
+\caption{Aligning a German present participle to a Romansh relative clause}
+\label{fig:align-part1}
 \end{figure}
 
-In this case, these two phrases should not be aligned as phrases, but only the content words which lexically correspond to each other: \emph{nichtarbeitslose} \textasciitilde ~ \emph{betg dischoccupadas}; \emph{Stellensuchende} \textasciitilde ~\emph{tschertgan [ina] plazza}.
+In this case, these two phrases should not be aligned as phrases, but only the content words which lexically correspond to each other: \emph{nichtarbeitslose} \textasciitilde ~ \emph{betg dischoccupadas}; \emph{Stellensuchende} \textasciitilde ~\emph{tschertgan [ina] plazza}. Figure~\ref{fig:align-part1} illustrates this.
 
 \subsubsection{Double negation}
-Negation in Romansh is built using two particles: \emph{na} and \emph{betg} to negate verbs or \emph{nagin-} to negate nouns. 
-Since we prefer 1-1 alignments, the German negations \emph{nicht} (for verbs) and \emph{kein-} for nouns should be aligned only to the second Romansh particle (\emph{betg}/\emph{nagin-}), leaving Romansh \emph{na} unaligned. 
-Granted, this is also in favor of the SimAlign output, but it is also linguistically motivated: when negating the imperative form, \emph{na} can be omitted required TODO:cite Grammatica per l’instrucziun dal rumantsch grischun. 
+Negation in Romansh is constructed using two particles: \emph{na} and \emph{betg} to negate verbs or \emph{nagin-} to negate nouns. 
+Since we prefer 1-to-1 alignments, the German negations \emph{nicht} (for verbs) and \emph{kein-} (for nouns) should be aligned only to the second Romansh particle (\emph{betg}/\emph{nagin-}), leaving Romansh \emph{na} unaligned. 
+This is also linguistically motivated: in certain cases, \emph{na} can be omitted \autocite[section 285]{caduff-2008-rumantsch-grischun}. 
 
 \subsubsection{Articles and prepositions}
 German articles inflect in case, which expresses some syntactic relations between nouns. 
 Romansh often uses preopsitions for expressing the same relations. 
 For instance \emph{Zustimmung der Person} \enquote{the person's agreement} is translated as \emph{consentiment da la persuna}. 
 I align the German article \emph{der} with Romansh \emph{da}, leaving \emph{la} unaligned. 
-Except for my preference for 1-1 alignments, the motivation for this is that it is the preposition \emph{da} that expresses the genitival relations between the nouns.
+Except for my preference for 1-to-1 alignments, the motivation for this is that it is the preposition \emph{da} that expresses the genitival relations between the nouns.
 
 \subsubsection{Separable verbs}
-German uses many verbs to which an adverb or a preopisition is affixed in order to delimit the verb's meaning (or sometimes completely change its meaning). 
-In such cases, both the verb and its affix should be aligned to the corresponding Romansh verb, resulting in a 2-1 alignment.
+German uses many verbs to which an adverb or a preposition is affixed in order to delimit the verb's meaning (or sometimes completely change its meaning). 
+In such cases, both the verb and its affix should be aligned to the corresponding Romansh verb, resulting in a 2-to-1 alignment.
 
 \section{Flaws}
 \label{sec:gold-flaws}
 I shall now discuss the quality of my gold standard and some flaws it has.
 
-The most obvious flaw is the fact that I created the gold standard alone. 
+The most obvious flaw is the fact that I created the gold standard alone, without a second annotator. 
 With more than one annotator, more intricate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
 For instance the annotators' agreement can be measured using the so-called inner-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
-Further, the intersection of the annotators' \emph{Sure} alignment can be used to build the final \emph{Sure} alignments set and the reunion of the \emph{Possible} alignments can be used to create the final \emph{Possible} alignments set \cite{mihalcea-pedersen-2003-evaluation}.
-A third annotator can also revise and resolve conflicts between two annotaors \cite{mihalcea-pedersen-2003-evaluation}.
+Further, the intersection of the annotators' Sure alignment can be used to build the final Sure alignments set and the reunion of the Possible alignments can be used to create the final Possible alignments set \autocite{mihalcea-pedersen-2003-evaluation}.
+A third annotator can also revise and resolve conflicts between two annotators \autocite{mihalcea-pedersen-2003-evaluation}.
 When several annotators work on the same task, they can also discuss conflicts and resolve them using a majority vote \autocite{DBLP:journals/corr/cmp-lg-9805004}.
+All of these possible schemes cannot be realized in the case of a single annotator, which was my case.
 
-All of these possible schemes cannot be realized in my case.
+Another flaw are the missing confidence labels (Sure and Possible), which may influence the evaluation scores (see Section~\refnameref{sec:problems-evaluation}). 
+There are however precedents for gold standards without Possible links, using only Sure links \autocites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore defensible.
 
-Another flaw is the missing confidence labels (\emph{Sure} and \emph{Possible}), which may influence the evaluation scores. 
-Doing without \emph{Possible} links and using only \emph{Sure} links is however precedented \autocites{clematide2018,mihalcea-pedersen-2003-evaluation} and hence defensible.
 
-In order to test my own consistency, I have re-annotated the first 100 sentences in the sample. 
-TODO: results
+Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines. 
 
-Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines.
 
