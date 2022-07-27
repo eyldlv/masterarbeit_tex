@@ -32,84 +32,85 @@ An approach for solving problematic cases is the distinction between \enquote{Su
 Generally, these labels allow to distinguish between ambiguous and unambiguous links. 
 Ambiguous links are labeled Possible and unambiguous links are labeled Sure \autocite{lambert2005}. 
 The Possible label was conceived to be used especially for aligning words within idiomatic expressions, free translations and missing function words \autocite{och-ney-2000-improved}.
-This distinction also has an impact on the way the evaluation metrics are computed (more on that later).
+This distinction also has an impact on the way the evaluation metrics are computed (see Section~\ref{sec:evaluation-metrics}).
 
-There seems to be no clear global definition about which alignments should be considered as umabiguous and marked as \emph{sure} and which should be considered ambiguous marked as \emph{possible}. 
-For some created gold standards, no distinciton between \emph{sure} and \emph{possible} alignments was made \autocite{clematide2018}. 
-In another case, annotators were asked to first label all alignments as \emph{sure} and then refine their alignments with confidence labels \autocite{holmqvist-ahrenberg-2011-gold}. 
-In the creation of the English-Icelandic gold standard in \cite{steingrimsson-etal-2021-combalign},  annotators used only \emph{sure} links. 
-Their annotations were then combined, with all 1-1 alignments both annotators agreed upon (i.e., the intersection of their annotations) makred as \emph{sure} and differences all other alignments made by either one or both were marked as \emph{possible} \autocite{steingrimsson-etal-2021-combalign}. 
+There seems to be no clear global definition about which alignments should be considered as umabiguous, thus marked as Sure, and which should be considered ambiguous, thus marked as Possible. 
+For some created gold standards, no distinciton between Sure and Possible alignments was made at all \autocite{clematide2018}. 
+In another case, annotators were asked to first label all alignments as Sure and then refine their alignments with confidence labels \autocite{holmqvist-ahrenberg-2011-gold}. 
+In the creation of the English-Icelandic gold standard in \cite{steingrimsson-etal-2021-combalign},  annotators used only Sure links. 
+Their annotations were then combined; all 1-to-1 alignments both annotators agreed upon (i.e., the intersection of their annotations) were makred as Sure and all other alignments were marked as Possible \autocite{steingrimsson-etal-2021-combalign}. Different annotation schemes use Sure and Possible alignment in a different way.
 
-\section{Evaluation Metrics}
-TODO: move to results/evaluation part
-Four types of measures have become standard for evaluating word alignment. Three of them -- precision, recall and F-measure -- are well known in Information Retrieval metrics \cite{mihalcea-pedersen-2003-evaluation}. 
-The fourth, alignment error rate (AER) one was introduced by \cite{och-ney-2000-improved}.
+% \section{Evaluation Metrics}
+% TODO: move to results/evaluation part
+% Four types of measures have become standard for evaluating word alignment. Three of them -- precision, recall and F-measure -- are well known in Information Retrieval metrics \cite{mihalcea-pedersen-2003-evaluation}. 
+% The fourth, alignment error rate (AER) one was introduced by \cite{och-ney-2000-improved}.
 
 \section{Gold standard for German-Romansh}
-In order to measure the performance of both models, the embedding based model (SimAlign) and the stastitical model (fast\_align), on the language pair German-Romansh a gold standard is needed. 
+As explained before, in order to measure the performance of both models, the similarity and embedding based model (SimAlign) and the stastitical models (fast\_align and eflomal), on the language pair German-Romansh a gold standard is needed. 
 Since no such gold standard exists, I took upon myself to create one. 
 Although I am not a speaker of Romansh, my experience as a trained linguist, as well as my knowledge in related languages (Latin, Italian, French), allows me to confidently tackle this task. 
-Additionally, whenever I was in doubt, I referred to the online dictionary \href{https://www.pledarigrond.ch/rumantschgrischun}{Pledari grond}, which also offers a grammar overview. 
-(TODO: add more grammar references)
+Additionally, whenever I was in doubt, I referred to the online dictionary Pledari Grond\footnote{\url{https://www.pledarigrond.ch/rumantschgrischun}}, which also offers a grammar overview. 
+% (TODO: add more grammar references)
 
 \subsection{Annotation tool}
 \label{sec:AlignMan}
-I used the tool \emph{AlignMan} which was originally programmed for creating the gold standard for English-Icelandic by \cite{steingrimsson-etal-2021-combalign}. 
+I used the tool \emph{AlignMan} which was originally programmed for creating the gold standard for English-Icelandic \autocite{steingrimsson-etal-2021-combalign}. 
 It is quite easy to use and its code is readable. 
 I also had to make some small changes to the code. 
 For instance, the sentences to be aligned, while loaded into the database, were read in opposite order, such that the source language became the target language and vice versa. 
 I fixed this issue, so that source (German) and target (Romansh) languages stay the same accross all applications.
 
-As mentioned above, the tool does not allow labeling of links with \emph{Sure} and \emph{Possible}. 
-Instead, AlignMan treats the union of 1-1 alignments made by two annotators as \emph{Sure} alignments and all other alignments as \emph{Possible}. 
-This means, each annotator is expected to only annotate \emph{Sure} alignments, which also applied to me while annotating the German-Romansh gold standard. 
+As mentioned in Section~\ref{sec:sure_possible}, the annotation scheme used by \cite{steingrimsson-etal-2021-combalign} does not allow labeling of links with Sure and Possible. 
+Instead, AlignMan treats the union of 1-to-1 alignments made by two annotators as Sure alignments and all other alignments as Possible. 
+This means, each annotator is expected to only annotate Sure alignments. This also applied to me while annotating the German-Romansh gold standard. 
 
 
 \subsection{Guidelines}
-As mentioned above, clear guidelines need to be defined for creating the gold standard in order to ensure quality and consistency. I shall now proceed to describe the guidelines I used for my annotation of the word alignments for the gold standard.
+As mentioned before, clear guidelines need to be defined for creating the gold standard in order to ensure quality and consistency. I shall now proceed to describe the guidelines I used for my annotation of the word alignments for the gold standard.
 
-A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{as few words as possible and as many words as necessary that carry the same meaning should be aligned.}, referring to \cite{lambert2005}. 
+A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{As few words as possible and as many words as necessary that carry the same meaning should be aligned,} referring to \cite{lambert2005}. 
 
 In the following sections I will list some general principles as well as more specific principles involving German and Romansh.
 
 \subsection{General priniciples}
 \label{sec:gold-principles}
 \paragraph{Principle I.} 
-Use only \emph{Sure} alignments. 
-Since the annotating tool I was using does not provide the use of confidence labels (cf.~section~\ref{sec:AlignMan}), I only aligned words which would be considered \emph{Sure} alignments, i.e., they are unambiguous (cf.~section~\ref{sec:sure_possible}). 
+Use only Sure alignments: 
+Since the annotating tool I was using does not provide the use of confidence labels (cf.~Section~\refnameref{sec:AlignMan}), I only aligned words which would be considered Sure alignments, i.e., they are unambiguous (cf.~Section~\refnameref{sec:sure_possible}). 
 
 
 \paragraph{Principle II.}
-Prefer 1-1 alignments over 1-n alignments or n-n alignments. 
-Since all alignments are seen as \emph{Sure} alignments, 1-n alignments should be avoided, unless a single word in the source sentence lexically corresponds to several words in the target sentence (see TODO principle sth.)
-This means alignments of phrases should be avoided. This is also due to the fact that we are testing models for automatic word, and not phrase alignments.
+Prefer 1-to-1 alignments over 1-to-n alignments or n-to-n alignments: 
+Since all alignments are seen as Sure alignments, 1-to-n alignments should be avoided, unless a single word in the source sentence lexically corresponds to several words in the target sentence. %(see TODO principle sth.)
+This means alignments of phrases should be avoided. This is also due to the fact that we are testing models for automatic word alignment, and not phrase alignment.
 
-\begin{tikzpicture}
-\node[align=left, anchor=north]{Gastkanton}
-	child { node[anchor=north]{chantun}}
-	child { node[anchor=north]{ospitant}}
-;
-\end{tikzpicture} 
+
+% \begin{tikzpicture}
+% \node[align=left, anchor=north]{Gastkanton}
+% 	child { node[anchor=north]{chantun}}
+% 	child { node[anchor=north]{ospitant}}
+% ;
+% \end{tikzpicture} 
 
 Words that are repeated in one language, but not in the other, should only be linked once, leaving the repetition unaligned.
 
 \paragraph{Principle III.}
-Lexical alignments should always be preferred over all other alignments (part-of-speech alignments or morphosyntactical alignments). 
-This means alignments should describe first and foremost lexical correspondences, i.e., they have the same lexical meaning (but not necessarily share the same grammatical function or the same part-of-speech).
+Lexical alignments should always be preferred over all other alignments (\acrfull{pos} alignments or morphosyntactical alignments). 
+This means alignments should describe first and foremost lexical correspondences, i.e., both words have the same lexical meaning (but not necessarily share the same grammatical function or the same POS).
 Only words that are translations of each other also outside of the specific context of the sentence pair at hand should be aligned. This is in line with \cite{clematide2018}.
-In cases of paraphrasing during translations, words should remain unaligned (TODO: example?)
+In cases of paraphrasing during translations, words should remain unaligned. %(TODO: example?)
 
-\begin{itemize}
-	\item only sure alignments
-	\item prefer 1-1 alignments over 1-n alignments
-	\item align words, not phrases
-	\item only align words that are translations of each other also outside of context
-	\item POS doesn't matter: German often prefers a nominal style, Romansh prefers a verbal style -- expect some noun-verb alignments.
+% \begin{itemize}
+% 	\item only sure alignments
+% 	\item prefer 1-1 alignments over 1-n alignments
+% 	\item align words, not phrases
+% 	\item only align words that are translations of each other also outside of context
+% 	\item POS doesn't matter: German often prefers a nominal style, Romansh prefers a verbal style -- expect some noun-verb alignments.
 
-\end{itemize}
+% \end{itemize}
 
 \subsection{Examples}
-I will now supply some examples to illustrate the above principles.
+I will now give some examples to illustrate the above principles.
 \subsubsection{Compound words}
 Compounding is the formation of new lexemes by adjoining two or more lexemes \autocite{bauer1988}. In German, compounds are productive and prominent means of word formation in German \autocite{clematide2018}. 
 In a sample of 4,500 types examined by \cite{clematide2018}, 80\% of German nouns were compounds.
