@@ -1,11 +1,13 @@
 \chapter{Algnment Examples}\label{appendix-a}
 
-I would like to shortly compare the  alignments computed by eflomal and SimAlign with my annotations from the gold standard, especially regarding some of the examples I mentioned in Section~\ref{sec:gold-standard-examples} for handling ambiguous cases.
+I would like to shortly compare the  alignments computed by eflomal and SimAlign with my annotations from the gold standard, especially regarding some of the examples I mentioned in Chapter~\refnameref{chap:gold-standard} for handling ambiguous cases.
+I will consider the following cases: double negation, German preterite and perfect vs.~Romansh perfect and compounds. 
+Please refer to Section~\ref{sec:gold-standard-examples} for more details.
 
-I will consider the following cases, which I have discussed in Section~\ref{sec:gold-standard-examples}: double negation, German preterit and perfect vs.~Romansh perfect and composite words.
+In all of the examples below, filled green squares are the gold standard, circels are alignments produced by SimAlign and boxes are alignments produced eflomal. 
+The plot were created using a script provided on GitHub\footnote{\url{https://github.com/cisnlp/simalign/blob/master/scripts/visualize.py}} accompanying SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
 
-In all of the examples below, filled green squares are the gold standard, circels are alignments produced by SimAlign and boxes are alignments produced eflomal.
-
+\section{Perfect--Perfect}
 Figure~\ref{fig:alignment-perfect} shows an example for aligning the German perfect with the Romansh perfect. 
 The German and the Romansh auxiliaries \emph{hat} and \emph{ha} should be aligned to each other, as well as the German and the Romansh participles \emph{verabschiedet} and \emph{deliberà}. 
 SimAlign's alignment are in accord with the gold standard, while eflomal aligned Romansh \emph{deliberà} to German \emph{hat}, leaving German \emph{verabschiedet} unaligned. However, in another case (Figure \ref{fig:alignment-perfect2}), eflomal correctly aligned the participle to the participle, and SimAlign didn't. 
@@ -23,7 +25,7 @@ It would be interesting to test this on a larger scale and see which system is m
 
 
 
-
+\section{German Preterite--Romansh Perfect}
 
 In the matter of aligning the German preterite with Romansh perfect, eflomal creates a 1-to-2 alignment, connecting both the auxiliary \emph{han} and the participle \emph{visità} to the German preterite \emph{besichtigten} (Example~\ref{fig:pret1}), an alignment which is not even acceptable, but also desirable, and which I chose to avoid in my annotations. However, in a different case, eflomal failed to align the participle, which is lexically the more important part, and left it unaligned (Example~\ref{fig:pret2}). 
 SimAlign successfully aligns the German preterite to the Romansh participle in the first case, but fails as well in the second case.
@@ -41,20 +43,37 @@ SimAlign successfully aligns the German preterite to the Romansh participle in t
 
 
 
-
-
-
-\begin{figure}[ht]
-\includegraphics{graphics/alignments/example2.png}
-\caption{Word alignment example 2}
-\end{figure}
-
-\begin{figure}[ht]
-\includegraphics{graphics/alignments/example4.png}
-\caption{Word alignment example 4}
-\end{figure}
+\section{Double Negation}
+I picked two random cases with negation, which are expressed by the words \emph{na ... 
+betg} in Romansh. 
+In both cases, (Examples~\ref{fig:na-betg1} and \ref{fig:na-betg2}), eflomal aligns \emph{betg} to the German negation \emph{nicht}, which is correct, but also aligns \emph{na} to the German finite verb, which is wrong. 
+SimAlign fails in both cases to align any of the negating words to each other.
 
 \begin{figure}[ht]
 \includegraphics{graphics/alignments/example5.png}
-\caption{Word alignment example 5}
+\caption{Word alignment example with Romansh double negation (\emph{na ... 
+betg})}
+\label{fig:na-betg1}
 \end{figure}
+
+\begin{figure}[ht]
+\includegraphics{graphics/alignments/example6-na_betg.png}
+\caption{Word alignment example with Romansh double negation (\emph{na ... 
+betg})}
+\label{fig:na-betg2}
+\end{figure}
+
+\section{Compounds}
+All of the examples here contain German compounds. 
+Both eflomal and SimAlign leave the Romansh prepositions connecting the nouns unaligned, which is correct and desirable.
+
+% \begin{figure}[ht]
+% \includegraphics{graphics/alignments/example2.png}
+% \caption{Word alignment example 2}
+% \end{figure}
+
+\begin{figure}[ht]
+\includegraphics{graphics/alignments/example4.png}
+\caption{Word alignment example containing a compound and two participles.}
+\end{figure}
+
