@@ -3,27 +3,27 @@
 \section{Goals}
 The goals of this work was twofold: 
 \begin{itemize}
-	\item Enlarge the amount of resources that is available containing the Romansh language;
+	\item Enlarge the amount of digital resources that is available containing the Romansh language;
 	\item Evaluate a novel similarity based word alignment method which uses word embeddings on the language pair German-Romansh.
 \end{itemize}
 
 
 \section{Corpus Compliation}
 In order to achieve both goals, I first had to collect data. 
-I chose to collect the press releases published by the \emph{Standeskanzlei} of the canton of Graubünden since 1997 until today. 
+I chose to collect the press releases published by the \emph{\Gls{standeskanzlei}} of the canton of \Gls{graubuenden} since 1997 until today. 
 These press releases have been released in the three official languages of the canton: German, Italian and Romansh. 
 I aligned the press releases (henceforth \emph{documents}) using URL matching when possible, or reverted to a simple heuristic (three releases from the same day in three different languages are mutual translations).
-The documents (aligned and not aligned), are saved both as JSON files and in a SQLite database, which allow for fast and simple queries.
+The documents (aligned and not aligned), are saved both as JSON files and in a SQLite database, which allows for fast and simple queries.
 
 I then proceeded to align the sentences using hunalign \autocite{hunalign}, a fast length- and dictionary-based method for aligning sentences. 
-After filtering duplicates, as well as sentences containing only phone numbers, URLS or email addresses, I was able to produce around 80,000 sentence pairs for each language combination (German-Romansh, German-Italian, Romansh-Italian).
+After filtering noise (duplicates and misalignments), as well as sentences containing only phone numbers, URLS or email addresses, I was able to produce around 80,000 sentence pairs for each language combination (German-Romansh, German-Italian, Romansh-Italian).
 
-I am glad to make the corpus the I collected, as well as the aligned sentence pairs and triplets to other students for further research and experimentation\footnote{In case you would like to use this corpus, please consult the copyright notice on \url{https://www.gr.ch/de/Seiten/Impressum.aspx} before publicly releasing it of parts thereof.}. 
+I will be glad to provide make the corpus that I collected, as well as the aligned sentence pairs, to other students for further research and experimentation{\interfootnotelinepenalty10000\footnote{In case you would like to use this corpus, please consult the copyright notice on \url{https://www.gr.ch/de/Seiten/Impressum.aspx}} before publicly releasing it of parts thereof.}. 
 
 \section{Gold Standard}
 In order to evaluate word alignment systems, a gold standard is needed. 
 In the context of word alignment, a gold standard is a collection of sentence pairs annotated for word correspondences. 
-Since there is no gold standard for German-Romansh, I annotated 600 sentences, which I also gladly make available for future stundents. 
+Since there is no gold standard for German-Romansh, I annotated word correspondences in 600 sentences (see Chapter~\ref{chap:gold-standard}). I will  gladly provide my annotations to other students for further experiments and research. 
 
 \section{Evaluation}
 I compared the performance of statistical word alignment methods---fast\_align \autocite{dyer-etal-2013-simple} and eflomal \autocite{Ostling2016efmaral}---with the novel similarity and embeddings based method SimAlign \autocite{jalili-sabet-etal-2020-simalign}. 
