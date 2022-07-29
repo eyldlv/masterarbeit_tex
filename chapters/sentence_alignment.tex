@@ -269,15 +269,16 @@ In the course of annotating the word alignment, I had to correct the tokenizatio
 
 \section{Results}
 The resulting final parallel corpus consists of three files containing around \numprint{80000} unique sentence pairs for each of the three language combinations: German--Romansh, German--Italian and Romansh--Italian. 
-Each line in the file contains a sentence pair, separated by a tab character (see Listing~\ref{lst:bicorpus}). 
+Each line in the file contains a sentence pair, separated by a tab character (see Listing~\ref{lst:bicorpus}).
+
 Table~\ref{tab:bicorpus-stats} elaborates on the number of sentences, tokens and type for each combination. 
 
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lcp{2cm}p{1.5cm}p{2cm}p{1.5cm}}
+\begin{tabular}{lp{1.5cm}p{2cm}p{1.5cm}p{2cm}p{1.5cm}}
 \toprule 
-Combination    & Sentences        & Tokens Source      &  Types Source     & Tokens \mbox{Target} & Types \mbox{Target} \\
+Combination    & Sentence pairs        &  Tokens Source      &  Types Source     & Tokens \mbox{Target} & Types \mbox{Target} \\
 \midrule 
 German--Romansh & \numprint{79613} & \numprint{1400313} & \numprint{80239} & \numprint{1792851} & \numprint{42656} \\
 
