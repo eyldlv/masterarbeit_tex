@@ -2,29 +2,28 @@
 \label{chap:gold-standard}
 \section{Introduction}
 In the previous chapter, I discussed SimAlign, a method for computing word alignments based on measuring the similarity between multilingual word embeddings. 
-The clear advantage of this method is that it does not rely on the existence of large amounts of parallel data. 
+The clear advantage of this method is that it does not rely on the existence  of parallel data--- 
 The multilingual word embeddings can be learned from monolingual data. 
 \cite{jalili-sabet-etal-2020-simalign} evaluated their method on language pairs which were all part of the training data for the language models in use (mBERT and XLM-R). 
-In the course of this work, I was able to extract \numprint{79548} sentence pairs for German-Romansh. 
-I shall now proceed to test how well SimAlign performs on this language pair, considering the fact the Romansh is not part of  the training data for these models, i.e., it is an unseen language. 
+I shall now proceed to test how well SimAlign performs on the language pair German-Romansh, under the consideration that Romansh is not part of  the training data for these language models, i.e., it is an unseen language. 
 
 
 In order to measure the quality of words alignments, a model's performance is measured on a test set, dubbed  gold standard, which is created by human annotators. 
 For the gold standard to be of good quality and consistent with itself, annotators have to follow strict guidelines.
 These guidelines address issues of ambiguity in word alignments. \autocite[115]{koehn2009}. 
 
-Some problematic cases that might occur are function words\footnotemark that have no clear equivalent in the other language.
+Some problematic cases that might occur are function words\footnotemark{} that have no clear equivalent in the other language.
 \footnotetext{Function words form a closed class of words (a fixed set of words with virtually no new additions), they occur frequently and often have structuring uses in grammar. Pronouns, prepositions and conjunctions like \emph{of}, \emph{it}, \emph{and}, or \emph{you} are function words \autocite[144]{jurafsky-2019}.} 
 \cite{koehn2009} gives as an example the German-English sentence pair: \emph{John wohnt hier nicht}  and \emph{John does not live here}. 
 What German word should the English word \emph{does} be aligned to? 
 Three different choices can be made:
 \begin{enumerate}
-	\item The word should remain unaligned since it has to clear equivalent in German.
-	\item The word \emph{does} is connected with \emph{live}; it holds information about number (singular) and tense (present tense), which, in German, is contained in one word \emph{wohnt}, so it should be aligned to \emph{wohnt}, together with \emph{live}.
+	\item The word should remain unaligned since it has no clear equivalent in German.
+	\item The word \emph{does} is connected with \emph{live}; it holds information about number (singular) and tense (present tense), which, in German, is contained in one word: \emph{wohnt}. Thus, it should be aligned to \emph{wohnt}, together with \emph{live}.
 	\item \emph{does} is part of the negation; without it, the sentence would not contain this word. Therefore, \emph{does} should be aligned with \emph{nicht} (the German negation).
 \end{enumerate}
 
-There are several possibilities, all of them arguable, none of them plain wrong, which illustrates the need for clear guidelines.
+There are several possibilities, all of them arguable, none of them plain wrong. This illustrates the need for clear guidelines.
 
 \section{Sure and Possible Alignments}
 \label{sec:sure_possible}
@@ -34,11 +33,11 @@ Ambiguous links are labeled Possible and unambiguous links are labeled Sure \aut
 The Possible label was conceived to be used especially for aligning words within idiomatic expressions, free translations and missing function words \autocite{och-ney-2000-improved}.
 This distinction also has an impact on the way the evaluation metrics are computed (see Section~\ref{sec:evaluation-metrics}).
 
-There seems to be no clear global definition about which alignments should be considered as umabiguous, thus marked as Sure, and which should be considered ambiguous, thus marked as Possible. 
+There seems to be no clear global definition about which alignments should be considered  umabiguous and thus marked as Sure, and which should be considered ambiguous and  marked as Possible. 
 For some created gold standards, no distinciton between Sure and Possible alignments was made at all \autocite{clematide2018}. 
 In another case, annotators were asked to first label all alignments as Sure and then refine their alignments with confidence labels \autocite{holmqvist-ahrenberg-2011-gold}. 
-In the creation of the English-Icelandic gold standard in \cite{steingrimsson-etal-2021-combalign},  annotators used only Sure links. 
-Their annotations were then combined; all 1-to-1 alignments both annotators agreed upon (i.e., the intersection of their annotations) were makred as Sure and all other alignments were marked as Possible \autocite{steingrimsson-etal-2021-combalign}. Different annotation schemes use Sure and Possible alignment in a different way.
+And in yet anoter instance, two annotators used only Sure links. 
+Their annotations were then combined; all 1-to-1 alignments both annotators agreed upon (i.e., the intersection of their annotations) were makred as Sure and all other alignments were marked as Possible \autocite{steingrimsson-etal-2021-combalign}. Different annotation schemes use Sure and Possible alignment in different ways.
 
 % \section{Evaluation Metrics}
 % TODO: move to results/evaluation part
@@ -46,7 +45,8 @@ Their annotations were then combined; all 1-to-1 alignments both annotators agre
 % The fourth, alignment error rate (AER) one was introduced by \cite{och-ney-2000-improved}.
 
 \section{Gold standard for German-Romansh}
-As explained before, in order to measure the performance of both models, the similarity and embedding based model (SimAlign) and the stastitical models (fast\_align and eflomal), on the language pair German-Romansh a gold standard is needed. 
+As explained before, in order to measure the performance of the different models, the similarity  based model (SimAlign) and the stastitical models (fast\_align and eflomal), on the language pair German-Romansh, a gold standard is needed. 
+
 Since no such gold standard exists, I took upon myself to create one. 
 Although I am not a speaker of Romansh, my experience as a trained linguist, as well as my knowledge in related languages (Latin, Italian, French), allows me to confidently tackle this task. 
 Additionally, whenever I was in doubt, I referred to the online dictionary Pledari Grond\footnote{\url{https://www.pledarigrond.ch/rumantschgrischun}}, which also offers a grammar overview. 
@@ -54,7 +54,7 @@ Additionally, whenever I was in doubt, I referred to the online dictionary Pleda
 
 \subsection{Annotation tool}
 \label{sec:AlignMan}
-I used the tool \emph{AlignMan} which was originally programmed for creating the gold standard for English-Icelandic \autocite{steingrimsson-etal-2021-combalign}. 
+I used the tool AlignMan which was originally programmed for creating the gold standard for English-Icelandic \autocite{steingrimsson-etal-2021-combalign}. 
 It is quite easy to use and its code is readable. 
 I also had to make some small changes to the code. 
 For instance, the sentences to be aligned, while loaded into the database, were read in opposite order, such that the source language became the target language and vice versa. 
@@ -62,13 +62,14 @@ I fixed this issue, so that source (German) and target (Romansh) languages stay 
 
 As mentioned in Section~\ref{sec:sure_possible}, the annotation scheme used by \cite{steingrimsson-etal-2021-combalign} does not allow labeling of links with Sure and Possible. 
 Instead, AlignMan treats the union of 1-to-1 alignments made by two annotators as Sure alignments and all other alignments as Possible. 
-This means, each annotator is expected to only annotate Sure alignments. This also applied to me while annotating the German-Romansh gold standard. 
+This means, each annotator is expected to only annotate Sure alignments. This also applied to myself while annotating the German-Romansh gold standard: I only annotated Sure alignments. 
 
 
 \subsection{Guidelines}
 As mentioned before, clear guidelines need to be defined for creating the gold standard in order to ensure quality and consistency. I shall now proceed to describe the guidelines I used for my annotation of the word alignments for the gold standard.
 
-A motto cited often for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}). A variation of this is found in \cite{clematide2018}: \enquote{As few words as possible and as many words as necessary that carry the same meaning should be aligned,} referring to \cite{lambert2005}. 
+A motto  often cited for annotating word alignments is \enquote{Align as small segments as possible, and as long segments as necessary.} (\cite{Vronis00evaluationof}, cited in \cite{lines2007}) A variation of this is found in \cite{clematide2018}: \enquote{As few words as possible and as many words as necessary that carry the same meaning should be aligned,} referring to \cite{lambert2005}. This motto  guided me throughout the annotation task and it especially comes to mind in Principle II below.
+
 
 In the following sections I will list some general principles as well as more specific principles involving German and Romansh.
 
@@ -76,16 +77,13 @@ In the following sections I will list some general principles as well as more sp
 \label{sec:gold-principles}
 \paragraph{Principle I.} 
 Use only Sure alignments: 
-Since the annotating tool I was using does not provide the use of confidence labels (cf.~Section~\refnameref{sec:AlignMan}), I only aligned words which would be considered Sure alignments, i.e., they are unambiguous (cf.~Section~\refnameref{sec:sure_possible}). 
+Since the annotation tool I was using does not provide the use of confidence labels (cf.~Section~\refnameref{sec:AlignMan}), I only aligned words which would be considered Sure alignments, i.e., they are unambiguous (cf.~Section~\ref{sec:sure_possible}). 
 
 
 \paragraph{Principle II.}
-Prefer 1-to-1 alignments over 1-to-n alignments or n-to-n alignments: 
-Since all alignments are seen as Sure alignments, 1-to-n alignments should be avoided, unless a single word in the source sentence lexically corresponds to several words in the target sentence. %(see TODO principle sth.)
+Prefer 1-to-1 alignments over 1-to-many alignments or n-to-many alignments: 
+Since all alignments are seen as Sure alignments, 1-to-many alignments should be avoided, unless a single word in the source sentence lexically corresponds to several words in the target sentence. %(see TODO principle sth.)
 This means alignments of phrases should be avoided. This is also due to the fact that we are testing models for automatic word alignment, and not phrase alignment.
-
-
-
 
 Words that are repeated in one language, but not in the other, should only be linked once, leaving the repetition unaligned.
 
@@ -114,7 +112,7 @@ Romansh, in comparison, uses prepositions (usually \emph{da}) for linking nouns,
 In other cases, German compounds might be translated to Romansh using an adjective + noun, e.g., German \emph{Gastkanton} was translated to \emph{chantun ospitant} ~\enquote{hosting canton}.
 See Table~\ref{tab:compounds} for more examples.
 
-\textbf{German compounds will be aligned to their equivalent lexical words, but not to function words, resulting in a 1-to-n alignment}: \emph{Webseite} \textasciitilde~\emph{pagina [d'] internet}, \emph{Gebäudeversicherung} \textasciitilde~\emph{Assicuranza [d'] edifizis}. 
+\textbf{German compounds will be aligned to their equivalent lexical words, but not to function words, resulting in a 1-to-many alignment}: \emph{Webseite} \textasciitilde~\emph{pagina [d'] internet}, \emph{Gebäudeversicherung} \textasciitilde~\emph{Assicuranza [d'] edifizis}. 
 This is also inline with principles I, II and III in \cite{clematide2018}. 
 See Figure~\ref{fig:align-compounds} for alignment examples.
 
@@ -237,7 +235,8 @@ This theoretically results in a 1-to-2 link.
 However, since Romansh \emph{è} only carries grammatical information of tense and number, but no real lexical information, it should remain unaligned. 
 
 \textbf{The German perfect should be aligned to the Romansh perfect using a 1-to-1 alignment}; auxiliary to auxiliary and participle to participle. 
-\textbf{The German preterite should also be aligned using a 1-to-1 alignment to the Romansh participle, leaving the Romansh auxiliary unaligned and avoiding a 1-to-2 alignment.}
+\textbf{The German preterite should also be aligned using a 1-to-1 alignment to the Romansh participle, leaving the Romansh auxiliary unaligned and avoiding a 1-to-2 alignment. 
+} (cf.~Principle II: prefer 1-to-1 alignments)
 
 \subsubsection{German present participle}
 German present participles (known in German as \emph{Partizip I}) are translated to Romansh using relative clauses. Moreover, adjectives (and participles in the function of adjectives), can be nominalized, meaning they become the head of a noun phrase and there is no need for an actual noun. 
@@ -274,28 +273,28 @@ In this case, these two phrases should not be aligned as phrases, but only the c
 
 \subsubsection{Double negation}
 Negation in Romansh is constructed using two particles: \emph{na} and \emph{betg} to negate verbs or \emph{nagin-} to negate nouns. 
-Since we prefer 1-to-1 alignments, the German negations \emph{nicht} (for verbs) and \emph{kein-} (for nouns) should be aligned only to the second Romansh particle (\emph{betg}/\emph{nagin-}), leaving Romansh \emph{na} unaligned. 
+Since we prefer 1-to-1 alignments (Principle II), the German negations \emph{nicht} (for verbs) and \emph{kein-} (for nouns) should be aligned only to the second Romansh particle (\emph{betg}/\emph{nagin-}), leaving Romansh \emph{na} unaligned. 
 This is also linguistically motivated: in certain cases, \emph{na} can be omitted \autocite[section 285]{caduff-2008-rumantsch-grischun}. 
 
-\subsubsection{Articles and prepositions}
-German articles inflect in case, which expresses some syntactic relations between nouns. 
+\subsubsection{Articles and Prepositions}
+German articles inflect in case, which expresses some syntactic relations involving nouns. 
 Romansh often uses preopsitions for expressing the same relations. 
-For instance \emph{Zustimmung der Person} \enquote{the person's agreement} is translated as \emph{consentiment da la persuna}. 
-I align the German article \emph{der} with Romansh \emph{da}, leaving \emph{la} unaligned. 
+Take the German genitive case in \emph{Zustimmung der Person} \enquote{the person's agreement} which is translated as \emph{consentiment da la persuna}. 
+I align the German article in genitive  \emph{der} with the Romansh preposition \emph{da}, leaving \emph{la} unaligned. 
 Except for my preference for 1-to-1 alignments, the motivation for this is that it is the preposition \emph{da} that expresses the genitival relations between the nouns.
 
 \subsubsection{Separable verbs}
-German uses many verbs to which an adverb or a preposition is affixed in order to delimit the verb's meaning (or sometimes completely change its meaning). 
-In such cases, both the verb and its affix should be aligned to the corresponding Romansh verb, resulting in a 2-to-1 alignment.
+German uses many verbs to which an adverb or a preposition is affixed in order to delimit the verb's meaning or sometimes completely it (dubbed \enquote{separable verbs}). 
+Since both the verb and the adverb form together the meaning of the word and are conceptually inseparable, both of them should be aligned to the corresponding Romansh verb, resulting in a 2-to-1 alignment.
 
 \section{Flaws}
 \label{sec:gold-flaws}
 I shall now discuss the quality of my gold standard and some flaws it has.
 
 The most obvious flaw is the fact that I created the gold standard alone, without a second annotator. 
-With more than one annotator, more intricate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
+With more than one annotator, more elaborate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
 For instance the annotators' agreement can be measured using the so-called inner-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
-Further, the intersection of the annotators' Sure alignment can be used to build the final Sure alignments set and the reunion of the Possible alignments can be used to create the final Possible alignments set \autocite{mihalcea-pedersen-2003-evaluation}.
+Further, the intersection of the annotators' Sure alignment can be used to build the final Sure alignments set and the reunion of the annotators' Possible alignments can be used to create the final Possible alignments set \autocite{mihalcea-pedersen-2003-evaluation}.
 A third annotator can also revise and resolve conflicts between two annotators \autocite{mihalcea-pedersen-2003-evaluation}.
 When several annotators work on the same task, they can also discuss conflicts and resolve them using a majority vote \autocite{DBLP:journals/corr/cmp-lg-9805004}.
 All of these possible schemes cannot be realized in the case of a single annotator, which was my case.
@@ -304,6 +303,6 @@ Another flaw are the missing confidence labels (Sure and Possible), which may in
 There are however precedents for gold standards without Possible links, using only Sure links \autocites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore defensible.
 
 
-Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines. 
+%Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines. 
 
 
