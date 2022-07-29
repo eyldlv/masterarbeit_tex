@@ -253,14 +253,14 @@ If similar words in different languages have similar embeddings, these embedding
 \label{subsec:simalign-method}
 SimAlign takes two parallel sentences $s_e$ and $s_f$ of lengths $l_e$ and $l_f$ in languages $e$ and $f$. 
 For this sentence pair a \emph{similarity matrix} is defined as $S \in [0,1]^{l_e\times l_f}$. 
-It is a matrix the size of the lengths of both sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
+It is a matrix the size of the lengths of the sentences. Each cell in the matrix will be filled with a value between 0 and 1, returned from a function measuring similarity between the embeddings of two words. 
 This means that for each combination of two words from sentence $s_e$ and sentence $s_f$, their similarity measure is filled into the corresponding cell in the matrix (Figure~\ref{fig:sim-matrix}).
 From this similarity matrix $S$, a binary alignment matrix $A \in \{0,1\}^{l_e \times l_f}$ is extracted. 
 The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means $i$ and $j$ will be aligned) if the word $s_i^e$ in the sentence $s_e$ is the most similar to the word $s_j^f$ in the sentence $s_f$ and vice versa (Figure~\ref{fig:al-matrix}).
 
 
 
-\begin{figure}[ht]
+\begin{figure}
 \[
 	\begin{array}{rl|c|c|c|c}
 & &1 & 2 & 3 & 4\\
@@ -275,11 +275,11 @@ The cell $A_{ij}$ in the alignment matrix $A$ will be filled with 1 (which means
 \]
 \captionsetup{width=.6\linewidth}
 \caption[Similarity matrix]{Similarity matrix $S \in [0,1]^{l_e \times l_x}$, filled with values between 0 and 1 corresponding to the similarity measure between the embeddings of the words. 
-The numbers are fictive.}
+The values are fictive.}
 \label{fig:sim-matrix}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}
 \[
 	\begin{array}{rl|c|c|c|c}
 & &1 & 2 & 3 & 4\\
@@ -330,7 +330,7 @@ The resulting alignment can be seen in Figure~\ref{fig:resulting-alignment}.
 This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}. Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
 To remedy this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
 In each iteration, the model focuses on still unaligned pairs and tries to align them. 
-If the similarity with an already aligned word is very high, the model can add another alignment edge. 
+Further, if the similarity with an already aligned word is very high, the model can add another alignment edge. 
 This allows for one word to be aligned to multiple other words, i.e., create 1-to-many alignments.
 
 Argmax finds a local optimum and Itermax is a greedy algorithm. 
