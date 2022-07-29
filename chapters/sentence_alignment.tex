@@ -146,29 +146,29 @@ A function that is most often used for measuring vector similarity is the cosine
 In this manner, similar sentences in different languages can be identified and aligned \autocite{artexte-schwenk-2019-laser}.
 
 
-\section{Sentence alignment pipeline}
+\section{Sentence Alignment Pipeline}
 
-I shall now describe the pipeline I used for retrieving sentence pairs for the corpus I compiled in section~\ref{chap:compiling}.
+I shall now describe the steps I took for extracting sentence pairs out of  the corpus I compiled in section~\ref{chap:compiling}.
 
 \subsection{Tool of choice}
 \label{subsec:tool}
 My tool of choice was hunalign \autocite{hunalign}. 
 It is presented as a software package on GitHub, it is free to use and contrary to the Microsoft program presented by \cite{moore2002fast}, its license allows corpora produced by it to be freely distributed. 
-It is also well documented, was easy to compile on my system (MacBook Air M1, 2020 running MacOS Monterey 12.3.1) and runs fast (aligning around \numprint{100000} sentences takes about three minutes). 
+It is also well documented, was easy to compile on my system\footnote{MacBook Air, M1 2020, 8GB RAM, running MacOS Monterey 12.3.1}) and runs fast (aligning around \numprint{100000} sentences takes about three minutes). 
 
-I tried, just for the sake of interest, to use Vecalign on a small portion of my corpus. 
-Veclaign requires that all adjacent sentences be concatenated first (to consider 1-to-many alignments). 
+I tried, just for the sake of interest, to use Vecalign on a small portion of my corpus (300 sentences). 
+Veclaign requires that all adjacent sentences be concatenated first (to allow for 1-to-many alignments). 
 Then for each sentence-concatenation, the sentence embeddings have to be obtained from the LASER language model. 
-Only then, sentence alignment can be calculated \autocite{thompson-koehn-2019-vecalign}. 
+Only then, can sentence alignment be calculated \autocite{thompson-koehn-2019-vecalign}. 
 
 The process of obtaining the sentence alignment took quite some time---around 10 minutes for 300 sentences---and by quick inspection with the bare eye, the result wasn't better than the one achieved with hunalign, but rather worse. 
 Obviously, this may be due to the fact that Romansh is not one of the languages LASER was trained on. 
 That being said, LASER \emph{has} been said to generalize to unseen languages that are similar to the ones the model was trained on, e.g., Swiss German or West Frisian, which are similar to German and Dutch, respectively \autocite{artexte-schwenk-2019-laser} 
 \footnote{See also \url{https://github.com/facebookresearch/LASER}}.
 
-Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentneces---hunalign performed excellently. 
-I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard, I only had to discard 11 out of 600 sentences due to  misalignment. 
-This corresponds to a precision of 98.2\%.
+Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentences---hunalign performed excellently. 
+I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard, I only had to discard 11 out of 611 sentences due to  misalignment. 
+This corresponds to a precision of 98.2\% or an error rate of 1.8\%.
 
 \subsection{Pipeline}
 
@@ -177,7 +177,7 @@ This corresponds to a precision of 98.2\%.
 \scalebox{0.9}{
 \begin{tikzpicture}[node distance=2cm]
 	\node (a) [startstop, align=center] {Query Documents \\From Database};
-	\node (b) [startstop, right of=a, xshift=2cm] {Segment Sentences};
+	\node (b) [startstop, right of=a, xshift=2cm] {Sentence Segmentation};
 	\node (c) [startstop, right of=b, xshift=2cm, align=center] {Align \\ Language Pairs};
 	\node (d) [startstop, right of=c, xshift=2cm] {Filter and Tokenize};
 	\draw [arrow] (a) -- (b);
@@ -188,23 +188,27 @@ This corresponds to a precision of 98.2\%.
 \label{fig:sentence-alignment}
 \end{figure}
 
-In the first step, all aligned documents are extracted from the corpus and are written to monolingual files, one sentence per line, and one file per year.
-This is done by querying the SQLite database for all the aligned documents for each year separately. 
+The scripts responsible for compiling the sentence pairs are under the folder \texttt{align\_sentences} on my repository on GitHub. 
+The bash script \texttt{make\_bicorpus.py} is responsible for executing the pipeline.
 
-\subsection{Sentence segmentation}
+
+\subsection{Database Query and Sentence Segmentation}
+In the first step, all aligned documents are extracted from the corpus and are written to monolingual files, one sentence per line, and one file per year.
+This is done by querying the SQLite database for all the aligned documents for each year. This is done by the script \texttt{exctract\_multicorpus.py}
+
 Sentence segmentation (also called sentence tokenization) was done using NLTK's Punkt tokenizers \autocite{bird-2009-nltk}. 
 Since I wasn't able to integrate a sentence tokenizer for Romansh into the pipeline, I used the an NLTK Punkt tokenizer model which was trained on Italian. 
-After instantiating both the German and the Italian models, I extended the list of abbreviations\footnotemark to enhance the performance of the tokenizer and avoid wrong segmentation. 
+After instantiating both the German and the Italian models, I extended the list of abbreviations\footnotemark~to enhance the performance of the tokenizer and avoid wrong segmentation. 
 
-\footnotetext{The abbreviations for Romansh were kindly taken from Lisa Gasner's/Samuel Läubli's GitHub repository}
+\footnotetext{The abbreviations for Romansh were kindly taken from Lisa Gasner's/Samuel Läubli's GitHub repository.}
 
-In the course of sentence segmentation, paragraphs are retained by converting line breaks into a special \texttt{<p>} token. 
+In the course of sentence segmentation, paragraphs are retained by converting line breaks into  special \texttt{<p>} tokens. 
 These tokens will serve \texttt{hunalign} as anchor points for sentence alignment.
 
 The result is three files for each year, one for each language, containing one sentence per line and \texttt{<p>} tokens marking paragraph borders. 
 Further, to keep the corpus well-structured, the file ID (see section~\ref{subsubsec:web-scraper} \nameref{subsubsec:web-scraper}) is included at the beginning of each document. 
 In case there is no mutual file ID, the date is included. 
-The file ID/date will be used by \texttt{hunalign} as anchor points for keeping the documents and the paragraphs aligned, see Listing~\ref{lst:sentences} for an example.
+The file IDs/dates will be used by \texttt{hunalign} as anchor points for keeping the documents aligned, see Listing~\ref{lst:sentences} for an example.
 
 \vspace{0.5cm}
 
@@ -240,21 +244,21 @@ As described in Section~\ref{subsec:tool}, my tool of choice for aligning the se
 hunalign can use a bilingual dictionary for alignment, but the existence of such a dictionary is not a real restriction. 
 In the absence of such a dictionary, the program will first fall back to sentence-length information, then automatically build a dictionary based on this alignment, and finally use this automatically-built dictionary for alignment in a second pass\footnote{\url{https://github.com/danielvarga/hunalign}}.
 
-Although inspection with the bare eye revealed excellent precision (from the 600 sentences extracted for word alignment only 11 were misalignments) which means the absence of a pre-made dictionary is not obstacle, when aligning the entire corpus, I used the German--Rumantsch Grischun dictionary downloaded from the online dictionary \emph{Pledari Grond}\footnote{\url{https://www.pledarigrond.ch/rumantschgrischun}} to support \texttt{hunalign} even further.
+Although inspection with the bare eye revealed excellent precision (from the 611 sentences extracted for annotation of word alignment for the gold standard, only 11 were misalignments) which means the absence of a pre-made dictionary is not obstacle, when aligning the entire corpus, I used the German--Rumantsch Grischun dictionary downloaded from the online dictionary \emph{Pledari Grond}\footnote{\url{https://www.pledarigrond.ch/rumantschgrischun}} to support \texttt{hunalign} even further.
 
 Files for three language pairs are  then created: German--Romansh, German--Italian and Romansh--Italian, one file for each year. 
 The files for each language combination are then concatenated.
-The result is three files containing all the sentence pairs for each language combination.
+The result is three files containing all the sentence pairs for each language combination, from 1997 until today.
 
 \subsection{Filtering and Tokenizing}
 The press releases often contain sentences that are repeated throughout many of them, such as noting the source of the information at the end of the press release. 
 A very common sentence ending a press release in German is \emph{Quelle: dt Standeskanzlei Graubünden} \enquote{Source: German State Chancellory Grisons}. 
-Such duplicate sentences are not simply redundant in the corpus, but are might also be considered noise in the data. % which might negatively influence an \acrshort{nmt} model trained on this corpus \autocite{thompson-koehn-2019-vecalign}. 
-Misaligned sentences and untranslated sentences are also considered noise that can have a negative influence on \acrshort{nmt} \autocite{khayrallah-koehn-2018-impact}.
+Such duplicate sentences are not simply redundant in the corpus, but might also be considered noise in the data. % which might negatively influence an \acrshort{nmt} model trained on this corpus \autocite{thompson-koehn-2019-vecalign}. 
+Misaligned sentences and untranslated sentences are also considered noise that can have a negative influence on \acrshort{nmt} models \autocite{khayrallah-koehn-2018-impact}.
 Therefore, duplicates and untranslated sentences should be filtered out, in order to make sure the remaining pairs are of high quality.
 
-The script \texttt{filter\_bicorpus.py} takes a file generated by hunalign (containing three tab-seperated columns: source--target--score) and produces a tab-seperated file containing two columns (source and target) with the filtered sentences, one sentence per line and word-tokenized. 
-The script removes sentences containing E-Mails, URLs or phone numbers, as well as sentences where source and target languages are identical, i.e., sentences are untranslated, or where the difference in sentence length between source and target is too large (more than three times), meaning the sentences are probably misalignments.
+The script \texttt{filter\_bicorpus.py} takes a file generated by hunalign (containing three tab-seperated columns: source--target--score) and produces a tab-separated file containing two columns (source and target) with the filtered sentences, one sentence per line and word-tokenized. 
+The script removes sentences containing E-Mails, \acrshort{URL}s or phone numbers, as well as sentences where source and target languages are identical, i.e., untranslated sentences. Sentences in which the difference in character length  between source and target is too large (more than three times), for which I then assume misalignment, are also removed.
 
 Word tokenization is important for the next step---word alignment. 
 For the task of tokenization, I used NLTK's \autocite{bird-2009-nltk} word tokeniziation functions, while applying the German model for German text and the Italian model for Romansh and Italian text. 
@@ -275,11 +279,11 @@ Table~\ref{tab:bicorpus-stats} elaborates on the number of sentences, tokens and
 \toprule 
 Combination    & Sentences        & Tokens Source      &  Types Source     & Tokens \mbox{Target} & Types \mbox{Target} \\
 \midrule 
-German--Romansh & \numprint{79548} & \numprint{1399382} & \numprint{80239} & \numprint{1791511} & \numprint{42570} \\
+German--Romansh & \numprint{79613} & \numprint{1400313} & \numprint{80239} & \numprint{1792851} & \numprint{42656} \\
 
-German--Italian & \numprint{78108} &  \numprint{1396933} &   \numprint{80239} & \numprint{1684152}&  \numprint{48787} \\ 
+German--Italian & \numprint{78186} &  \numprint{1396933} &   \numprint{80149} & \numprint{1685792}&  \numprint{48854} \\ 
 
-Romansh--Italian & \numprint{78030} & \numprint{1758448} & \numprint{42235} &  \numprint{1654165} & \numprint{48680} \\
+Romansh--Italian & \numprint{78101} & \numprint{1760424} & \numprint{42295} &  \numprint{1655822} & \numprint{48753} \\
 \bottomrule
 \end{tabular}
 \caption[Parallel corpus in numbers]{Parallel corpus in numbers, as of July 20, 2022. 
