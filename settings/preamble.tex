@@ -150,7 +150,7 @@
 \usepackage{nameref}
 \newcommand{\refnameref}[1]{\ref{#1}:~\nameref{#1}}
 % \newcommand{\defref}[1]{Definition~\ref{#1}}
-\usepackage[colorlinks=true,linkcolor=MidnightBlue,anchorcolor=black,citecolor=DarkBlue,filecolor=black,menucolor=black,runcolor=black,urlcolor=DarkBlue]{hyperref}
+\usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=DarkBlue,filecolor=black,menucolor=black,runcolor=black,urlcolor=DarkBlue]{hyperref}
 
 % Acronyms
 % \usepackage{acro}
@@ -159,4 +159,10 @@
 % \makeglossaries
 \input{settings/glossary}
 % \makenoidxglossaries
-\hyphenation{SimAlign}
+\hyphenation{SimAlign} % no hyphenation for SimAlign
+
+
+% No new page after abstract
+% \usepackage{etoolbox} % provides \patchcmd
+% \patchcmd{\endabstract}{\null}{}{}{} % replaces \null with third argument (empty)
+
