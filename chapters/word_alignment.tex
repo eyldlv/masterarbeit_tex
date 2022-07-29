@@ -1,6 +1,6 @@
 \chapter{Word Alignment}\label{chap:word-alignment}
-We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods. 
-In the following pages, I shall give a short introduction on the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity based word alignment.
+
+Before We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods, I shall give a short introduction to the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity/word embedding based word alignment.
 
 \section{Introduction}
 Following the success statistical models had in the task of sentence alignment, word alignment was seen as a natural extension of that work. 
@@ -33,7 +33,7 @@ A simple example for an alignment for a pair of sentences from the corpus I comp
 
 
 In this example, each word in German is aligned to exactly one word in Romansh and the words follow exactly the same order, such that the resulting alignment is the set of mappings $\{1\to1, 2\to2,3\to3,4\to4\}$. 
-Such alignments, in which each word in the source sentence is aligned to exactly one word in the target sentence and in which the words follow the same order are considered simple \autocite[85]{koehn2009}.
+Such alignments, in which each word in the source sentence is aligned to exactly one word in the target sentence, and in which the words follow the same order, are considered simple \autocite[85]{koehn2009}.
 
 Things become more complicated when word order differs between languages or when several words in one sentence are mapped to one or several words in the other sentence. 
 The latter gives rise to a variety of alignment types. 
@@ -56,7 +56,7 @@ I will rather attempt to explain their \emph{modus operandi} in a more intuitive
 \label{sec:ibm-model-1}
 The IBM models are translation models. 
 They were developed in order to compute the conditional probability of a sentence in the target language $f$ given a sentence in the source langauge $e$: $P(f|e)$ \autocite{brown-etal-1993-mathematics}. 
-In layman terms, they compute how likely a given sentence in the target language is a translation of a sentence in the source language.
+In layman's terms, they compute how likely a given sentence in the target language is a translation of a sentence in the source language.
 By modeling these probabilities, the models can generate a number of different translations for a sentence. 
 However, there are infinitely many sentences in a language and most sentences occur, even in large corpora, only once. 
 This makes the task of modeling the probability distribution for full sentences hard and not promising. 
@@ -69,11 +69,12 @@ We can compute the probability distributions of lexical translations given their
 That is, by counting how often a word $s^e_i$ in the sentence $s_e$ in language $e$ was translated as a word $s^f_j$ in a sentence $s_f$ in language $f$, we can compute the desired probability distributions. 
 Take for example a set of German-English sentence pairs. By counting how many times the German word \emph{das} was translated as \emph{the}, how many times it was translated as \emph{that}, etc., we can compute each word's translation probability distribution. 
 With these individual probability distributions we can compute the likelihood of a sentence in language $f$ being a translation of a sentence in language $e$ \autocite[88]{koehn2009}.
+Unfortunately, while sentence alignment is a relatively easy task (at least of well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. In other words, we do not know \emph{a priori} how each word in the source sentence was translated, which means we cannot compute the counts for the probability distributions.
 
-Unfortunately, while sentence alignment is a relatively easy task (at least of well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. 
-This problem, dubbed as a \emph{chicken and egg problem}, is basically the following: If we had word alignments, it wouldn't be a problem to estimate the lexical translation model and compute the probability distributions for words and sentences. 
+This problem, dubbed as a \emph{chicken and egg problem}, is basically the following: If we had word alignments, it wouldn't be a problem to estimate the lexical translation model and compute the probability distributions for words and sentences; 
 And if we had a model, we could easily estimate the most likely correspondences between words in the source and the target sentences. 
 Unfortunately, we have none of the above \autocite[88]{koehn2009}.
+
 
 \subsubsection{EM Algorithm} 
 In order to solve the problem of incomplete data, an iterative learning algorithm, the \acrfull{em} algorithm comes into play. 
@@ -81,11 +82,11 @@ The EM algorithm is mathematically intricate.
 I shall try to explain in simple words the idea behind it. 
 
 In the very first iteration, the values of the model parameters are unknown and are initialized with a uniform distribution. 
-This means all words are equally likely to be translations of each other.
+This means all words are equally likely  translations of each other.
 Then, in the estimation step, the model is applied to the data to compute the most likely alignments. 
 In the maximization step, the model is learned from the data based on counts collected from it. 
 The algorithm counts co-occurrences of words in the source and the target languages, which are then weighted with the probabilities that were computed in the estimation step.
-These weighted counts are used to compute again the probabilities in the estimation step. 
+These weighted counts are used to compute again the probabilities in the next estimation step. 
 These two steps, estimation and maximization, are then repeated until convergence---until a global minimum has been reached \autocites[88-92]{koehn2009}{brown-etal-1993-mathematics}.
 
 In simple words, the model does not know in the beginning which words in the source language correspond to which words in the target language. 
@@ -96,7 +97,7 @@ Likely links between words are strengthened, while less likely links are weakene
 This goes on until the model converges and the most likely word alignments have been learned by the model. 
 
 \subsection{Higher IBM Models}
-Without going too much into details, I will shortly mention the other IBM models, Models 2-5. 
+Without going too much into detail, I will shortly mention the other IBM models, Models 2-5. 
 
 Model 1 makes the unrealistic assumption that all connections for each position are equally likely. 
 This means that word order is not modeled by Model 1. 
@@ -112,7 +113,7 @@ Models 4 and 5 add more complexity and take into account for instance the positi
 
 Models 1-4 serve as stepping stones towards the training of Model 5. 
 Model 1 has a simple mathematical form and a one unique local minimum, which means the parameters learned by it do not depend on the starting point\footnote{The other models have several minima; this means according to the starting parameters, different minima can be arrived at.}. 
-The estimates learned by Model 1 are used to initialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on and so forth---each model is initialized from the parameters of the model before it. 
+The estimates learned by Model 1 are used to initialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on, and so forth---each model is initialized from the parameters of the model before it. 
 This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}. 
 
 These models have been playing a key role in word alignment tasks and in statistical and phrase based machine translation. 
@@ -126,7 +127,7 @@ Using these alignments, phrase alignments can be learned in order to train a sta
 
 \section{Word Embeddings}
 \label{sec:word-embeddings}
-A different approach to word alignment is based on word embeddings. 
+A different approach to word alignment is based on similarity between words, which is in turn computed using word embeddings. 
 But what are word embeddings?
  
 
@@ -142,26 +143,26 @@ The words \emph{someone} and \emph{anyone} are written as one word, while \emph{
 For the sake of simplicity, I will stick to the term \emph{word}, referring to any linguistic unit, made up of one or several morphemes (or words), divided in written form by whitespaces from its neighboring units.
 
 \subsubsection{Meaning of Words}
-The question of describing the meanings of words is an entire field---semantics. But already in his posthumously published work \emph{Cours de linguistique générale} (\enquote{Course in General Linguistics}) from 1916, the Swiss linguist and semiotician Fredinand de Sassure came to an important conclusion. 
+The question of describing the meanings of words is an entire field: semantics. But already in his posthumously published work \emph{Cours de linguistique générale} (\enquote{Course in General Linguistics}) from 1916, the Swiss linguist and semiotician, Fredinand de Sassure, came to an important conclusion. 
 Linguistic elements receive their value only by being arranged in a sequence, which de Saussure calls \emph{syntagm}: 
-\enquote{A term in the syntagm acquires its value only because it stands in opposition to everything that precedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course}. 
+\enquote{A term in the syntagm acquires its value only because it stands in opposition to everything that precedes or follows it, or to both.} \autocite[123]{de-saussure-1959-course} 
 
 Additionally, each term in the syntagm, in the sequence of terms, has associative (or \emph{paradigmatic}) relations. 
 These relations reside in the memory of the speakers. 
 For instance the German word \emph{zudrehen} \enquote{close something by turning} unconciously calls to mind related words, such as other words beginning with \emph{zu-}: \emph{zumachen} \enquote{close}, \emph{zumauern} \enquote{wall something up}, \emph{zuklappen} \enquote{close something shut}. 
-But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course}\footnote{My examples}.
+But also words with the verb \emph{drehen}: \emph{aufdrehen} \enquote{turn open}, \emph{verdrehen} \enquote{twist, contort}, etc. etc. \autocite[122-127]{de-saussure-1959-course}\footnote{Examples are my own.}.
 
 Each term in the syntagm stands in opposition not only to the preceding and following parts in the syntagm, but also to terms in the paradigm, which are called to mind by the associative series. 
-The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic one, the vertical axis.
+The meaning, or rather value of words, is a result of an intersection of two axes---the syntagmatic, the horizontal axis, and the paradigmatic axis, the vertical axis.
 
 Take, for instance, the sentence \emph{I am drinking coffee}. The word \emph{coffee} gets its  \textbf{syntagmatic} value from the perceding word \emph{drinking}, which stands in \textbf{paradigmatic} opposition to other words (\emph{plant}, \emph{grow}) which would give \emph{coffee} a different meaning.
-We know that by \emph{coffee} a hot-drink is meant, because it follows the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{I bought one pound of coffee} it would mean beans and in \emph{coffee ice-cream} it would describe a flavor.
+We know that by \emph{coffee} a hot-drink is meant, because it follows the verb \emph{drink}. In the sentence \emph{I grow coffee} it would mean a plant or a tree, in \emph{I bought one pound of coffee} it would mean beans, and in \emph{coffee ice-cream} it would describe a flavor.
 
-The Austrian-British philosopher, Ludwig Wittgenstein, summed the meaning of the word \emph{meaning} (German \emph{Bedeutung}) in two sentences in his Philosophical Investigations, no. 43:
+The Austrian-British philosopher, Ludwig Wittgenstein, summed up the meaning of the word \emph{meaning} (German \emph{Bedeutung}) in two sentences in his Philosophical Investigations, no. 43:
 
 
 \begin{displayquote}\emph{
-Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutung« – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache.}\footnote{{For a large class of cases of the use of the word \emph{meaning}---and maybe for all of its use cases---one could explain the word as follows: The meaning of a word is its use in the language.}} \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}
+Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutung« – wenn auch nicht für alle Fälle seiner Benützung – dieses Wort so erklären: Die Bedeutung eines Wortes ist sein Gebrauch in der Sprache.}\footnote{{For a large class of cases of the use of the word \emph{meaning}---and maybe for all of its use cases---one could explain the word as follows: The meaning of a word is its use in the language.}} {\interfootnotelinepenalty10000 \footnote{\url{https://www.wittgensteinproject.org/w/index.php?title=Philosophische_Untersuchungen\#43}}}
 \end{displayquote}
 
 \subsection{Word Embeddings}
