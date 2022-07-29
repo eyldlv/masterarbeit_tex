@@ -166,7 +166,7 @@ Man kann für eine große Klasse von Fällen der Benützung des Wortes »Bedeutu
 \end{displayquote}
 
 \subsection{Word Embeddings}
-These ideas, which were further developed by linguists in the 1950's, that a word can be defined by its environment or distribution, i.e., by its set of contexts in which it occurs and its grammatical environments, is the inspriation for what is called vector semantics.  
+These ideas, which were further developed by linguists in the 1950's, namely that a word can be defined by its environment or distribution, i.e., by its set of contexts in which it occurs and its grammatical environments, is the inspiration for what is called vector semantics.  
 The idea of vector semantics is to represent a word as a point in some $n$-dimensional vector space. 
 These vectors are called \emph{embeddings}. 
 There are different ways and versions of word embeddings, but in each case the values of the vectors are based in some way on counts of neighboring words \autocite[98-99]{jurafsky-2019}.
@@ -175,29 +175,30 @@ One version of word embeddings comes from neural language models.
 Language modeling is the task of assigning probabilities to a sequence of words, that is, modeling how likely it is that a sequence of words in a language would be uttered/written by a speaker of that language \autocite[181]{koehn2009}. 
 In practice, the task of a language model is predicting upcoming words from prior word context \autocite[137]{jurafsky-2019}.
 
+In a neural language model, the modeling is done using a neural network. 
 Without going too much into detail, a neural network is a complex non-linear function. 
 It is made up of layers, which are vectors, and weights, which are matrices. 
-The numbers (a vector) from each layer are passed on to the next layer by multiplying the it with the weights (a matrix) between the layers using matrix multiplication. 
+The numbers (a vector) from each layer are passed on to the next layer by multiplying it with the weights (a matrix) between the layers using matrix multiplication. 
 The vector resulting from this matrix multiplication (usually passed through some non-linear activation function), is the next layer in the neural network. 
-The output of a neural network can be for instance a single value, as in the cases of a binary classification task, in which the output is either 0 or 1, but it can also be a vector representing some probability distribution.
+The output of a neural network can be  a single value, as in the cases of a binary classification task, in which the output is either 0 or 1, but it can also be a vector representing some probability distribution.
 
-In the course of the training of a language neural model, i.e., while the neural network learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
+In the course of the training of a neural language  model, i.e., while the neural network learns the probability distributions for words given its neighboring words, the parameters for the weights are learned. 
 The weights connecting the input layer with the first hidden layer are our said word embeddings. 
 When inputting a word into the network (in form of a one-hot vector), we can get its vector representation, i.e., its embedding, from the so-called embedding layer. 
 Since this representation is conditioned on context, similar words should have similar embeddings \autocite[104-105]{koehn-2020}.
 
-There are different ways of learning word embeddings. 
+There are different ways for learning word embeddings. 
 One of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
 These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn high quality word vector representations, not to generate language.
 
 \subsection{Word Similarity}
 \label{sec:word-similarity}
-If words are represented by vectors, we need a measure for taking two such vectors and measuring how similar they are. 
+If words are represented by vectors, we need a measure for taking two such vectors and determining how similar they are. 
 The most common similarity metric is the \textbf{cosine similarity}---measuring the angle between the vectors. 
 
-Again, without going into too much mathematical details, using the dot product for measuring similarity, i.e., multiplying the vectors with each other, favors long vectors, that is, vectors with high values in each dimension, which represents the frequency of words. 
-This means more frequent words have higher values, but we want to measure the similarity between words regardless of their frequency.
-To solve this problem, we need to normalize the dot product by dividing it by the lengths of the vectors. 
+Again, without going into too much mathematical details, using the dot product for measuring similarity, i.e., multiplying the vectors with each other, favors long vectors. Long vectors are vectors with high values in each dimension, which represents the frequency of words. 
+This means more frequent words would have higher values, but we are interested in measuring the similarity between words regardless of their frequency.
+To solve this problem, we need to \textbf{normalize the dot product} by dividing it by the lengths of the vectors. 
 Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf{w}$ can be computed as:
 
 \begin{equation}
@@ -214,8 +215,7 @@ Thus, the cosine similarity metric between two vectors $\mathbf{v}$ and $\mathbf
 	}	
 \end{equation}
 
-with $\sum_{i=1}^Nv_iw_i$ being the dot product of the vectors $\mathbf{v}$ and $\mathbf{w}$ and $\sqrt{\sum_{i=1}^N v_i^2}$ being the length of the vector $\mathbf{v}$ and $\sqrt{\sum_{i=1}^N w_i^2}$ the length of the vector $\mathbf{w}$
-\autocite[103-104]{jurafsky-2019}.
+With $\sum_{i=1}^Nv_iw_i$ being the dot product of the vectors $\mathbf{v}$ and $\mathbf{w}$, and $\sqrt{\sum_{i=1}^N v_i^2}$ and $\sqrt{\sum_{i=1}^N w_i^2}$ being the lengths of the vectors $\mathbf{v}$ and $\mathbf{w}$, respectively \autocite[103-104]{jurafsky-2019}.
 
 The cosine similarity returns a value between $-1$ and $1$. 
 The highest  similarity is \(1\): the vectors are parallel and pointing in the same direction. 
@@ -226,7 +226,7 @@ The lowest similarity is $-1$: the vectors point in opposite directions.
 There are also methods for computing multilingual word embeddings. 
 Multilingual word embeddings are word embeddings for words in different languages that share the same vector space. 
 This can be achieved by learning word embeddings for each language separately on monolingual data, and then map these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
-They can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
+Multilingual word embeddings can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
 
 The idea behind multilingual word embeddings is that two equivalent words in different languages should have a similar distribution, thus their vector representations should also be similar \autocite{artetxe-etal-2018-robust}. 
 
@@ -235,7 +235,7 @@ Word embeddings are vector representations of words learned by a neural language
 These vectors' dimensions usually range between 100 and 1000 dimensions. 
 Similar words (words that appear in the same context) have similar word embeddings. 
 To measure word similarity, we measure the similarity between their embeddings using the cosine similarity.
-Multilingual word embeddings are word embeddings for words in different languages which share the same vector space. 
+Multilingual word embeddings are word embeddings for words in different languages  sharing the same vector space. 
 Similar words in different languages should have similar embeddings.
 
 \section{Similarity Based Word Alignment}
@@ -247,8 +247,7 @@ Similar words in different languages should have similar embeddings.
 % It has been shown that words that occur in similar contexts have similar word embeddings. 
 % This vector similarity can be measured with the cosine similarity.
 
-With multilingual word embeddings, similar words in different languages should have similar embeddings. 
-This similarity between embeddings in different languages can be leveraged in order to find word alignments using a similarity matrix, without the need for parallel data, which is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
+If similar words in different languages have similar embeddings, these embeddings can be  leveraged in order to find word alignments using a similarity matrix, without the need for parallel data. This is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
 
 \subsection{Method}
 \label{subsec:simalign-method}
