@@ -86,7 +86,7 @@ After the creation of a local copy of the \acrshort{html} files containing the p
 
 Using the Python package BeautifulSoup\footnote{\url{https://beautiful-soup-4.readthedocs.io/en/latest/}} to parse the HTML files, I extracted from each HTML file the title and the text of the press release, as well as some meta data: date, language and the original file-id and the original file name (for debugging purposes).  
 The data was then saved to a \gls{json}\footnotemark file, one file per year.
-See listing~\ref{lst:json} for an example.
+See listing~\ref{lst:json} in page~\pageref{lst:json} for an example.
 
 \footnotetext{\acrfull{JSON} is one of the most popular formats for organizing text data in a hierarchical form. 
 Its syntax is almost identical with that of Python list and dictionaries \autocite[279]{kofler-python}.}
@@ -154,7 +154,7 @@ The SQLite database contains two tables, \texttt{corpus} and \texttt{raw} with t
 
 The final result is an SQLite database (\texttt{corpus.db}) containing two tables:
 \begin{itemize}
-	\item \texttt{corpus}: all the aligned documents from 1997 until today, see Table~\ref{tab:corpus.db-corpus} for details.
+	\item \texttt{corpus}: All the aligned documents from 1997 until today. See Table~\ref{tab:corpus.db-corpus} for details.
 
 
 
@@ -232,10 +232,10 @@ Column & Description \\
 \section{Summary}
 For compiling the corpus, the following steps were taken (see also Figure~\ref{fig:corpus-creation-pipeline}):
 \begin{enumerate}
-	\item Scrape website and save HTML documents locally.
-	\item Extract relevant content from HTML files (date, language, title and content) and save to JSON files.
-	\item Read the JSON files using Pandas DataFrames, align the documents and save to new JSON files.
-	\item Feed both types of JSON files into an SQLite database.
+	\item Scrape website and save \acrshort{html} documents locally.
+	\item Extract relevant content from \acrshort{html} files (date, language, title and content) and save to \acrshort{JSON} files.
+	\item Read the \acrshort{JSON} files using Pandas DataFrames, align the documents and save to new \acrshort{JSON} files.
+	\item Feed both types of \acrshort{JSON} files into an SQLite database.
 \end{enumerate}
 
 \begin{figure}
@@ -256,10 +256,10 @@ For compiling the corpus, the following steps were taken (see also Figure~\ref{f
 
 
 \subsection{Statistics}
-The corpus contains \numprint{3536} parallel documents, with a yearly average of 56.8 documents prior to 2009 and a yearly average of 207.8 documents from 2009 onward\footnote{Not including 2022}. 
-See also Table~\ref{tab:docs-per-year}. Table~\ref{tab:docs-per-lang} breaks down the number of documents per each year and language. 
+The corpus contains \numprint{3536} parallel documents, with a yearly average of 56.8 documents prior to 2009 and a yearly average of 207.8 documents from 2009 onward\footnote{Not including 2022}, 
+see also Table~\ref{tab:docs-per-year}. Table~\ref{tab:docs-per-lang} breaks down the number of documents per each year and language. 
 
-The corpus contains \numprint{2484250} German tokens, \numprint{2760690} Romansh tokens and \numprint{2581168} Italian tokens\footnote{Including punctuation tokens}. Table~\ref{tab:top-20} displays the 20 most frequent tokens for each language in the corpus.
+The unaligned corpus contains \numprint{2484250} German tokens, \numprint{2760690} Romansh tokens and \numprint{2581168} Italian tokens\footnote{Including punctuation tokens}. Table~\ref{tab:top-20} displays the 20 most frequent tokens for each language in the corpus.
 
 \begin{table}
 \centering
