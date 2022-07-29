@@ -32,7 +32,8 @@ Sentences may not be left out and each sentence may only occur in one sentence p
 Traditionally, there are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based and partial similarity-based \autocite{hunalign}. 
 
 \subsection{Length Based}
-One early method for sentence alignment is the one described in \cite{gale-church-1991-program} which is \enquote{based on a simple satistical model of character lengths} \autocite{gale-church-1991-program}. The method arose out of the need to design a faster, computationally more efficient algorithm than the ones that existed at the time\footnotemark.
+One early method for sentence alignment is %the one described in \cite{gale-church-1991-program} which is 
+\enquote{based on a simple statistical model of character lengths} \autocite{gale-church-1991-program}. The method, dubbed since as the \enquote{Gale \& Church method/algorithm}, arose out of the need to design a faster, computationally more efficient algorithm than the ones that existed at the time\footnotemark.
 
 \footnotetext{With the algorithms that existed up to that time, it took 10 days to extract 3 million sentence pairs, 12,500 sentences per hour.}
 
@@ -45,14 +46,14 @@ A program based on this method was tested against a human-made alignment on two 
 The program made a total of 55 errors out of a total of \numprint{1316} alignments (4.2\%). 
 By taking the best scoring 80\% of the alignments, the error rate could be reduced to 0.7\%.
 The method was also much faster than the algorithms that existed up to that time: 
-It took 20 hours to extract around \numprint{890000} sentence pairs, around \numprint{44500} sentence pairs per hour, which is around 3.5 times faster than previous algorithms \autocite{gale-church-1991-program}.
+It took 20 hours to extract around \numprint{890000} sentence pairs, around \numprint{44500} sentence pairs per hour, which is about 3.5 times faster than previous algorithms \autocite{gale-church-1991-program}.
 
 \subsection{Partial Similarity Based}
 Another method is similarity based such as the one presented in \cite{simard-plamondon-1996-bilingual}. 
 Here, alignment follows two steps (or passes). 
 In the first step, \emph{isolated cognates} are used to mark sort of \emph{anchors} in the texts. 
-The term \emph{cognate} refers here to two word-forms of different languages whose  first four characters are identical. 
-Isolated cognates are cognates with no resmebling word forms within a context window.
+The term \enquote{cognate} refers here to two word-forms of different languages whose  first four characters are identical. 
+Isolated cognates are cognates with no resembling word forms within a context window.
 It follows the assumption that two isolated cognates of different languages are parts of segments that are mutual translations and should be aligned with each other. 
 These cognates are used as anchors, and the process is repeated recursively between the anchors, in order to find further isolated cognates within these boundaries, until no more anchor points can be found.
 
@@ -77,7 +78,7 @@ There are also hybrid sentence-alignment methods, combining several methods.
 
 \cite{moore2002fast} presents a method in which sentence lengths are combined with word correspondences to find the best alignments. 
 It works in three steps:
-First sentences are aligned using a sentence-length-based model. 
+First, sentences are aligned using a sentence-length-based model. 
 Then, the sentence pairs with the highest probability, i.e., those that are most likely real correspondences of each other, are used to train a translation model. 
 The translation model is then used to augment the initial alignment, so that the result is length- and translation-based \autocite{moore2002fast}.
 
@@ -99,7 +100,7 @@ When the alignment process takes less time,  texts that are less suitable for al
 can be filtered out earlier, and pre-processing steps such as tokenization and sentence segmentation, which may also influence the alignment quality, can be tested. 
 Tweaking and fine-tuning the model parameters may also require several runs \autocite{hunalign}. 
 
-In other words, it may take several attempts until unsuitable texts can be filtered out, the best pre-processing steps are identified and the best model parameters are found. 
+In other words, it may take several attempts until unsuitable texts can be filtered out, the best pre-processing steps are identified, and the best model parameters are found. 
 An algorithm which performs faster has a clear advantage in such cases.
 
 % In other words, sentence alignment for a big corpus often requires several passes or runs until misalignments due to less suitable texts or faulty tokenization and sentence segmentation are revealed. An algorithm that performs faster has an obvious advantage here.
@@ -110,8 +111,8 @@ While the statistics- and length-based  methods described in section~\ref{sec:ov
 \subsection{Bleualign}
 
 One of these methods was presented in \cite{sennrich-volk-2010-mt} and has been dubbed since as Bleualign. 
-It arose as a method addressing to the problem of aligning less \enquote{easily} alignable corpora. 
-Sentence alignment methods up to that time perform excellent on well-strctured corpora with a high language similarity such as the Canadian Hansards  or the Europarl\footnote{Parliamentary proceedings of the EU Parliament}  which are considered easy to align because they are well-structured---they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
+It arose as a method addressing  the problem of aligning less \enquote{easily} alignable corpora. 
+Sentence alignment methods up to that time perform excellent on well-structured corpora with a high language similarity such as the Canadian Hansards  or the Europarl\footnote{Parliamentary proceedings of the EU Parliament}  which are considered easy to align because they are well-structured---they provide markup information to identify speakers which is useful for creating anchor points and the subsequent alignment \autocites{simard-plamondon-1996-bilingual,sennrich-volk-2011-iterative}. 
 However, when aligning pairs of languages which are fundamentally different and/or of less structured texts, the alignment task becomes more difficult \autocite{sennrich-volk-2010-mt}.
 
 Bleualign uses BLEU as a similarity score to find sentence alignments. 
@@ -123,7 +124,7 @@ The higher the BLEU score, the more likely it is that two sentences are mutual t
 BLEU scores for two unrelated sentences is usually 0. Instead of aligning sentences of the source and the target language with each other, Bleualign aligns a machine translated version of the target side of the corpus with the source side in order to find the most reliable alignments \autocite{sennrich-volk-2010-mt}. 
 
 However, this approach requires an already existing machine translation system with reasonable performance. 
-This problem was addressed in \cite{sennrich-volk-2011-iterative} by suggesting an iterative method for alignment combining length-based and BLEU score-based methods which doesn't require an already existing machine translation system: 
+This problem was addressed in \cite{sennrich-volk-2011-iterative} by suggesting an iterative method for alignment, combining length-based and BLEU score-based methods, which doesn't require an already existing machine translation system. 
 In the first iteration, sentences are aligned using an implementation of the Gale \& Church algorithm, then a \acrfull{smt} system is trained on the sentence-aligned corpus. 
 In the following iterations, the corpus (target side) is machine-translated using the \acrshort{smt} system trained in the last iteration and is then aligned to the source side using Bleualign. 
 Then, a new \acrshort{smt} system is trained using the current alignments.
@@ -132,7 +133,7 @@ Then, a new \acrshort{smt} system is trained using the current alignments.
 It should be used mainly where conventional sentence alignment algorithms such as Gale \& Church have lower accuracy or where language-specific resources such as dictionaries (needed for hunalign \autocite{hunalign}) or machine translation systems are unavailable or lacking in quality.
 
 \subsection{Vecalign}
-The desire for  sentence alignment of even higher quality rose with the insight that while misaligned sentences have small effect on \acrshort{smt} performance, they have a crucial effect on \acrfull{nmt} systems. 
+The desire for  sentence alignment of even higher quality rose with the insight that, while misaligned sentences have small effect on \acrshort{smt} performance, they do have a crucial effect on \acrfull{nmt} systems. 
 This is especially true in scenarios with less data for low-resource \acrshort{nmt} \autocite{thompson-koehn-2019-vecalign}. 
 
 Vecalign uses a novel method which is based on the similarity of bilingual sentence embeddings. 
