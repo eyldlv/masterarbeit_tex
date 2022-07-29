@@ -2,7 +2,7 @@
 \label{chap:compiling}
 \section{Introduction}
 
-The corpus at hand incorporates the press releases published by the Canton of \Gls{graubuenden}. 
+The corpus at hand incorporates the press releases published by the canton of \Gls{graubuenden}. 
 These press releases are a means of the cantonal government to publish news and information about topics such as politics, economy, health and culture. 
 Graubünden, which is made up of German speaking, Italian speaking and Romansh speaking regions, is the only trilingual canton in Switzerland. 
 As such, virtually all press releases are published in these three languages.
@@ -11,15 +11,15 @@ This trilingual setting lends itself to be collected to a parallel trilingual co
 \section{Collecting the Data}
 At first, I contacted the \emph{\Gls{standeskanzlei}} (\enquote{State Chancellery of Grisons}) which is the \enquote{the general administrative authority for questions of office, coordination and liaison with the cantonal parliament (\enquote{Grosser Rat}), government and cantonal administration} \autocite{staka}. 
 The \emph{\Gls{standeskanzlei}}, with its \emph{Übersetzungsdienst} (\enquote{Translation service}), is responsible for translating documents in service of the canton.
-I was hoping to receive the data directly from them---after all, we are not talking about private or commercial data, but about public translation work financed with taxpayers' money.
+I was hoping to receive the data directly from them---after all, this is not private or commercial data, but  public translation work financed with taxpayers' money.
 
-I spoke to Mr.~Mirco Frepp from the communication sevices (\emph{Kommunaktionsdienst}), which, although very friendly, had to inform me that it would be impossible for me to receive the data. 
-The explanation was that the documents are not saved locally somewhere, but are saved in a database. 
+I spoke to Mr.~Mirco Frepp from the communication services (\emph{Kommunaktionsdienst}), which, although very friendly, had to inform me that it would be impossible for me to receive the data. 
+The explanation was that the documents are not saved locally somewhere, but are rather saved in a database. 
 The documents are extracted from the database and are generated as ad-hoc HTML documents whenever the website is accessed. 
 It was also not possible to receive a dump of the database.
 
 \section{Web Scraping}
-Not being able to receive a dump of the database meant I had to scrape the canton's website, extract the relevant content from the HTML files and construct my own database. In order to achieve this, I wrote a series of Python scripts that would take care of these tasks. 
+Not being able to receive a dump of the database meant I had to scrape the canton's website, extract the relevant content from the \gls{htmlgloss} files and construct my own database. In order to achieve this, I wrote a series of Python scripts that would take care of these tasks. 
 All the scripts can be found on my GitHub repository\footnote{\url{https://github.com/eyldlv/de_rm_it_corpus}}. 
 The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}.
 
@@ -40,10 +40,10 @@ The scripts relevant for the database building are saved under the folder \textt
 \label{subsubsec:web-scraper}
 The script \texttt{web\_scraper.py} goes to the index web page for each year and language. 
 This page contains the links pointing to all the press releases that were released that year. 
-It collects all those links, and then downloads the HTML from each link. 
-The HTML pages are saved in separate folders for each year. 
+It collects all those links, and then downloads the \acrshort{html} file from each link. 
+The \acrshort{html} pages are saved in separate folders for each year. 
 The filenames have the following format: \texttt{year\_file-id\_language}, e.g., \texttt{1997\_12924\_DE.html}. 
-The file-id is taken from the URL and will be later used to align the documents. 
+The file ID is taken from the \gls{url} and will be later used to align the documents. 
 
 
 \begin{figure}[ht]
@@ -67,7 +67,7 @@ The file-id is taken from the URL and will be later used to align the documents.
 \end{figure} 
 
 Since the script makes many requests to the website, one has to anticipate that the server might stop responding, which will result in a request time-out.  This means the script will have to be run a couple of times.
-To avoid downloading HTML pages that were already downloaded, the script will skip and press releases that already exist locally, providing the file size is greater than 0 bytes.
+To avoid downloading HTML pages that were already downloaded, the script will skip any press releases that already exist locally, providing the file size is greater than 0 bytes.
 This way, the script can also be run at a later stage, after additional new press releases were published, in order to update the local repository.
 To make sure the local copy of the press releases is complete, the script can simply be run repeatedly until a message is printed to the console that no new press releases were downloaded. 
 
@@ -82,43 +82,19 @@ This can be limited by using the following optional arguments:
 All the scripts responsible for building the corpus can be found under the folder \texttt{corpus\_builder}.
 
 \subsection{HTML Parsing}
-After the creation of a local copy of the HTML files containing the press releases, the content needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
+After the creation of a local copy of the \acrshort{html} files containing the press releases, the content needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
 
 Using the Python package BeautifulSoup\footnote{\url{https://beautiful-soup-4.readthedocs.io/en/latest/}} to parse the HTML files, I extracted from each HTML file the title and the text of the press release, as well as some meta data: date, language and the original file-id and the original file name (for debugging purposes).  
-The data was then saved to a JSON file, one file per year.
+The data was then saved to a \gls{json}\footnotemark file, one file per year.
 See listing~\ref{lst:json} for an example.
 
+\footnotetext{\acrfull{JSON} is one of the most popular formats for organizing text data in a hierarchical form. 
+Its syntax is almost identical with that of Python list and dictionaries \autocite[279]{kofler-python}.}
 
-\begin{lstlisting}[caption={Example for a JSON file containing the press releases extracted from the HTML files.}, captionpos=b, label=lst:json, language=json]
-{
-    "0": {
-        "id": "12924",
-        "orig_file": "html/1997/1997_12924_DE.html",
-        "lang": "DE",
-        "title": "25 Jahre Arge Alp: Graubünden feiert tüchtig mit",
-        "date": "31.12.1997",
-        "content": "Die Arge Alp feiert heuer ihr 25-Jahre-Jubiläum. Aus diesem Grund finden vom 27. September bis 12. Oktober 1997 die Festwochen des Alpenraums in Telfs-Mösern, Tirol, statt. ..."
-    },
-    "1": {
-        "id": "12926",
-        "orig_file": "html/1997/1997_12926_DE.html",
-        "lang": "DE",
-        "title": "Kanton will auch personelles Engagement bei der Bündner Kraftwerke AG verstärken",
-        "date": "31.12.1997",
-        "content": "Nachdem der Kanton Graubünden letzten Herbst die Aktienmehrheit der Bündner Kraftwerke AG übernommen hat, will er nun auch seine Vertretung im Verwaltungsrat stärken...."
-    },
-    "2": {
-        "id": "12927",
-        "orig_file": "html/1997/1997_12927_DE.html",
-        "lang": "DE",
-        "title": "Graubünden trifft präventive Massnahmen zur Bekämpfung der illegalen Einwanderung",
-        "date": "31.12.1997",
-        "content": "Die Fremdenpolizei des Kantons Graubünden trifft im Einvernehmen mit dem kantonalen Sozialamt, dem Amt für Zivilschutz sowie der Kantonspolizei Graubünden Massnahmen, um die illegale Einwanderung in den Südtälern des Kantons Graubünden zu bekämpfen...."
-    },
-\end{lstlisting}
+
 
 \subsection{Document Alignment}
-After extracting the relevant data from the HTML files and saving them in JSON files, the core task can begin: aligning the documents to get document-triples which are translations of each other.
+After extracting the relevant data from the HTML files and saving them in \acrshort{JSON} files, the core task can begin: aligning the documents to get document-triples which are mutual translations.
 
 \subsubsection{Linked vs.~Unlinked}
 \label{sec:linked-unlinked}
@@ -127,18 +103,19 @@ The file ID extracted from the URLs is \textbf{common} to all three releases in 
 This file ID can be used to link the press releases with each other. 
 I shall refer to these press releases as \enquote{linked releases}.
 
-For releases published prior to that, each release has a \textbf{unique} file ID. 
+For releases published prior to that, each release has a \textbf{unique} URL, hence also a unique file ID. 
 This means it cannot be used for document alignment. 
 I shall refer to these releases as \enquote{unlinked releases}.
-For unlinked releases I used a simple heuristic: if on one single date exactly three releases were published in three different languages, I assume they are translations of each other. 
+For unlinked releases I used a simple heuristic: if on one single date, exactly three releases were published in three different languages, I assume they are translations of each other. 
 %The titles of press releases that weren't aligned are saved to a CSV file which can be used for manual alignment.
 
 Unfortunately, this means more than half of the of the releases in the years prior to 2009 cannot be automatically added to the corpus, cf.~Figure~\ref{fig:linked-unlinked}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics{graphics/linked-unlinked.png}
-	\caption{Portion of automatically aligned press releases up to 2009}
+	\includegraphics[width=0.9\textwidth]{graphics/linked-unlinked.png}
+	\caption{Portion of automatically aligned press releases up to 2009. 
+	\enquote{Resolved} are releases the were added to the corpus according to the heuristic described in Section~\ref{sec:linked-unlinked} (exactly three on one date of three different languages).}
 	\label{fig:linked-unlinked}
 \end{figure}
 
@@ -146,7 +123,7 @@ Since the year 2009 contains both \enquote{linked} and \enquote{unlinked} releas
 It uses a very simple heuristic: if the file ID of a press release is longer than 5 digits, it is a linked press releases.
 
 \subsubsection{Aligned corpus}
-The aligned press releases are saved again to JSON files, with each entry in the file containing the three press releases in the three languages, along with metadata such as date and file ID. 
+The aligned press releases are saved again to \acrshort{JSON} files, with each entry in the file containing the three press releases in the three languages, along with metadata such as date and file ID. 
 In the rare case that one language is missing, i.e., the press releases wasn't translated into that language for some reason, it is simply left blank. 
 Press releases that are available only in one language are discarded from the aligned corpus.
 
@@ -155,9 +132,9 @@ Using the Python library Pandas\footnote{\url{https://pandas.pydata.org}}, the J
 For linked releases, all the unique ID's are queried, and then for each ID the three languages are collected and saved into a new row. 
 The dates are converted from their original format (DD.MM.YY) to an ISO-8601 format (YYYY-MM-DD) \autocite{enwiki:1095673391} for better compatibility and easier processing later.
 
-For JSON files containing unlinked documents, the script \texttt{create\_corpus} has to be run with the switch \texttt{-{}-by-date}, which tells the program to use the date for aligning the documents instead of the file ID.
+For JSON files containing unlinked documents, the script \texttt{create\_corpus} has to be run with the switch \texttt{-{}-by-date}, which tells the program to use the date, instead of the file ID, for aligning the documents.
 
-For an example of the resulting JSON files, with each row containing the aligned documents, see Listing~\ref{lst:json-aligned}.
+For an example of the resulting \acrshort{JSON} files, with each row containing the aligned documents, see Listing~\ref{lst:json-aligned}.
 \input{listings/aligned_json}
 
 % \section{Manual alignment of unlinked documents}
@@ -386,3 +363,30 @@ das	&	14370	&	ed	&	16030	&	Grigioni	&	15337 \\
 \label{tab:top-20}
 \end{table}
 
+\begin{lstlisting}[caption={Example for a JSON file containing the press releases extracted from the HTML files.}, captionpos=b, label=lst:json, language=json]
+{
+    "0": {
+        "id": "12924",
+        "orig_file": "html/1997/1997_12924_DE.html",
+        "lang": "DE",
+        "title": "25 Jahre Arge Alp: Graubünden feiert tüchtig mit",
+        "date": "31.12.1997",
+        "content": "Die Arge Alp feiert heuer ihr 25-Jahre-Jubiläum. Aus diesem Grund finden vom 27. September bis 12. Oktober 1997 die Festwochen des Alpenraums in Telfs-Mösern, Tirol, statt. ..."
+    },
+    "1": {
+        "id": "12926",
+        "orig_file": "html/1997/1997_12926_DE.html",
+        "lang": "DE",
+        "title": "Kanton will auch personelles Engagement bei der Bündner Kraftwerke AG verstärken",
+        "date": "31.12.1997",
+        "content": "Nachdem der Kanton Graubünden letzten Herbst die Aktienmehrheit der Bündner Kraftwerke AG übernommen hat, will er nun auch seine Vertretung im Verwaltungsrat stärken...."
+    },
+    "2": {
+        "id": "12927",
+        "orig_file": "html/1997/1997_12927_DE.html",
+        "lang": "DE",
+        "title": "Graubünden trifft präventive Massnahmen zur Bekämpfung der illegalen Einwanderung",
+        "date": "31.12.1997",
+        "content": "Die Fremdenpolizei des Kantons Graubünden trifft im Einvernehmen mit dem kantonalen Sozialamt, dem Amt für Zivilschutz sowie der Kantonspolizei Graubünden Massnahmen, um die illegale Einwanderung in den Südtälern des Kantons Graubünden zu bekämpfen...."
+    },
+\end{lstlisting}
