@@ -171,6 +171,7 @@ The idea of vector semantics is to represent a word as a point in some $n$-dimen
 These vectors are called \emph{embeddings}. 
 There are different ways and versions of word embeddings, but in each case the values of the vectors are based in some way on counts of neighboring words \autocite[98-99]{jurafsky-2019}.
 
+\subsubsection{Neural Language Models}
 One version of word embeddings comes from neural language models.
 Language modeling is the task of assigning probabilities to a sequence of words, that is, modeling how likely it is that a sequence of words in a language would be uttered/written by a speaker of that language \autocite[181]{koehn2009}. 
 In practice, the task of a language model is predicting upcoming words from prior word context \autocite[137]{jurafsky-2019}.
@@ -187,9 +188,21 @@ The weights connecting the input layer with the first hidden layer are our said 
 When inputting a word into the network (in form of a one-hot vector), we can get its vector representation, i.e., its embedding, from the so-called embedding layer. 
 Since this representation is conditioned on context, similar words should have similar embeddings \autocite[104-105]{koehn-2020}.
 
+\subsubsection{Neural Embeddings}
+
 There are different ways for learning word embeddings. 
 One of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
 These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn high quality word vector representations, not to generate language.
+
+\subsubsection{Sub-words}\label{sec:subwords}
+Due to computational limitations, neural language models usually have a fixed vocabulary size. 
+This means that even if we had some hypothetical corpus which contains all the words in a language, the model will still not be able to \enquote{learn} all these words. 
+Some words will remain out-of-vocabulary.
+There are different ways for dealing with this limitation in vocabulary size, i.e., with rare words. 
+One way is to split words into small sub-word units. 
+There are different algorithms for splitting words. 
+mBERT uses an algorithm called WordPiece \autocites{wu-2016-wordpiece,delvin-chang-2018-bert} and XLM-R uses BPE \autocites{conneau-etal-2020-xlm,sennrich-etal-2016-neural}.
+
 
 \subsection{Word Similarity}
 \label{sec:word-similarity}

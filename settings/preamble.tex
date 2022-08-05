@@ -110,16 +110,16 @@
 \usepackage{listings}
 \definecolor{background}{HTML}{EEEEEE}
 % json listings
-\lstdefinelanguage{json}{
-    basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
-    numbers=left,
-    numberstyle=\scriptsize,
-    stepnumber=1,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    backgroundcolor=\color{background},
-    frame=lines}
+% \lstdefinelanguage{json}{
+%     basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
+%     numbers=left,
+%     numberstyle=\scriptsize,
+%     stepnumber=1,
+%     numbersep=8pt,
+%     showstringspaces=false,
+%     breaklines=true,
+%     backgroundcolor=\color{background},
+%     frame=lines}
 
 \lstdefinelanguage{txt}{
     basicstyle=\fontsize{10}{10}\normalfont\ttfamily,
@@ -133,7 +133,7 @@
     breaklines=true,
     backgroundcolor=\color{background},
     frame=lines}
-
+\input{settings/json-lang}
 
 \usepackage{numprint}
 \npthousandsep{,}
@@ -159,7 +159,7 @@
 % \makeglossaries
 \input{settings/glossary}
 % \makenoidxglossaries
-\hyphenation{SimAlign} % no hyphenation for SimAlign
+% \hyphenation{SimAlign} % no hyphenation for SimAlign
 
 
 % No new page after abstract
