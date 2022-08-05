@@ -23,26 +23,26 @@ Not being able to receive a dump of the database meant I had to scrape the canto
 All the scripts can be found on my GitHub repository\footnote{\url{https://github.com/eyldlv/de_rm_it_corpus}}. 
 The scripts relevant for the database building are saved under the folder \texttt{corpus\_builder}.
 
-\begin{figure}
-\dirtree{%
-.1 corpus\_builder.
-.2 corpus\_builder.
-.3 access\_db.py.
-.3 create\_corpus.py.
-.2 web\_scraper.
-.3 test\_web\_scraper.py.
-.3 web\_scraper.py.
-}
+% \begin{figure}
+% \dirtree{%
+% .1 corpus\_builder.
+% .2 corpus\_builder.
+% .3 access\_db.py.
+% .3 create\_corpus.py.
+% .2 web\_scraper.
+% .3 test\_web\_scraper.py.
+% .3 web\_scraper.py.
+% }
 
-\caption{Directory tree of \texttt{corpus\_builder}}
-\end{figure} 
+% \caption{Directory tree of \texttt{corpus\_builder}}
+% \end{figure} 
 \subsubsection{Web Scraper}
 \label{subsubsec:web-scraper}
 The script \texttt{web\_scraper.py} goes to the index web page for each year and language. 
 This page contains the links pointing to all the press releases that were released that year. 
 It collects all those links, and then downloads the \acrshort{html} file from each link. 
 The \acrshort{html} pages are saved in separate folders for each year. 
-The filenames have the following format: \texttt{year\_file-id\_language}, e.g., \texttt{1997\_12924\_DE.html}. 
+The filenames are saved using the following format: \texttt{year\_file-id\_language}, e.g., \texttt{1997\_12924\_DE.html}. 
 The file ID is taken from the \gls{url} and will be later used to align the documents. 
 
 
@@ -82,11 +82,11 @@ This can be limited by using the following optional arguments:
 All the scripts responsible for building the corpus can be found under the folder \texttt{corpus\_builder}.
 
 \subsection{HTML Parsing}
-After the creation of a local copy of the \acrshort{html} files containing the press releases, the content needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
+After the creation of a local copy of the \acrshort{html} files containing the press releases, the text containing the press releases needs to be extracted from the HTML files and saved in a format that would be suitable for later processing.
 
-Using the Python package BeautifulSoup\footnote{\url{https://beautiful-soup-4.readthedocs.io/en/latest/}} to parse the HTML files, I extracted from each HTML file the title and the text of the press release, as well as some meta data: date, language and the original file-id and the original file name (for debugging purposes).  
-The data was then saved to a \gls{json}\footnotemark file, one file per year.
-See listing~\ref{lst:json} in page~\pageref{lst:json} for an example.
+Using the Python package BeautifulSoup\footnote{\url{https://beautiful-soup-4.readthedocs.io/en/latest/}} to parse the HTML files, I extracted from each HTML file the title and the text of the press release, as well as some meta data: date, language and the original file ID and the original file name (for debugging purposes).  
+The data was then saved to a \gls{json}\footnotemark{} file, one file per year.
+See listing~\ref{lst:json} on page~\pageref{lst:json} for an example.
 
 \footnotetext{\acrfull{JSON} is one of the most popular formats for organizing text data in a hierarchical form. 
 Its syntax is almost identical with that of Python list and dictionaries \autocite[279]{kofler-python}.}
@@ -98,8 +98,8 @@ After extracting the relevant data from the HTML files and saving them in \acrsh
 
 \subsubsection{Linked vs.~Unlinked}
 \label{sec:linked-unlinked}
-For all releases published after mid-2009 this is pretty simple. 
-The file ID extracted from the URLs is \textbf{common} to all three releases in the three languages (see Figure~\ref{fig:html-scheme}). 
+For all releases published after mid-2009, document alignment is pretty simple. 
+The file ID extracted from the URLs is \textbf{common} to all three releases in the three languages (see example under the folder 2022 in Figure~\ref{fig:html-scheme}). 
 This file ID can be used to link the press releases with each other. 
 I shall refer to these press releases as \enquote{linked releases}.
 
@@ -124,7 +124,7 @@ It uses a very simple heuristic: if the file ID of a press release is longer tha
 
 \subsubsection{Aligned corpus}
 The aligned press releases are saved again to \acrshort{JSON} files, with each entry in the file containing the three press releases in the three languages, along with metadata such as date and file ID. 
-In the rare case that one language is missing, i.e., the press releases wasn't translated into that language for some reason, it is simply left blank. 
+In the rare case that one language is missing, i.e., a press release wasn't translated into that language for some reason, it is simply left blank. 
 Press releases that are available only in one language are discarded from the aligned corpus.
 
 The script \texttt{create\_corpus.py} deals with this task.
@@ -146,7 +146,7 @@ For an example of the resulting \acrshort{JSON} files, with each row containing 
 % The CSV files containing the now enumerated documents can be given to the script \texttt{create\_corpus.py} using the argument \texttt{add-from-csv} to combine the enumerated documents as linked documents into the JSON file.
 
 \section{SQLite database}
-The query language SQL offers flexible and complex way to query databases. 
+The query language SQL offers flexible and complex ways to query databases. 
 For this reason, I decided to save the resulting corpus in an SQLite database. 
 I opted for SQLite because it doesn't require running a separate server and SQLite databases can be easily built, edited and accessed using \texttt{sqlite3}\footnote{\url{https://docs.python.org/3/library/sqlite3.html}}, a Python module delivered with the Python standard library\footnote{\url{https://docs.python.org/3/tutorial/stdlib.html}}.
 
@@ -232,10 +232,10 @@ Column & Description \\
 \section{Summary}
 For compiling the corpus, the following steps were taken (see also Figure~\ref{fig:corpus-creation-pipeline}):
 \begin{enumerate}
-	\item Scrape website and save \acrshort{html} documents locally.
-	\item Extract relevant content from \acrshort{html} files (date, language, title and content) and save to \acrshort{JSON} files.
-	\item Read the \acrshort{JSON} files using Pandas DataFrames, align the documents and save to new \acrshort{JSON} files.
-	\item Feed both types of \acrshort{JSON} files into an SQLite database.
+	\item Scrape website and save the \acrshort{html} documents locally.
+	\item Extract relevant content from the \acrshort{html} files (date, language, title and content) and save  it to \acrshort{JSON} files.
+	\item Read the \acrshort{JSON} files using Pandas DataFrames, align the documents and save them to new \acrshort{JSON} files.
+	\item Feed both types of \acrshort{JSON} files (aligned and unaligned) into an SQLite database.
 \end{enumerate}
 
 \begin{figure}
