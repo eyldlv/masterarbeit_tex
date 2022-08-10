@@ -284,12 +284,13 @@ I align the German article in genitive  \emph{der} with the Romansh preposition 
 Except for my preference for 1-to-1 alignments, the motivation for this is that it is the preposition \emph{da} that expresses the genitival relations between the nouns.
 
 \subsubsection{Separable verbs}
-German uses many verbs to which an adverb or a preposition is affixed in order to delimit the verb's meaning or sometimes completely it (dubbed \enquote{separable verbs}). 
-Since both the verb and the adverb form together the meaning of the word and are conceptually inseparable, both of them should be aligned to the corresponding Romansh verb, resulting in a 2-to-1 alignment.
+Separable verbs are verbs in front of which affixes (mostly prepositions) are placed. 
+These affixes delimit and modify the verb's meaning. \autocite[47]{dryer-2009}. 
+Since both the verb and the affix form together the meaning of the word and are conceptually inseparable, both of them should be aligned to the corresponding Romansh verb, resulting in a 2-to-1 alignment.
 
 \section{Flaws}
 \label{sec:gold-flaws}
-I shall now discuss the quality of my gold standard and some flaws it has.
+I shall now discuss the quality of my gold standard and some of its flaws.
 
 The most obvious flaw is the fact that I created the gold standard alone, without a second annotator. 
 With more than one annotator, more elaborate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
@@ -300,9 +301,14 @@ When several annotators work on the same task, they can also discuss conflicts a
 All of these possible schemes cannot be realized in the case of a single annotator, which was my case.
 
 Another flaw are the missing confidence labels (Sure and Possible), which may influence the evaluation scores (see Section~\refnameref{sec:problems-evaluation}). 
-There are however precedents for gold standards without Possible links, using only Sure links \autocites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore defensible.
+There are however precedents for gold standards without Possible links, using only Sure links \autocites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore arguable.
 
 
 %Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines. 
 
+\section{Statistics}
+The 600 sentence pairs of the gold standard contain 6743 German tokens and 9158 Romansh tokens. 
+The gold standard contains 6962 edges, 6275 of them are 1-to-1 alignments.
+
+Unfortunately, I did not keep tabs on time during annotation, but I would estimate that at a rate of around 60 sentences per hour, annotation took around 10 hours (not including setting up the alignment program and defining the annotation guidelines). 
 
