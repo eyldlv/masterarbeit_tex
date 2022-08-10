@@ -69,7 +69,7 @@ We can compute the probability distributions of lexical translations given their
 That is, by counting how often a word $s^e_i$ in the sentence $s_e$ in language $e$ was translated as a word $s^f_j$ in a sentence $s_f$ in language $f$, we can compute the desired probability distributions. 
 Take for example a set of German-English sentence pairs. By counting how many times the German word \emph{das} was translated as \emph{the}, how many times it was translated as \emph{that}, etc., we can compute each word's translation probability distribution. 
 With these individual probability distributions we can compute the likelihood of a sentence in language $f$ being a translation of a sentence in language $e$ \autocite[88]{koehn2009}.
-Unfortunately, while sentence alignment is a relatively easy task (at least of well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. In other words, we do not know \emph{a priori} how each word in the source sentence was translated, which means we cannot compute the counts for the probability distributions.
+Unfortunately, while sentence alignment is a relatively easy task (at least for well-structured texts), and while sentence aligned parallel corpora are not hard to compile or come by, we do not know which words correspond to which words in the sentence pairs. In other words, we do not know \emph{a priori} how each word in the source sentence was translated, which means we cannot compute the counts for the probability distributions.
 
 This problem, dubbed as a \emph{chicken and egg problem}, is basically the following: If we had word alignments, it wouldn't be a problem to estimate the lexical translation model and compute the probability distributions for words and sentences; 
 And if we had a model, we could easily estimate the most likely correspondences between words in the source and the target sentences. 
@@ -103,7 +103,7 @@ Model 1 makes the unrealistic assumption that all connections for each position 
 This means that word order is not modeled by Model 1. 
 Simply put, the word order does not influence the likelihood of word alignments.
 Therefore, Model 2 \emph{does} depend on word order. 
-It adds an explicit model for alignment based on the positions of the source and the target words \autocites{brown-etal-1993-mathematics}[99]{koehn2009}.
+It adds an explicit model for alignment based on the absolute positions of the source and the target words \autocites{brown-etal-1993-mathematics}[99]{koehn2009}.
 
 Model 3 adds a probability distribution of the number of words a source word is usually translated to (dubbed \emph{fertility}). 
 It is able to model alignments of types other than 1-to-1 \autocite[100]{koehn2009}. 
@@ -350,8 +350,14 @@ Argmax finds a local optimum and Itermax is a greedy algorithm.
 There is a third alignment method, called \textbf{Match}, which finds global optima. 
 The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source).
 
-For the task for word alignment, SimAlign can use multilingual embeddings which were learned in advance from monolingual data and then mapped to a shared vector space. 
-SimAlign can also use, out-of-the-box, the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}.
+For the task of word alignment, SimAlign can use multilingual embeddings which were learned in advance from monolingual data and then mapped to a shared vector space. 
+SimAlign can also use, out-of-the-box, the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
+
+However, none of these models has \enquote{seen} Romansh, i.e., Romansh is not part of the training data for these models. 
+But multilingual models were shown to generalize even for unseen languages. 
+mBERT, for instance, achieves reasonable results out-of-the-box (without further training) on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}. 
+There is therefore good reason to expect that SimAlign would also work for aligning words in sentence pairs with Romansh.
+
 
 \subsection{Summary}
 By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs can be computed. 
