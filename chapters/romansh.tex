@@ -1,9 +1,9 @@
 \chapter{Romansh}\label{chap:romansh}
 
-In this chapter, I will provide a short context about Romansh, the language that builds a third of the resulting corpus, but is conceptually the main motivation for this work.
+In this chapter, I will provide a short context about Romansh, the language that is a third of the resulting corpus and conceptually the main motivation for this work.
 
 \section{Rhaeto-Romance}\label{sec:rhaeto-romance}
-In 1873, an Italian linguist by the name of Graziadio Ascoli pointed out a shared number of characterizing phenomena in a number of Romance dialects spoken in parts of Switzerland and Italy (but without a geographical continuum) and named this group of dialects \enquote{Ladino}. Since 1883, due to the influence of the Austrian linguist Theodor Gartner's publication \emph{Raetoromanishce Grammatik} describing this group of dialects, this name (German \emph{Rätoromanisch}, English \enquote{Rhaeto-Romance}) became associated with this group of dialects. 
+In 1873, an Italian linguist by the name of Graziadio Ascoli pointed out a shared number of characterizing phenomena in a number of Romance dialects spoken in parts of Switzerland and Italy (but without a geographical continuum) and named this group of dialects \enquote{Ladino}. Since 1883, due to the influence of the Austrian linguist Theodor Gartner's publication \emph{Raetoromanische Grammatik}  describing this group of dialects, this name (German \emph{Rätoromanisch}, English \enquote{Rhaeto-Romance}) became associated with this group of dialects. 
 
 Rhaeto-Romance is spoken in three areas, separated from each other, and is made up of three super-dialects: Romansh, spoken in parts of the Swiss canton of Grisons (Graubünden), Ladin, spoken in the Dolomotic Alps in northern Italy (Südtirol), and Friualian, spoken around the drainage basin of the Tagliamento river, between Venice and Trieste \autocite[1]{haiman1992}.
 
@@ -99,7 +99,7 @@ Since its invention, Romansh and the people promoting it have had notable succes
 In 1999, Romansh became a \enquote{partially official language} (\emph{Teilamtssprache}) of the Swiss confederation. 
 In 2003, it was recognized in the cantonal constitution of Graubünden as an equal cantonal language, and the protection of the traditional language regions was guaranteed.
 Nowadays, Romansh is in use in many domains, not only in the public administration, but also in economy. 
-Many writings and works were written in Rumantsch Grischun. 
+Many works were written in Rumantsch Grischun. 
 People learn to read and write in Rumantsch Grischun and in some schools, classes are held in it. 
 The extent of radio and television in Romansh has been growing. 
 There is a radio station broadcasting 24/7, television programs in Romansh are broadcast in all public channels of the Swiss Broadcating Corporation (SSG SSR), and there are also internet portals, e.g., \url{https://www.rtr.ch/}. All of this wouldn't have been possible if it weren't for the political \enquote{upgrade} that was aspired for by the Romansh language movement \autocite{cathomas2012}.
@@ -108,3 +108,30 @@ The canton of Graubünden has been releasing most or all of its press releases s
 I therefore decided to collect these press releases and use them to compile a parallel corpus. 
 
 From this point on, the term \emph{Romansh} will refer to the standard variant \emph{Rumantsch Grischun}.
+
+\section{Romansh in NLP}
+\subsection{Low-resource languages}
+The field of \acrfull{NLP} relies on the existence of digital language resources, such as collections of written or spoken texts, or a gold standard with labels of the desired output of a system. 
+There is a dichotomy in the field of \acrshort{NLP} between high-resource languages and low-resource languages. 
+High-resource languages, such as English and Chinese, have large accessible amounts of digitized texts and annotated data, but also  off-the-shelf working tools for various NLP tasks (\acrshort{pos} taggers, named entity recognizers) \autocite{bender-2019}.
+
+The term low-resource refers to a variety of scenarios and there is no  clear definition of what a low-resource language is. 
+It may refer to endangered languages with a low number of speakers, but also to widely spoken languages which are seldom addressed by the NLP community. 
+There are also different thresholds of amounts of data for defining a language as \enquote{low-resource} \autocite{hedderich-etal-2021-survey}. 
+As the case may be, \enquote{low-resource language} means the amount of digital resources available for that language are scarce in comparison to high-resource languages.
+
+\subsection{Romansh as a low-resource language}
+Although Romansh is an endangered language with an ever diminishing number of speakers, it did receive some attention from the NLP community.
+One could say that Romansh \enquote{got lucky}: it has a written standard, it is spoken in a highly-modernized country, it is promoted and protected by law, and last but not least, the Universities of Zurich and Geneva have departments dedicated to NLP, whose attention was often drawn towards Romansh.
+
+I was indeed not the first person to have the idea of collecting parallel data including Romansh. 
+\cite{scherrer-cartoni-2012-trilingual} also created a trilingual corpus using the press releases published by the canton of Graubünden\footnote{However, only until 2012; The corpus was then used for the task of induction of bilingual lexicons}. 
+\cite{weibel-2014} compiled two sentence- and word-aligned corpora (German-Romansh) based on legal texts and on the same press releases, and made them available on multilignwis, an online concordance search system \autocite{multilingwis}. 
+Last year, another student at the University of Zurich collected parallel data in German and Romansh as part of a seminar dealing with Rhaeto-Roman culture \autocite{gasner-2021}.
+
+Romansh was also used for evaluating performance of out-of-domain machine translation\footnote{Translating texts of unseen domains} \autocite{muller-etal-2020-domain} or for evaluating code-switching detection within a multilingual corpus \autocite{volk-clematide-2014-detecting}.
+
+Most recently, a Zurich based company specializing on machine translation, TextShuttle, developed and released a machine translation system for Romansh (translating to or from German, French, Italian and English) \autocite{textshuttle}.
+
+Although Romansh is in a better situation than other low-resource languages, collecting more data and running experiments with it, especially in a zero-shot setting using multilingual language models (cf., Section~\ref{sec:research-question} and Section~\ref{sec:discussion}), is worthwhile.
+
