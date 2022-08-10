@@ -185,6 +185,16 @@ The final result is an SQLite database (\texttt{corpus.db}) containing two table
 % \end{itemize}
 \end{itemize}
 
+This way, fast and efficient corpus queries can be made. For instance, the following query will find all the German press releases and their Italian translations from the year 2021 containing the word \emph{Umwelt} (\enquote{environment}) that are at least 5000 characters long:
+
+\begin{verbatim}
+		SELECT DE_title, DE_content, IT_title, IT_content 
+		FROM corpus 
+		WHERE DE_content LIKE "%Umwelt%"
+		AND LENGTH(DE_content) > 5000
+\end{verbatim}
+
+
 
 \begin{table}
 \centering
