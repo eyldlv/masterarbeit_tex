@@ -360,14 +360,14 @@ There is therefore good reason to expect that SimAlign would also work for align
 
 
 \subsection{Summary}
-By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs can be computed. 
+By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs in the languages the models were pre-trained on can be computed. 
 Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce, which makes similarity based word alignment a competitive method against statistical methods. 
 
-Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of data to perform well.
+Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of parallel data to perform well.
 The quality of the alignments deteriorates quickly when the size of data diminishes\footnotemark. 
 
-\footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning 1.5M sentence pairs is $9.4\%$. 
-When aligning only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
+\footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning words in 1.5M sentence pairs is $9.4\%$. 
+When aligning words in only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
  (see Table 4 in \cite{och-ney-2000-improved})}
 
 In experiments done by \cite{jalili-sabet-etal-2020-simalign}, their similarity based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
