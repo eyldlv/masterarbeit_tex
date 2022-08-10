@@ -6,7 +6,7 @@ The corpus presented in chapter~\ref{chap:compiling} is a raw parallel corpus, t
 In order to use the corpus for tasks such as training a machine translation model, another processing step is needed: sentence alignment \autocite[55]{koehn2009}.
 
 A bilingual, sentence-aligned corpus can be useful for a variety of tasks. 
-Probably the most important task bilingual corpora are used for nowadays is for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but other tasks it can be used for are building translation memories \autocite{sennrich-volk-2011-iterative} or a for a bilingual concordance system with the purpose of allowing a user to find out how a given translation is translated \autocites{moore2002fast,gale-church-1991-program}, e.g., multilingwis\footnote{\url{https://pub.cl.uzh.ch/projects/sparcling/multilingwis2.demo/}} \autocite{multilingwis}.
+Bilingual corpora are  probably mostly used for training a machine translation model \autocites{gale-church-1991-program,moore2002fast,chen-1993-aligning}, but they can also be used for building translation memories \autocite{sennrich-volk-2011-iterative} or a for bilingual concordance systems, with the purpose of allowing a user to find out how a given sentence is translated \autocites{moore2002fast,gale-church-1991-program}, e.g., multilingwis\footnote{\url{https://pub.cl.uzh.ch/projects/sparcling/multilingwis2.demo/}} \autocite{multilingwis}.
 
 \subsection{Formal definition}
 Formally, the task of sentence alignment can be described as follows: We have a list of sentences in language \(e\), \(e_1,...e_{n_e}\) and a list of sentences in language \(f\), \(f_1,...,f_{n_f}\). 
@@ -168,7 +168,7 @@ That being said, LASER \emph{has} been said to generalize to unseen languages th
 \footnote{See also \url{https://github.com/facebookresearch/LASER}}.
 
 Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentences---hunalign performed excellently. 
-I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard, I only had to discard 11 out of 611 sentences due to  misalignment. 
+I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard of German-Romansh (see Chapter~\ref{chap:gold-standard}), I only had to discard 11 out of 611 sentences due to  misalignment. 
 This corresponds to a precision of 98.2\% or an error rate of 1.8\%.
 
 \subsection{Pipeline}
@@ -266,7 +266,7 @@ Word tokenization is important for the next step---word alignment.
 For the task of tokenization, I used NLTK's \autocite{bird-2009-nltk} word tokeniziation functions, while applying the German model for German text and the Italian model for Romansh and Italian text. 
 The justification for the latter is that Romansh, in a manner very similar to Italian, uses apostrophes to attach enclitics (articles and pronouns) to neighboring words, which should be separated for word tokenization. 
 An inspection with the bare eye looked precise enough. 
-In the course of annotating the word alignment, I had to correct the tokenization less than 10 times for 600 sentences.
+In the course of annotating the word alignment for the gold standard, I had to correct the tokenization less than 10 times for 600 sentences.
 
 
 \section{Results}
