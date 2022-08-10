@@ -2,25 +2,30 @@
 \section{Motivation}
 Romansh is a Romance language spoken in Switzerland, primarily in the Canton of Grisons (henceforth \gls{graubuenden}) \autocite[173]{bossong2008}. 
 Graubünden is the only canton in Switzerland with three official languages---German, Italian and Romansh. 
-The number of Romansh speakers, 40,000, has been sinking in the last decades \autocite{bundesamt2020}. 
+The number of Romansh speakers, 40,000, has been decreasing in the last decades \autocite{bundesamt2020}. 
 In order to protect Romansh from extinction, Graubünden committed itself in its constitution to the protection and the promotion of multilinguality within its borders: 
 
+\begin{german}
 \begin{displayquote}
-Kanton und Gemeinden unterstützen und ergreifen die erforderlichen Massnahmen zur Erhaltung und Förderung der rätoromanischen und der italienischen Sprache\footnote{The canton and the communities shall support and take the required measures to maintain and promote the Romansh language and the Italian language.}. 
+Kanton und Gemeinden unterstützen und ergreifen die erforderlichen Massnahmen zur Erhaltung und Förderung der rätoromanischen und der italienischen Sprache\footnote{The canton and the communities shall support and take the required measures to maintain and promote the Romansh language and the Italian language.}
+. 
 (Art.~3 Abs.~2 der Bündner Verfassung\footnote{\url{https://www.gr-lex.gr.ch/app/de/texts_of_law/110.100}}) 
 \end{displayquote}
+\end{german}
 
 Additionally, in 2006 a language law (\emph{Sprachengesetz}) was passed, with the aim of further promoting and protecting the multilinguality of the canton:
+\begin{german}
 \begin{displayquote}
 Dieses Gesetz bezweckt:
 ...
 e)~~~die  bedrohte  Landessprache  Rätoromanisch  mit  besonderen  Massnahmen zu unterstützen\footnote{The law of languages of the Canton Graubünden is meant to: e) to support the endangered national language Romansh.}; (Abs.~1 Art.~1 Bst.~e des Sprachengesetz des Kantons Graubündens\footnote{\url{https://www.gr-lex.gr.ch/app/de/texts_of_law/492.100\#structured_documentingress_foundation_fn_4417_2_2_c}})
 \end{displayquote}
+\end{german}
 
 
-Since 1998, the majority of all press releases published by the Canton Graubünden were released in these three langauges. 
-This existence of such parallel documents in three langauges lends itself to the collection and the compliation of a trilingual parallel corpus. 
-Of special interest is here the Romansh language, which, having such a low number of speakers, is to be considered a  \enquote{low-resource language}.
+Since 1998, the majority of all press releases published by the Canton Graubünden were released in these three languages. 
+Such parallel documents in three languages lend themselves to the collection and the compilation of a trilingual parallel corpus. 
+Of special interest is here the Romansh language, which, having such a low number of speakers and due to the fact that not many \acrfull{NLP} resources exist (more on that later), should be seen as a \enquote{low-resource language}.
 
 
 % When traveling by train, the announcements are heard in German, Romansh or Italian according to which part of the canton one is currently at. 
@@ -35,25 +40,27 @@ Of special interest is here the Romansh language, which, having such a low numbe
 
 
 \section{Research Question and Goals}
-\subsection{Research Questions}
-\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment (SimAlign), which is similarity based and uses multilingual word embeddings to compute similarity, outperforms statistical models. 
+\subsection{Research Question}
+Given two sentences which are mutual translations, word alignment is a mapping of the words in the sentence of the source language to the words in the sentence of the target language \autocite[84]{koehn2009}.
+\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment (SimAlign), which is similarity-based and uses multilingual word embeddings to compute similarity, outperforms statistical models. 
 
-But not only that the model outperforms the existing statistical models, its biggest advantage, as propagated by \cite{jalili-sabet-etal-2020-simalign}, is that it requires no training data--- 
-statistical models will only reach a threshold of good performance with enough training data \autocites{jalili-sabet-etal-2020-simalign,och-ney-2000-improved}. 
+But not only that the model outperforms the existing statistical models, its biggest advantage, as propagated by \cite{jalili-sabet-etal-2020-simalign}, is that it requires no parallel training data (pairs of sentences which are mutual translations), but only monolingual training data--- 
+statistical models will only reach good performance with enough parallel training data \autocites{jalili-sabet-etal-2020-simalign,och-ney-2000-improved}. 
 Using word embeddings, words in just one single sentence pair can be aligned with high accuracy, without the need of a large set of sentence pairs for first training a word alignment model.
-However, all of this works presuming we already have trained a multilingual language model, whose learned embeddings we can leverage for this task. 
+However, all of this works presuming we already have  a multilingual language model, trained on monolingual data, whose learned embeddings we can leverage for this task. 
 There exist some language models that were trained on multilingual data: 
 mBERT was trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, LASER was trained on 93 languages \autocite{artexte-schwenk-2019-laser} and XLM-RoBERTa base was trained on 100 languages \autocite{conneau-etal-2020-xlm}. Romansh, however, is not part of any of the training data for these models.
 
-Multilingual language models were shown to also perform  well on unseen languages, dubbed as \enquote{zero-shot setting}. 
-Although the LASER model was pretrained on 93 languges, it obtained strong results for sentence embeddings in 112 languages \autocite{artexte-schwenk-2019-laser}. 
-mBERT was shown to perform well on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}.
+
+
+Multilingual language models were shown to also perform  well in various tasks on unseen languages, dubbed as \enquote{zero-shot setting}. 
+mBERT achieves reasonable results out-of-the-box (without further training) on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}.
+And although the LASER model was pretrained on 93 languages, it obtained strong results for sentence embeddings in 112 languages \autocite{artexte-schwenk-2019-laser}. 
 
 There is, thus, good reason to believe that similarity based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh, in spite of Romansh not being part of the training data, especially since vocabulary overlaps between unseen and seen languages favor performance in zero-shot settings \autocite{pires-etal-2019-multilingual}, and since Romansh displays a high similarity with other seen Romance languages, e.g., Italian, French, Spanish. 
 English, although not a Romance language, also has a large portion of Romance-based vocabulary.
 
-The research question at hand is therefore: \textbf{Will similarity based word alignment perform as well as statistical word alignment models for the language pair German-Romansh? 
-Will it outperform it?}
+The research question at hand is therefore: \textbf{Will similarity-based word alignment perform as well as statistical word alignment models for the language pair German-Romansh?}
 
 % Will word embeddings based word alignment will work in zero-shot settings? 
 % That is, can the embeddings learned by a multilingual language model be used for word alignment for a language that wasn't included in the training data?
@@ -76,7 +83,7 @@ In the course of the following pages I will first give a short introduction to t
 I will shortly explain the mechanism behind statistical and similarity based word alignment methods (Chapter~\ref{chap:word-alignment}). 
 Finally, I will explain how and according to which guidelines I created the gold standard (Chapter~\ref{chap:gold-standard}) and display the results of my experiments in which I compared different word aligning systems (Chapter~\ref{chap:results}).
 
-Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow  student of linguistics, such that this work, if it ever falls in the hands a future student, will be comprehensible and readable. 
+Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow  student of linguistics, such that this work, if it ever falls in the hands of a future student, will be comprehensible and readable. 
 I hope that it \emph{will} be read by and inspire future students, in the same way I that was inspired by works written by students before me.
 
 \section{GitHub repository}
