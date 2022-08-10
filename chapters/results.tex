@@ -65,10 +65,10 @@ See \url{https://github.com/robertostling/efmaral}}
 
 
 \subsection{Performance}
-Statistical word alignment models rely heavily  on a minimal amount of data before they reach a threshold of good performance. In order to be fair in the evaluation of the baseline systems (fast\_align and eflomal) I word-aligned all of the sentence pairs (\numprint{79548}) with  the addition of the 600 annotated sentences from the gold standard (total of \numprint{80148} sentence pairs). I then extracted the alignments of the gold standard for the evaluation.
+Statistical word alignment models rely heavily  on a minimal amount of parallel data before they reach a threshold of good performance. In order to be fair in the evaluation of the baseline systems (fast\_align and eflomal) I word-aligned all of the sentence pairs (\numprint{79548}) with  the addition of the 600 annotated sentences from the gold standard (total of \numprint{80148} sentence pairs). I then extracted the alignments of the gold standard for the evaluation.
  
 
-The perfromance of the two baseline models on different dataset sizes is presented in Table~\ref{tab:baseline}. The relation between quality and dataset size is striking. 
+The performance of the two baseline models on different dataset sizes is presented in Table~\ref{tab:baseline}. The relation between quality and dataset size is striking. 
 
 Compared to  results reported in other papers, the results achieved by the models can be considered good. 
 For eflomal,  an \acrshort{aer} of 0.106  was achieved for English-Swedish (\numprint{692662} sentences) and an AER of 0.279 for English-Romanian (\numprint{48641} sentences) (Table 2 in \cite{Ostling2016efmaral}). 
@@ -114,7 +114,7 @@ The full dataset size  is the number of sentence pairs extracted at the time of 
 \section{SimAlign}\label{sec:performance-simalign}
 I word-aligned the 600 sentences from the gold standard (see Chapter~\ref{chap:gold-standard}) several times using different parameters. 
 I tested the two multilingual embeddings that SimAlign works with out-of-the-box: mBERT\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}} and XLM-R \autocite{conneau-etal-2020-xlm}. 
-mBERT only provides embeddings on a subword level, while XLM-R works either on the word or the subword level \autocite{jalili-sabet-etal-2020-simalign} (see also Section~\ref{sec:subwords}). 
+mBERT only provides embeddings on a subword level (called WordPiece), while XLM-R works either on the word or the subword level (BPE) \autocite{jalili-sabet-etal-2020-simalign} (see also Section~\ref{sec:subwords}). 
 
 For each embedding and word/subword-level combination, alignments are produced according to each of the three methods (Argmax, Itermax and Match) presented by \cite{jalili-sabet-etal-2020-simalign} (see also Section~\ref{subsec:simalign-method}).
 
