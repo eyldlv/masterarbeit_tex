@@ -129,7 +129,7 @@ Match has the lowest precision (0.795) but the highest recall (0.767), which mak
 These results are reasonable and within the range of reported results for other language pairs using SimAlign. 
 SimAlign's AER ranges between 0.06 for English-French, and 0.39 for English-Hindi. 
 For English-Romanian an AER of 0.29 was achieved, and for English-German an AER of 0.19 (Table 2 in \cite{jalili-sabet-etal-2020-simalign}). 
-This puts the AER of 0.22 achieved for German-Romansh in a reasonable place within this range.
+This puts the minimal AER of 0.19 achieved for German-Romansh in a reasonable place within this range.
 
 \begin{table}
 \centering
@@ -167,7 +167,7 @@ Despite this fact, the performance is excellent.
 SimAlign's recall is on par with that of fast\_align and its precision is higher than that of fast\_align by 17.3 percentage points (27.8\%).
 Also, in the hypothetical case in which we only had the 600 annotated sentences to compute word alignment, SimAlign would have outperformed eflomal as well with an \acrshort{aer} of 0.219  (SimAlign) against an \acrshort{aer} of 0.284 (eflomal) (cf.~Table~\ref{tab:baseline}). 
 
-Further,  SimAlign's performance on the language pair German-Romansh (\acrshort{aer} of 0.22) falls from the performance of SimAlign on English-German sentence pairs (\acrshort{aer} of 0.19, Table 2 in \cite{jalili-sabet-etal-2020-simalign}) only by 3 percentage points . This means that the performance in a zero-shot setting  with mBERT embeddings  for German-Romansh is virtually as good as the performance for a pair of seen languages.
+Further,  SimAlign's performance on the language pair German-Romansh (\acrshort{aer} of 0.19) does not fall from the performance of SimAlign on English-German sentence pairs (\acrshort{aer} of 0.19, Table 2 in \cite{jalili-sabet-etal-2020-simalign}). This means that the performance in a zero-shot setting  with mBERT embeddings  for German-Romansh is virtually as good as the performance for a pair of seen languages.
 
 \begin{table}
 \centering
@@ -179,7 +179,7 @@ Further,  SimAlign's performance on the language pair German-Romansh (\acrshort{
 
 							eflomal     & \textbf{0.827} & \textbf{0.877} & \textbf{0.851} & \textbf{0.148} \\
 
-SimAlign:                     mBERT-BPE & 0.795   & 0.767  & 0.781  & 0.219 \\
+SimAlign:                     mBERT-subword & 0.795   & 0.767  & 0.781  & 0.219 \\
 \bottomrule
 \end{tabular}
 \caption[Comparison of the best performance of the three SimAlign methods]{Comparison of the best performance of each of the three methods. 
