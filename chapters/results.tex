@@ -42,7 +42,7 @@ Both have established themselves as well performing models and were used as base
 fast\_align is a re-parameterization of the IBM Model 2 which overcomes two problems posed by IBM Models 1 and 2: 
 IBM Model 1 assumes all word orders are equally likely and Model 2 is \enquote{vastly overparameterized, making it prone to degenerate behavior on account of overfitting.} \autocite{dyer-etal-2013-simple} 
 
-fast\_align overcomes these problems by implementing a log-linear paramterization. It is ten times faster than IBM Model 4 and outperforms it \autocite{dyer-etal-2013-simple}.
+fast\_align overcomes these problems by implementing a log-linear parameterization. It is ten times faster than IBM Model 4 and outperforms it \autocite{dyer-etal-2013-simple}.
 It has become a popular competitor to Giza++, serves as a baseline system in other works \autocites{Ostling2016efmaral,jalili-sabet-etal-2020-simalign}, and is even recommended by Philipp Koehn as an alternative to Giza++\footnote{For computing the word alignments for Moses SMT, a software package for training statistical machine translation models}:
 
 
@@ -119,7 +119,7 @@ mBERT only provides embeddings on a subword level (called WordPiece), while XLM-
 For each embedding and word/subword-level combination, alignments are produced according to each of the three methods (Argmax, Itermax and Match) presented by \cite{jalili-sabet-etal-2020-simalign} (see also Section~\ref{subsec:simalign-method}).
 
 \subsection{Performance}
-Table~\ref{tab:simalign} shows the evaluation of performance for word alignments computed with SimAlign with the various methods. 
+Table~\ref{tab:simalign} and Figure~\ref{fig:aer-comparison} show the evaluation of performance for word alignments computed with SimAlign with the various methods. 
 For each embedding layer (mBERT and XLM-R), the best score in each column is marked in bold. 
 Generally, the mBERT embeddings perform better. 
 Argmax has the best precision (0.894), which means only 10.6\% of the alignments are wrong. 
@@ -157,11 +157,18 @@ Best result per embedding type in bold.}
 \label{tab:simalign}
 \end{table}
 
+\begin{figure}
+\centering
+\includegraphics{graphics/charts/aer-comparison.png}
+\caption[Comparison of AER for different methods and embeddings using SimAlign]{Comparison of \acrfull{aer} (lower is better) for different methods and embeddings using SimAlign}
+\label{fig:aer-comparison}
+\end{figure}
+
 
 \section{Discussion}\label{sec:discussion}
 Comparing the best performance of SimAlign against the best performance of the baseline systems, SimAlign outperforms fast\_align, but is outperformed by eflomal.
 
-Nonetheless, I believe that these results are promising good news. 
+Nonetheless, I believe that these results are good news. 
 SimAlign uses embeddings from language models which have never seen Romansh, a scenario which is also referred to as \enquote{zero-shot}. 
 Despite this fact, the performance is excellent. 
 SimAlign's recall is on par with that of fast\_align and its precision is higher than that of fast\_align by 17.3 percentage points (27.8\%).
@@ -226,9 +233,39 @@ In theory, it is possible that fast\_align generates \emph{correct} 1-to-many al
 In that case, we should solely concentrate on recall, which is not affected by Possible alignments. 
 If we were indeed to ignore the other measurements, the difference between fast\_align (recall 0.782) and SimAlign (recall 0.767) would be 1.5 percentage points, a difference of 2\%, in favor of fast\_align.
 
-All that being said, I believe the excellent performance of eflomal proves that the gold standard is of good quality and is sensible for measuring the performance of word alignment models on German-Romansh.
+% All that being said, I believe the excellent performance of eflomal proves that the gold standard is of good quality and is sensible for measuring the performance of word alignment models on German-Romansh.
 
 
+\section{Explanation Attempt}
+Multilingual models such as mBERT show good performance in what is called \enquote{cross-lingual zero-shot transfer}. 
+It is a scenario in which a pre-trained model is fine-tuned (training taking place after the initial pre-training) on a task, such as \acrshort{pos} tagging on one language; the model then carries out this task on a different language (target language) for which it wasn't trained \autocite{deshpande-etal-2022-bert}.
+Such models also perform well in a variety of tasks such as \acrshort{pos} tagging or \acrshort{ner} on unseen languages (languages which were not covered by the pre-trained model) such as Faroese, Maltese or Swiss German \autocite{muller-et-al-2020}.
+
+There is a lack of consensus as to what properties of a language favor performance in such scenarios, i.e., it is not entirely clear  \emph{when} zero-shot transfer works. 
+Some suggest sub-word overlap is crucial for good performance \autocite{wu-dredze-2019-beto}, while others showed that transfer also works well between languages written in different scripts when they are typologically similar\footnotemark{}, meaning sub-word overlap is not a necessary condition \autocite{pires-etal-2019-multilingual}.  It was however shown that transliterating languages from unseen scripts leads to large gains in performance \autocite{muller-et-al-2020}.
+
+\cite{deshpande-etal-2022-bert} show that zero-shot transfer is possible for different scripts with similar word order, and that the lack of both, on the other hand, hurts performance. 
+
+\cite{deshpande-etal-2022-bert} also show that zero-shot performance is correlated with alignment between word embeddings, i.e., to what extent the embeddings of different languages share the same geometric shape and are aligned across the same axes. 
+When multilingual word embeddings are learned, the embeddings of the different languages have to be aligned to each other, such that they share similar geometrical shapes and are aligned across the same axes, in order for vectors of similar words across different languages to be next to each other in the vector space \autocite[220-223]{koehn-2020}. See Figure~\ref{fig:embedding-alignment}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{graphics/embedding-alignment.png}
+\caption{Matching up the geometric shape of embedding spaces of words in English and German. 
+Taken from \cite[223]{koehn-2020}}
+\label{fig:embedding-alignment}
+\end{figure}
+
+
+
+Since Romansh shares a high similarity, not only in script, but also typologically, with other Romance and other European languages, which are a major part of the training data for mBERT, it is not surprising that similarity-based word alignment using embeddings from mBERT works well.
+
+
+
+
+\footnotetext{mBERT fine-tuned for \acrshort{pos} tagging in Urdu (Arabic script) achieved 91\% accuracy on Hindi (Devanagari script) \autocite{pires-etal-2019-multilingual}. 
+Both languages are mutually intelligible and are considered variants of a single language---Hindustani \autocite{hindustani}.}
 
  
 \section{Summary}
