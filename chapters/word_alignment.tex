@@ -348,7 +348,7 @@ This allows for one word to be aligned to multiple other words, i.e., create 1-t
 
 Argmax finds a local optimum and Itermax is a greedy algorithm. 
 There is a third alignment method, called \textbf{Match}, which finds global optima. 
-The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source).
+The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source)\footnote{\cite{jalili-sabet-etal-2020-simalign} don't elaborate on the relevance  of the notion of source and target sentences.}.
 
 For the task of word alignment, SimAlign can use multilingual embeddings which were learned in advance from monolingual data and then mapped to a shared vector space. 
 SimAlign can also use, out-of-the-box, the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
