@@ -57,7 +57,7 @@ Multilingual language models were shown to also perform  well in various tasks o
 mBERT achieves reasonable results out-of-the-box (without further training) on unseen languages in a variety of tasks such as \acrfull{ner} and \acrfull{pos} tagging \autocite{pires-etal-2019-multilingual}.
 And although the LASER model was pretrained on 93 languages, it obtained strong results for sentence embeddings in 112 languages \autocite{artexte-schwenk-2019-laser}. 
 
-There is, thus, good reason to believe that similarity based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh, in spite of Romansh not being part of the training data, especially since vocabulary overlaps between unseen and seen languages favor performance in zero-shot settings \autocite{pires-etal-2019-multilingual}, and since Romansh displays a high similarity with other seen Romance languages, e.g., Italian, French, Spanish. 
+There is, thus, good reason to believe that similarity-based word alignment using multilingual word embeddings would work also for the case of German--Romansh or Italian--Romansh, in spite of Romansh not being part of the training data, especially since vocabulary overlaps between unseen and seen languages favor performance in zero-shot settings \autocite{pires-etal-2019-multilingual}, and since Romansh displays a high similarity with other seen Romance languages, e.g., Italian, French, Spanish. 
 English, although not a Romance language, also has a large portion of Romance-based vocabulary.
 
 The research question at hand is therefore: \textbf{Will similarity-based word alignment perform as well as statistical word alignment models for the language pair German-Romansh?}
@@ -69,7 +69,7 @@ The research question at hand is therefore: \textbf{Will similarity-based word a
 \subsection{Goals}
 My goals for this thesis are twofold:
 \begin{itemize}
-	\item Test whether similarity based word alignment using multilingual word embeddings will perform on par with statistical word alignment models on Romansh;
+	\item Test whether similarity-based word alignment using multilingual word embeddings will perform on par with statistical word alignment models on Romansh;
 
 	\item Collect the press releases of the canton Graubünden, published in German, Romansh and Italian, and compile a parallel trilingual corpus. 
 
@@ -80,7 +80,7 @@ After finishing my work, I will make my gold standard and the corpus I compiled 
 
 \section{Structure}
 In the course of the following pages I will first give a short introduction to the Romansh language (Chapter~\ref{chap:romansh}), then describe how I collected the data and aligned the documents (Chapter~\ref{chap:compiling}) and how I further aligned the sentences to extract sentence pairs (Chapter~\ref{chap:sentence-alignment}). 
-I will shortly explain the mechanism behind statistical and similarity based word alignment methods (Chapter~\ref{chap:word-alignment}). 
+I will shortly explain the mechanism behind statistical and similarity-based word alignment methods (Chapter~\ref{chap:word-alignment}). 
 Finally, I will explain how and according to which guidelines I created the gold standard (Chapter~\ref{chap:gold-standard}) and display the results of my experiments in which I compared different word aligning systems (Chapter~\ref{chap:results}).
 
 Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow  student of linguistics, such that this work, if it ever falls in the hands of a future student, will be comprehensible and readable. 
