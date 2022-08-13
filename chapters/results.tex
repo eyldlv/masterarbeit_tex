@@ -238,38 +238,46 @@ If we were indeed to ignore the other measurements, the difference between fast\
 
 \section{Explanation Attempt}
 Multilingual models such as mBERT show good performance in what is called \enquote{cross-lingual zero-shot transfer}. 
-It is a scenario in which a pre-trained model is fine-tuned (training taking place after the initial pre-training) on a task, such as \acrshort{pos} tagging on one language; the model then carries out this task on a different language (target language) for which it wasn't trained \autocite{deshpande-etal-2022-bert}.
-Such models also perform well in a variety of tasks such as \acrshort{pos} tagging or \acrshort{ner} on unseen languages (languages which were not covered by the pre-trained model) such as Faroese, Maltese or Swiss German \autocite{muller-et-al-2020}.
+It is a scenario in which a pre-trained model is fine-tuned (training taking place after the initial pre-training) on a task, e.g., \acrshort{pos} tagging, on one language; the model then carries out this task on a different language (target language) for which it wasn't trained \autocite{deshpande-etal-2022-bert}.
+Such models also perform well in a variety of tasks such as \acrshort{pos} tagging or \acrshort{ner} on \textbf{unseen languages} (languages which were not covered by the pre-trained model) such as Faroese, Maltese or Swiss German \autocite{muller-et-al-2020}.
 
 There is a lack of consensus as to what properties of a language favor performance in such scenarios, i.e., it is not entirely clear  \emph{when} zero-shot transfer works. 
-Some suggest sub-word overlap is crucial for good performance \autocite{wu-dredze-2019-beto}, while others showed that transfer also works well between languages written in different scripts when they are typologically similar\footnotemark{}, meaning sub-word overlap is not a necessary condition \autocite{pires-etal-2019-multilingual}.  It was however shown that transliterating languages from unseen scripts leads to large gains in performance \autocite{muller-et-al-2020}.
+Some suggest sub-word overlap is crucial for good performance \autocite{wu-dredze-2019-beto}, while others show that transfer also works well between languages written in different scripts when they are typologically similar\footnotemark{}, meaning sub-word overlap is not a necessary condition \autocite{pires-etal-2019-multilingual}.  It was, however, shown that transliterating languages from unseen scripts leads to large gains in performance \autocite{muller-et-al-2020}.
+
+\footnotetext{mBERT fine-tuned for \acrshort{pos} tagging in Urdu (Arabic script) achieved 91\% accuracy on Hindi (Devanagari script) \autocite{pires-etal-2019-multilingual}. 
+Both languages are mutually intelligible and are considered variants of a single language---Hindustani \autocite{hindustani}.}
 
 \cite{deshpande-etal-2022-bert} show that zero-shot transfer is possible for different scripts with similar word order, and that the lack of both, on the other hand, hurts performance. 
 
-\cite{deshpande-etal-2022-bert} also show that zero-shot performance is correlated with alignment between word embeddings, i.e., to what extent the embeddings of different languages share the same geometric shape and are aligned across the same axes. 
+\cite{deshpande-etal-2022-bert} also show that zero-shot performance is correlated with alignment between word embeddings, i.e., to what extent the embeddings of different languages share the same geometric shape and are aligned across the same axes: 
 When multilingual word embeddings are learned, the embeddings of the different languages have to be aligned to each other, such that they share similar geometrical shapes and are aligned across the same axes, in order for vectors of similar words across different languages to be next to each other in the vector space \autocite[220-223]{koehn-2020}. See Figure~\ref{fig:embedding-alignment}.
+
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{graphics/embedding-alignment.png}
 \caption{Matching up the geometric shape of embedding spaces of words in English and German. 
-Taken from \cite[223]{koehn-2020}}
+Taken from \cite[223]{koehn-2020}}.
 \label{fig:embedding-alignment}
 \end{figure}
 
+However, in our case, we are not dealing with transfer learning, but simply with the leverage of embeddings for measuring word similarity. 
+
+Since multilingual models process tokens at the sub-word level, they work in an open vocabulary setting and can process any language, even languages that aren't part of the pretraining data (providing the character set is part of the pretraining data) \autocite{muller-et-al-2020}.
+
+According to the mBERT's performance on unseen languages, \cite{muller-et-al-2020} put these unseen languages into three categories: Easy, Intermediate and Hard. 
+\cite{muller-et-al-2020} ascribe the differences in mBERT's performance on these languages to two things: close relatedness to languages used during pretraining; and the unseen languages using the same script as those closely related languages which were seen during pretraining.
+
+Since Romansh shares a high similarity, not only in script, but also typologically, with other Romance, as well as other European languages\footnotemark{}, which are a major part of the training data for mBERT, it should not be surprising that similarity-based word alignment using word embeddings from mBERT works well.
+
+\footnotetext{European languages from different languages families (Germanic, Romance, Slavic) were shown to display high similarity to each other and to form a so-called \emph{Sprachbund}, dubbed Standard Average European \autocite{haspelmath-2001-standard}.}
 
 
-Since Romansh shares a high similarity, not only in script, but also typologically, with other Romance and other European languages, which are a major part of the training data for mBERT, it is not surprising that similarity-based word alignment using embeddings from mBERT works well.
 
-
-
-
-\footnotetext{mBERT fine-tuned for \acrshort{pos} tagging in Urdu (Arabic script) achieved 91\% accuracy on Hindi (Devanagari script) \autocite{pires-etal-2019-multilingual}. 
-Both languages are mutually intelligible and are considered variants of a single language---Hindustani \autocite{hindustani}.}
 
  
 \section{Summary}
-I evaluated the performance of  two statistical baseline models (fast\_align and eflomal)  as well as the performance of SimAlign, a similarity based word alignment model, on the language pair German-Romansh. 
+I evaluated the performance of  two statistical baseline models (fast\_align and eflomal)  as well as the performance of SimAlign, a similarity-based word alignment model, on the language pair German-Romansh. 
 SimAlign computed the word similarity using multilingual word embeddings from two language models: mBERT and XLM-R. Neither of the models had seen Romansh during training, i.e., we are dealing with a zero-shot setting.
 The evaluation was done using a gold standard of 600 annotated sentence pairs in German-Romansh, which I had created myself (see Chapter~\ref{chap:gold-standard}).
 SimAlign outperformed fast\_align, but not eflomal (see Table~\ref{tab:comparison}). 
