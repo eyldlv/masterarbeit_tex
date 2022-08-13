@@ -4,7 +4,7 @@
 The goals of this work were twofold: 
 \begin{itemize}
 	\item Enlarge the amount of digital resources that are available for the Romansh language;
-	\item Evaluate a novel, similarity based word alignment method, which uses word embeddings, on the language pair German-Romansh.
+	\item Evaluate a novel, similarity-based word alignment method, which uses word embeddings, on the language pair German-Romansh.
 \end{itemize}
 
 
@@ -26,7 +26,7 @@ In the context of word alignment, a gold standard is a collection of sentence pa
 Since there is no gold standard for German-Romansh, I annotated word correspondences in 600 sentences (see Chapter~\ref{chap:gold-standard}). I will  gladly provide my annotations to other students for further experiments and research, as well as for second annotation.  
 
 \section{Evaluation}
-I compared the performance of statistical word alignment methods---fast\_align \autocite{dyer-etal-2013-simple} and eflomal \autocite{Ostling2016efmaral}---with the novel similarity and embeddings based method SimAlign \autocite{jalili-sabet-etal-2020-simalign}. 
+I compared the performance of statistical word alignment methods---fast\_align \autocite{dyer-etal-2013-simple} and eflomal \autocite{Ostling2016efmaral}---with the novel similarity- and embeddings-based method SimAlign \autocite{jalili-sabet-etal-2020-simalign}. 
 SimAlign's performance is on par with fast\_align, but was outperformed by eflomal. 
 This still shows that SimAlign is a viable method for computing word alignments for German-Romansh. 
 Considering the fact that the multilingual embeddings used by SimAlign (mBERT) do not contain embeddings for Romansh (a.k.a.~zero-shot setting), I believe that these results are very promising.
