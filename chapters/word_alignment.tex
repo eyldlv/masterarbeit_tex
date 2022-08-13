@@ -1,6 +1,6 @@
 \chapter{Word Alignment}\label{chap:word-alignment}
 
-Before We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods, I shall give a short introduction to the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity/word embedding based word alignment.
+Before We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods, I shall give a short introduction to the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity/word embedding-based word alignment.
 
 \section{Introduction}
 Following the success statistical models had in the task of sentence alignment, word alignment was seen as a natural extension of that work. 
@@ -48,7 +48,7 @@ In that case, they will be aligned to a special \texttt{NULL} token \autocite[85
 In order to deal with these challenges of different word order and alignments that are not 1-to-1 alignments, \cite{brown-etal-1993-mathematics} developed their pipeline of translation models, the IBM Models 1-5.
 
 \section{Overview of Methods}
-I shall now give a quick explanation of word alignment methods, namely of the IBM Models, and of SimAlign, a similarity based alignment model that uses  word embeddings. 
+I shall now give a quick explanation of word alignment methods, namely of the IBM Models, and of SimAlign, a similarity-based alignment model that uses  word embeddings. 
 Since I am not a mathematician, I will not go into the mathematics of these models. 
 I will rather attempt to explain their \emph{modus operandi} in a more intuitive way, so as to to allow the reader some basic understanding of the mechanics behind the scenes.
 
@@ -116,7 +116,7 @@ Model 1 has a simple mathematical form and a one unique local minimum, which mea
 The estimates learned by Model 1 are used to initialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on, and so forth---each model is initialized from the parameters of the model before it. 
 This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}. 
 
-These models have been playing a key role in word alignment tasks and in statistical and phrase based machine translation. 
+These models have been playing a key role in word alignment tasks and in statistical- and phrase-based machine translation. 
 Put together in a pipeline of models, they serve as the groundwork for Giza++, a toolkit for training word-based translation models. 
 Using these alignments, phrase alignments can be learned in order to train a statistical phrase-based machine translation \autocites{och-ney-2000-improved,och-ney-2003-smt}
 
@@ -251,7 +251,7 @@ To measure word similarity, we measure the similarity between their embeddings u
 Multilingual word embeddings are word embeddings for words in different languages  sharing the same vector space. 
 Similar words in different languages should have similar embeddings.
 
-\section{Similarity Based Word Alignment}
+\section{Similarity-Based Word Alignment}
 
 % Without going too much into details, when a simple neural language models learns the probabilty distributions for words given all the previous words, the weights in the hidden layer are adapted. 
 % We can then use the language model not for generating language, but extract the weights for a specific word from the inner layer, which are an $n$-dimensional vector.
@@ -361,7 +361,7 @@ There is therefore good reason to expect that SimAlign would also work for align
 
 \subsection{Summary}
 By measuring the similarity between multilingual word embeddings, word alignments for sentence pairs in the languages the models were pre-trained on can be computed. 
-Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce, which makes similarity based word alignment a competitive method against statistical methods. 
+Multilingual embeddings can be learned from monolingual data, and thus word alignment can be computed even in low-resource scenarios, i.e., in scenarios where parallel data is scarce, which makes similarity-based word alignment a competitive method against statistical methods. 
 
 Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of parallel data to perform well.
 The quality of the alignments deteriorates quickly when the size of data diminishes\footnotemark. 
@@ -370,7 +370,7 @@ The quality of the alignments deteriorates quickly when the size of data diminis
 When aligning words in only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
  (see Table 4 in \cite{och-ney-2000-improved})}
 
-In experiments done by \cite{jalili-sabet-etal-2020-simalign}, their similarity based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
+In experiments done by \cite{jalili-sabet-etal-2020-simalign}, their similarity-based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
 However, all of these languages were included in mBERT's and XLM-R's training data. 
 \cite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method being high performance also in the case of little  parallel data.
 
