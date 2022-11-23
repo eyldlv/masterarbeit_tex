@@ -45,7 +45,7 @@ In that case, they will be aligned to a special \texttt{NULL} token \autocite[85
 %Each target word is connected to exactly one source word; but source words can be linked to multiple target words or to no words at all. 
 %This difficulty will not bother us 
 
-In order to deal with these challenges of different word order and alignments that are not 1-to-1 alignments, \cite{brown-etal-1993-mathematics} developed their pipeline of translation models, the IBM Models 1-5.
+In order to deal with these challenges of different word order and alignments that are not 1-to-1 alignments, \textcite{brown-etal-1993-mathematics} developed their pipeline of translation models, the IBM Models 1-5.
 
 \section{Overview of Methods}
 I shall now give a quick explanation of word alignment methods, namely of the IBM Models, and of SimAlign, a similarity-based alignment model that uses  word embeddings. 
@@ -340,7 +340,7 @@ That is, a cell $A_{ij}$ in the matrix $A$ is set to 1 if:
 If all entries in a row $i$ or a column $j$ of S are 0 (as is the case in column 3 of Figure~\ref{fig:sim-matrix}), $A_{ij}$ will be set to 0.
 The resulting alignment can be seen in Figure~\ref{fig:resulting-alignment}.
 
-This basic method is referred to in \cite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}. Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
+This basic method is referred to in \textcite{jalili-sabet-etal-2020-simalign} as \textbf{Argmax}. Mutual argmaxes can be rare, which is why for many sentences Argmax only identifies few alignments. 
 To remedy this, Argmax is applied iteratively in a method called \textbf{Itermax}. 
 In each iteration, the model focuses on still unaligned pairs and tries to align them. 
 Further, if the similarity with an already aligned word is very high, the model can add another alignment edge. 
@@ -348,7 +348,7 @@ This allows for one word to be aligned to multiple other words, i.e., create 1-t
 
 Argmax finds a local optimum and Itermax is a greedy algorithm. 
 There is a third alignment method, called \textbf{Match}, which finds global optima. 
-The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source)\footnote{\cite{jalili-sabet-etal-2020-simalign} don't elaborate on the relevance  of the notion of source and target sentences.}.
+The alignments generated with the Match method are inherently bidirectional (the source is aligned to the target and the target is aligned to the source)\footnote{\textcite{jalili-sabet-etal-2020-simalign} don't elaborate on the relevance  of the notion of source and target sentences.}.
 
 For the task of word alignment, SimAlign can use multilingual embeddings which were learned in advance from monolingual data and then mapped to a shared vector space. 
 SimAlign can also use, out-of-the-box, the embeddings from two multilingual language models: mBERT, which is a version of BERT \autocite{delvin-chang-2018-bert} trained on 104 languages\footnote{\url{https://github.com/google-research/bert/blob/master/multilingual.md}}, and XLM-RoBERTa base, trained on 100 languages \autocite{conneau-etal-2020-xlm}. 
@@ -366,13 +366,12 @@ Multilingual embeddings can be learned from monolingual data, and thus word alig
 Traditional statistical methods such as the IBM Models \autocite{brown-etal-1993-mathematics} and their implementations, such as GIZA++ \autocite{och-ney-2003-smt} or fast\_align \autocite{dyer-etal-2013-simple} require a large amount of parallel data to perform well.
 The quality of the alignments deteriorates quickly when the size of data diminishes\footnotemark. 
 
-\footnotetext{In \cite{och-ney-2000-improved}, the \acrfull{aer} for aligning words in 1.5M sentence pairs is $9.4\%$. 
-When aligning words in only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$
- (see Table 4 in \cite{och-ney-2000-improved})}
+\footnotetext{In \textcite{och-ney-2000-improved}, the \acrfull{aer} for aligning words in 1.5M sentence pairs is $9.4\%$. 
+When aligning words in only \numprint{50000} sentences, the \acrshort{aer} goes up to $15.6\%$ (see Table 4 in \textcite{och-ney-2000-improved}).}
 
-In experiments done by \cite{jalili-sabet-etal-2020-simalign}, their similarity-based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
+In experiments done by \textcite{jalili-sabet-etal-2020-simalign}, their similarity-based word alignment method, when using embeddings extracted from mBERT or XLM-R, outperforms any state-of-the-art statistical method for the languages Czech, German, French and Hindi, paired with English. 
 However, all of these languages were included in mBERT's and XLM-R's training data. 
-\cite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method being high performance also in the case of little  parallel data.
+\textcite{jalili-sabet-etal-2020-simalign} emphasize the advantage of their method being high performance also in the case of little  parallel data.
 
 In the following two chapters I will describe the creation of a gold standard (Chapter~\ref{chap:gold-standard}) in order to answer my research question and test \textbf{whether SimAlign performs just as well on data unseen by said language models, specifically for the language pair German-Romansh} (Chapter~\ref{chap:results}).
 
