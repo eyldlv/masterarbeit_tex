@@ -54,7 +54,7 @@ Another alternative to GIZA++ is fast\_align from Dyer et al. It runs much faste
 
 fast\_align is extremely fast---computing the word alignments for the around \numprint{80000} sentence pairs takes around 50 seconds on my system\footnote{MacBook Air (M1, 2020), 8 GB RAM, running macOS Monterey 12.3.1}. 
 It is well documented and is extremely easy to compile and to operate. 
-All of this makes fast\_align a most attractive system to use as a baseline system.
+All of this makes fast\_align most attractive to use as a baseline system.
 
 \subsection{eflomal}
 eflomal (a.k.a. efmaral\footnotemark) is a system for word alignment using a Bayesian model with Markov Chain Monte Carlo inference (instead of the usual maximum likelihood estimation used in traditional applications of the IBM models for inference, i.e., updating the probabilities). 
@@ -123,7 +123,7 @@ Table~\ref{tab:simalign} and Figure~\ref{fig:aer-comparison} show the evaluation
 For each embedding layer (mBERT and XLM-R), the best score in each column is marked in bold. 
 Generally, the mBERT embeddings perform better. 
 Argmax has the best precision (0.894), which means only 10.6\% of the alignments are wrong. 
-However, it has recall measure of only 0.622, which means 37.8\% of the alignments are missing.
+However, it has a recall of only 0.622, which means 37.8\% of the alignments are missing.
 Match has the lowest precision (0.795) but the highest recall (0.767), which makes it the best compromise between precision and recall and it thus has the lowest \acrshort{aer}.
 
 These results are reasonable and within the range of reported results for other language pairs using SimAlign. 
@@ -160,7 +160,7 @@ Best result per embedding type in bold.}
 \begin{figure}
 \centering
 \includegraphics{graphics/charts/aer-comparison.png}
-\caption[Comparison of AER for different methods and embeddings using SimAlign]{Comparison of \acrfull{aer} (lower is better) for different methods and embeddings using SimAlign}
+\caption[Comparison of AER for different methods and embeddings using SimAlign]{Comparison of \acrfull{aer} (lower is better) for different methods and embeddings using SimAlign.}
 \label{fig:aer-comparison}
 \end{figure}
 
@@ -197,20 +197,20 @@ The best value in each column is in bold.}
 \begin{figure}
 \centering
 \includegraphics{graphics/charts/precision.png}
-\caption{Comparing precision between the systems for different dataset sizes.}
+\caption{Comparing \textbf{precision} between the systems for different dataset sizes.}
 \label{fig:precision}
 \end{figure}
 \begin{figure}
 \centering
 \includegraphics{graphics/charts/recall.png}
-\caption{Comparing recall between the systems for different dataset sizes.}
+\caption{Comparing \textbf{recall} between the systems for different dataset sizes.}
 \label{fig:recall}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics{graphics/charts/aer.png}
-\caption{Comparing \acrshort{aer} between the systems for different dataset sizes.}
+\caption{Comparing \textbf{\acrshort{aer}} between the systems for different dataset sizes.}
 \label{fig:aer}
 \end{figure}
 
@@ -249,17 +249,8 @@ Both languages are mutually intelligible and are considered variants of a single
 
 \textcite{deshpande-etal-2022-bert} show that zero-shot transfer is possible for different scripts with similar word order, and that the lack of both, on the other hand, hurts performance. 
 
-\textcite{deshpande-etal-2022-bert} also show that zero-shot performance is correlated with alignment between word embeddings, i.e., to what extent the embeddings of different languages share the same geometric shape and are aligned across the same axes: 
-When multilingual word embeddings are learned, the embeddings of the different languages have to be aligned to each other, such that they share similar geometrical shapes and are aligned across the same axes, in order for vectors of similar words across different languages to be next to each other in the vector space \autocite[220-223]{koehn-2020}. See Figure~\ref{fig:embedding-alignment}.
-
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{graphics/embedding-alignment.png}
-\caption[Matching up the geometric shape of embedding spaces of words in English and German]{Matching up the geometric shape of embedding spaces of words in English and German. 
-Taken from \cite[223]{koehn-2020}}.
-\label{fig:embedding-alignment}
-\end{figure}
+\textcite{deshpande-etal-2022-bert} also show that zero-shot performance is correlated with alignment between word embeddings, i.e., to what extent the embeddings of different languages share the same geometric shape and are aligned across the same axes. 
+See section~\ref{subsec:multilingual-word-embeddings} and Figure~\ref{fig:embedding-alignment}.
 
 However, in our case, we are not dealing with transfer learning, but simply with the leverage of embeddings for measuring word similarity. 
 
@@ -282,8 +273,8 @@ SimAlign computed the word similarity using multilingual word embeddings from tw
 The evaluation was done using a gold standard of 600 annotated sentence pairs in German-Romansh, which I had created myself (see Chapter~\ref{chap:gold-standard}).
 SimAlign outperformed fast\_align, but not eflomal (see Table~\ref{tab:comparison}). 
 
-SimAlign's performance, although worse the eflomal's performance, is on par with that of fast\_align and is generally promising. 
-It shows that mBERT's embeddings can be used in a zero-shot setting (Romansh was not part of the training data; mBERT has never seen Romansh before) for the task of word alignment and may give future students and/or researchers the impulse to test the performance of mBERT (or other multilingual models) on Romansh in other tasks, such as information extraction, question answering, sentiment analysis, \acrshort{pos} tagging etc.
+SimAlign's performance, although worse than eflomal's performance, is on par with that of fast\_align. 
+Most importantly, it shows that mBERT's embeddings can be used in a zero-shot setting (Romansh was not part of the training data; mBERT has never seen Romansh before) for the task of word alignment and may give future students and/or researchers the impulse to test the performance of mBERT (or other multilingual models) on Romansh in other tasks, such as information extraction, question answering, sentiment analysis, \acrshort{pos} tagging etc.
 
 For a discussion of the differences between the systems in some specific cases, see Appendix~\ref{appendix-a}.
 

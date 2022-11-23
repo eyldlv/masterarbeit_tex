@@ -98,7 +98,7 @@ After extracting the relevant data from the HTML files and saving them in \acrsh
 
 \subsubsection{Linked vs.~Unlinked}
 \label{sec:linked-unlinked}
-For all releases published after mid-2009, document alignment is pretty simple. 
+For all releases published after mid-2009, document alignment is simple. 
 The file ID extracted from the URLs is \textbf{common} to all three releases in the three languages (see example under the folder 2022 in Figure~\ref{fig:html-scheme}). 
 This file ID can be used to link the press releases with each other. 
 I shall refer to these press releases as \enquote{linked releases}.
@@ -109,7 +109,7 @@ I shall refer to these releases as \enquote{unlinked releases}.
 For unlinked releases I used a simple heuristic: if on one single date, exactly three releases were published in three different languages, I assume they are translations of each other. 
 %The titles of press releases that weren't aligned are saved to a CSV file which can be used for manual alignment.
 
-Unfortunately, this means more than half of the of the releases in the years prior to 2009 cannot be automatically added to the corpus, cf.~Figure~\ref{fig:linked-unlinked}.
+Unfortunately, this means that more than half of the releases in the years prior to 2009 cannot be automatically added to the corpus, cf.~Figure~\ref{fig:linked-unlinked}.
 
 \begin{figure}[h]
 	\centering
@@ -119,7 +119,7 @@ Unfortunately, this means more than half of the of the releases in the years pri
 	\label{fig:linked-unlinked}
 \end{figure}
 
-Since the year 2009 contains both \enquote{linked} and \enquote{unlinked} releases, the script \texttt{split\_2009.py} will split the data accordingly. 
+Since the year 2009 contains both \enquote{linked} and \enquote{unlinked} releases, the script \linebreak \texttt{split\_2009.py}  will split the data accordingly. 
 It uses a very simple heuristic: if the file ID of a press release is longer than 5 digits, it is a linked press releases.
 
 \subsubsection{Aligned corpus}
@@ -273,26 +273,39 @@ The unaligned corpus contains \numprint{2484250} German tokens, \numprint{276069
 
 \begin{table}
 \centering
-\begin{tabular}{cc|cc}
+\begin{tabular}{cc}
 \toprule
-Year & Documents & Year & Documents\\
+Year & Documents \\
 \midrule
-1997 &	3 & 2010	&184\\
-1998 & 64 & 2011	&167\\
-1999 & 53 & 2012&	207 \\
-2000 & 53 & 2013 &	219 \\
-2001 &	47 &2014	&218\\
-2002 & 53 &2015	&183 \\
-2003 &	56 & 2016	&190\\
-2004&	60 & 2017	&207\\
-2005	&71 & 2018	&221 \\
-2006	&76 & 2019	&216 \\
-2007	&78 & 2020	&286 \\
-2008	&68 & 2021	&294 \\
-2009	&109&2022	&153\\
+1997 &	3 \\
+1998 & 64 \\
+1999 & 53 \\
+2000 & 53 \\
+2001 &	47 \\
+2002 & 53 \\
+2003 &	56 \\
+2004&	60 \\
+2005	&71 \\
+2006	&76 \\
+2007	&78 \\
+2008	&68 \\
+2009	&109\\
+ 2010	&184 \\
+2011	&167 \\
+2012&	207 \\
+2013 &	219 \\
+2014	&218\\
+2015	&183 \\
+2016	&190\\
+2017	&207\\
+2018	&221 \\
+2019	&216 \\
+2020	&286 \\
+2021	&294 \\
+2022	&153\\
 		
 		\midrule
-		&   & \textbf{Total} & \textbf{\numprint{3536}} \\
+ \textbf{Total} & \textbf{\numprint{3536}} \\
 \bottomrule
 \end{tabular}
 \caption[Number of parallel documents per year]{Number of parallel documents per year, as of July 20, 2022.}
@@ -347,9 +360,9 @@ Year & German & Romansh & Italian\\
 \multicolumn{2}{c|}{German} &  \multicolumn{2}{c|}{Romansh} & \multicolumn{2}{c}{Italian} \\
 Type & Count & Type & Count & Type & Count\\
 \midrule
-Graubünden	&	17859	&	Grischun	&	16775	&	Governo	&	15592 \\ 
-Regierung	&	15557	&	regenza	&	14683	&	Grigioni	&	15337 \\ 
-Kanton	&	8554	&	chantun	&	10928	&	Cantone	&	10402 \\ 
+Graubünden	&	\numprint{17859}	&	Grischun	&	\numprint{16775}	&	Governo	&	\numprint{15592} \\ 
+Regierung	&	\numprint{15557}	&	regenza	&	\numprint{14683}	&	Grigioni	&	\numprint{15337} \\ 
+Kanton	&	8554	&	chantun	&	\numprint{10928}	&	Cantone	&	\numprint{10402} \\ 
 Franken	&	7400	&	davart	&	8917	&	franchi	&	6594 \\ 
 Bündner	&	7375	&	chantunala	&	7668	&	cantonale	&	6494 \\ 
 Gemeinden	&	5638	&	francs	&	7264	&	progetto	&	5966 \\ 
@@ -370,7 +383,7 @@ wurde	&	2902	&	construcziun	&	3993	&	protezione	&	3754 \\
 \bottomrule 
 \end{tabular}
 \caption[Twenty most frequent tokens in each language in the corpus]{Twenty most frequent tokens in each language in the corpus, excluding punctuation and stop words. 
-Stop words lists for German and Italian taken from NLTK \autocite{bird-2009-nltk}}
+Stop word lists for German and Italian taken from NLTK \autocite{bird-2009-nltk}}
 \label{tab:top-20}
 \end{table}
 

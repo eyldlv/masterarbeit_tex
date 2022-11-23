@@ -1,9 +1,9 @@
 \chapter{Word Alignment}\label{chap:word-alignment}
 
-Before We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods, I shall give a short introduction to the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity/word embedding-based word alignment.
+We now reach the core of my thesis, computing word alignments using the novel method \enquote{SimAlign} \autocite{jalili-sabet-etal-2020-simalign} and evaluating it against two baseline methods, I shall give a short introduction to the topic of word alignment and explain the mechanisms behind statistical word alignment and  similarity/word embedding-based word alignment.
 
 \section{Introduction}
-Following the success statistical models had in the task of sentence alignment, word alignment was seen as a natural extension of that work. 
+Following the success of statistical models in sentence alignment, word alignment was seen as a natural extension of that work. 
 This work had two main goals: offer a valuable resource in bilingual lexicography and develop a system for automatic translation \autocite{brown-etal-1993-mathematics}. 
 
 Word alignments are objects indicating for each word in a string in the target language \(f\) which word in the source language \(e\) it arose from \autocite{brown-etal-1993-mathematics}. 
@@ -116,7 +116,7 @@ Model 1 has a simple mathematical form and a one unique local minimum, which mea
 The estimates learned by Model 1 are used to initialize the training of Model 2, those of Model 2 are used to initialize Model 3, and so on, and so forth---each model is initialized from the parameters of the model before it. 
 This way, the estimates arrived at by the end of training of Model 5 do not depend  on the initial estimates of the parameters for Model 1 \autocite{brown-etal-1993-mathematics}. 
 
-These models have been playing a key role in word alignment tasks and in statistical- and phrase-based machine translation. 
+These models have been playing a key role in word alignment tasks and in statistical machine translation. 
 Put together in a pipeline of models, they serve as the groundwork for Giza++, a toolkit for training word-based translation models. 
 Using these alignments, phrase alignments can be learned in order to train a statistical phrase-based machine translation \autocites{och-ney-2000-improved,och-ney-2003-smt}
 
@@ -191,7 +191,7 @@ Since this representation is conditioned on context, similar words should have s
 \subsubsection{Neural Embeddings}
 
 There are different ways for learning word embeddings. 
-One of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
+Two of the most popular methods are \emph{word2vec} (actually made up of two different methods) and \emph{GloVE}. 
 These methods are simpler than neural language models \autocite[111]{jurafsky-2019}; their main goal is to learn high quality word vector representations, not to generate language.
 
 \subsubsection{Sub-words}\label{sec:subwords}
@@ -199,7 +199,7 @@ Due to computational limitations, neural language models usually have a fixed vo
 This means that even if we had some hypothetical corpus which contains all the words in a language, the model will still not be able to \enquote{learn} all these words. 
 Some words will remain out-of-vocabulary.
 There are different ways for dealing with this limitation in vocabulary size, i.e., with rare words. 
-One way is to split words into small sub-word units. 
+One way is to split words into sub-word units. 
 There are different algorithms for splitting words. 
 mBERT uses an algorithm called WordPiece \autocites{wu-2016-wordpiece,delvin-chang-2018-bert} and XLM-R uses BPE \autocites{conneau-etal-2020-xlm,sennrich-etal-2016-neural}.
 
@@ -236,9 +236,21 @@ If it is $0$, the angle between the vectors is a $90^\circ$ angle.
 The lowest similarity is $-1$: the vectors point in opposite directions.
 
 \subsection{Multilingual Word Embeddings}
+\label{subsec:multilingual-word-embeddings}
 There are also methods for computing multilingual word embeddings. 
 Multilingual word embeddings are word embeddings for words in different languages that share the same vector space. 
-This can be achieved by learning word embeddings for each language separately on monolingual data, and then map these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
+This can be achieved by learning word embeddings for each language separately on monolingual data, and then mapping these embeddings to a shared vector space \autocite{artetxe-etal-2018-robust}. 
+When multilingual word embeddings are learned, the embeddings of the different languages have to be aligned to each other, such that they share similar geometrical shapes and are aligned across the same axes, in order for vectors of similar words across different languages to be next to each other in the vector space \autocite[220-223]{koehn-2020}. See Figure~\ref{fig:embedding-alignment}.
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{graphics/embedding-alignment.png}
+\caption[Matching up the geometric shape of embedding spaces of words in English and German]{Matching up the geometric shape of embedding spaces of words in English and German. 
+Taken from \cite[223]{koehn-2020}}.
+\label{fig:embedding-alignment}
+\end{figure}
+
 Multilingual word embeddings can also be extracted from a multilingual language model \autocite{jalili-sabet-etal-2020-simalign}.
 
 The idea behind multilingual word embeddings is that two equivalent words in different languages should have a similar distribution, thus their vector representations should also be similar \autocite{artetxe-etal-2018-robust}. 
@@ -260,7 +272,7 @@ Similar words in different languages should have similar embeddings.
 % It has been shown that words that occur in similar contexts have similar word embeddings. 
 % This vector similarity can be measured with the cosine similarity.
 
-If similar words in different languages have similar embeddings, these embeddings can be  leveraged in order to find word alignments using a similarity matrix, without the need for parallel data. This is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
+If similar words in different languages have similar embeddings, these embeddings can be  leveraged in order to find word alignments using a similarity matrix, without the need for parallel training data. This is the idea that forms the basis of SimAlign \autocite{jalili-sabet-etal-2020-simalign}.
 
 \subsection{Method}
 \label{subsec:simalign-method}

@@ -6,8 +6,8 @@ The clear advantage of this method is that it does not rely on the existence  of
 \textcite{jalili-sabet-etal-2020-simalign} evaluated their method on language pairs which were all part of the training data for the language models in use (mBERT and XLM-R). 
 I shall now proceed to test how well SimAlign performs on the language pair German-Romansh, under the consideration that Romansh is not part of  the training data for these language models, i.e., it is an unseen language. 
 
-In order to measure the quality of words alignments, a model's performance is measured on a test set, dubbed  gold standard, which is created by human annotators. 
-For the gold standard to be of good quality and consistent with itself, annotators have to follow strict guidelines.
+In order to measure the quality of word alignments, a model's performance is measured on a test set, dubbed  gold standard, which is created by human annotators. 
+For the gold standard to be of good quality and consistent, annotators have to follow strict guidelines.
 These guidelines address issues of ambiguity in word alignments. \autocite[115]{koehn2009}. 
 
 Some problematic cases that might occur are function words\footnotemark{} that have no clear equivalent in the other language.
@@ -292,9 +292,9 @@ Since both the verb and the affix form together the meaning of the word and are 
 \label{sec:gold-flaws}
 I shall now discuss the quality of my gold standard and some of its flaws.
 
-The most obvious flaw is the fact that I created the gold standard alone, without a second annotator. 
+The most obvious flaw is the fact that I created the gold standard by myself, without a second annotator. 
 With more than one annotator, more elaborate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
-For instance the annotators' agreement can be measured using the so-called inner-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
+For instance the annotators' agreement can be measured using the so-called inter-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
 Further, the intersection of the annotators' Sure alignment can be used to build the final Sure alignments set and the reunion of the annotators' Possible alignments can be used to create the final Possible alignments set \autocite{mihalcea-pedersen-2003-evaluation}.
 A third annotator can also revise and resolve conflicts between two annotators \autocite{mihalcea-pedersen-2003-evaluation}.
 When several annotators work on the same task, they can also discuss conflicts and resolve them using a majority vote \autocite{DBLP:journals/corr/cmp-lg-9805004}.
@@ -310,5 +310,5 @@ There are however precedents for gold standards without Possible links, using on
 The 600 sentence pairs of the gold standard contain 6743 German tokens and 9158 Romansh tokens. 
 The gold standard contains 6962 edges, 6275 of them are 1-to-1 alignments.
 
-Unfortunately, I did not keep tabs on time during annotation, but I would estimate that at a rate of around 60 sentences per hour, annotation took around 10 hours (not including setting up the alignment program and defining the annotation guidelines). 
+Unfortunately, I did not keep tabs on time during annotation, but I  estimate that at a rate of around 60 sentences per hour, annotation took around 10 hours (not including setting up the alignment program and defining the annotation guidelines). 
 

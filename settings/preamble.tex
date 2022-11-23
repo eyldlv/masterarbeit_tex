@@ -71,10 +71,12 @@
 % \usepackage{times} % Times New Roman
 
 % Bibliography
-\usepackage[style=apa]{biblatex}
+\usepackage[backend=biber, style=authoryear]{biblatex}
 \addbibresource{bibliography/bibliography.bib}
 \addbibresource{bibliography/urls.bib}
 \addbibresource{bibliography/word_align.bib}
+\DeclareFieldFormat{apacase}{#1} % use the casing from the bib files when using style=apa
+\renewcommand*{\nameyeardelim}{\addcomma\space}
 
 % Graphics
 \usepackage{graphicx}

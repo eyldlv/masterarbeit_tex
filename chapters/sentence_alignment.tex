@@ -29,7 +29,7 @@ Sentences may not be left out and each sentence may only occur in one sentence p
 
 \section{Method Overview}
 \label{sec:overview_senalign}
-Traditionally, there are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based and partial similarity-based \autocite{hunalign}. 
+Traditionally, there are three main approaches for solving the problem of sentence alignment:  length-based, dictionary- or translation-based, and partial similarity-based \autocite{hunalign}. 
 
 \subsection{Length-Based}
 One early method for sentence alignment is %the one described in \cite{gale-church-1991-program} which is 
@@ -42,9 +42,9 @@ The Gale \& Church method is based on the assumption that longer sentences in la
 The method combines a distance measure based on the lengths of the sentence with a prior probability of the alignment type (1-to-1; 1-to-0 or 0-to-1; 2-to-1 or 1-to-2; 2-to-2) to a probabilistic score. 
 It assigns this score to possible sentence pairs in a dynamic programming framework to find the best (most probable) pairs \autocite[57]{koehn2009}. 
 
-A program based on this method was tested against a human-made alignment on two pairs of languages: English-German and English-French. 
+\textcite{gale-church-1991-program} tested a program based on this method against a human-made alignment on two pairs of languages: English-German and English-French. 
 The program made a total of 55 errors out of a total of \numprint{1316} alignments (4.2\%). 
-By taking the best-scoring 80\% of the alignments, the error rate was able to be reduced to 0.7\%.
+By taking the best-scoring 80\% of the alignments, the error rate could be reduced to 0.7\%.
 The method was also much faster than the algorithms that existed up to that time: 
 It took 20 hours to extract around \numprint{890000} sentence pairs, around \numprint{44500} sentence pairs per hour, which is about 3.5 times faster than previous algorithms \autocite{gale-church-1991-program}.
 
@@ -88,7 +88,7 @@ It combines a dictionary- and a length-based method.
 Here, a sort of a dummy translation of the source text is produced using a translation dictionary which is supplied to the program\footnote{Note that this is not a real restriction. See Section~\ref{sec:aligning-language-pairs}}. 
 The program then simply converts each token into its corresponding dictionary translation.
 After the dummy translation has been created, a similarity score is computed for each sentence pair.
-The similarity score consists of two components: a score based the number of shared words in the sentence pair (token-based) and  a score based on the ratio of character counts between sentences (length-based). 
+The similarity score consists of two components: a score based on the number of shared words in the sentence pair (token-based) and  a score based on the ratio of character counts between sentences (length-based). 
 The program treats paragraph boundaries (special \texttt{<p>} tokens) as sentences with special scoring. 
 This similarity score of a paragraph-boundary  and a real sentence is always minus infinity, which makes sure they never align. This way, paragraph boundaries always align with themselves and can be used as anchors to keep  paragraphs mutually aligned \autocite{hunalign}.
 
@@ -138,12 +138,12 @@ The desire for  sentence alignment of even higher quality rose with the insight 
 This is especially true in scenarios with less data for low-resource \acrshort{nmt} \autocite{thompson-koehn-2019-vecalign}. 
 
 Vecalign uses a novel method which is based on the similarity of bilingual sentence embeddings. 
-Sentence embeddings are, in a manner similar to word embeddings (see Section~\ref{sec:word-embeddings}), vector representation of sentences that are learned by and can be extracted from a neural language model. 
+Sentence embeddings are, in a manner similar to word embeddings (see Section~\ref{sec:word-embeddings}), vector representations of sentences that are learned by and can be extracted from a neural language model. 
 This vector representation is said to represent the meaning of a sentence. 
 The sentence embeddings are obtained from a language model that was trained on multiple languages, thus, the embeddings for all languages share the same vector space.
 This means that the embeddings are indifferent to the specific input language: They are language agnostic.
 If two sentences, regardless of their language, are similar, their vector representations will lie close to each other in the vector space. 
-A function that is most often used for measuring vector similarity is the cosine similarity (see Section~\ref{sec:word-similarity}.
+A function that is most often used for measuring vector similarity is the cosine similarity (see Section~\ref{sec:word-similarity}).
 In this manner, similar sentences in different languages can be identified and aligned \autocite{artexte-schwenk-2019-laser}.
 
 
@@ -167,7 +167,7 @@ Obviously, this may be due to the fact that Romansh is not one of the languages 
 That being said, LASER \emph{has} been said to generalize to unseen languages that are similar to the ones the model was trained on, e.g., Swiss German or West Frisian, which are similar to German and Dutch, respectively \autocite{artexte-schwenk-2019-laser} 
 \footnote{See also \url{https://github.com/facebookresearch/LASER}}.
 
-Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language and the press releases are usually not longer than a few sentences---hunalign performed excellently. 
+Since the corpus at hand is well-structured---the documents are pre-aligned, the translations are close translations, paragraphs in the source language correspond to paragraphs in the target language, and the press releases are usually not longer than a few sentences---hunalign performed excellently. 
 I didn't create a gold standard for sentence alignment, so automatic evaluation was not possible, but during the task of annotating word alignments for the gold standard of German-Romansh (see Chapter~\ref{chap:gold-standard}), I only had to discard 11 out of 611 sentences due to  misalignment. 
 This corresponds to a precision of 98.2\% or an error rate of 1.8\%.
 
@@ -202,6 +202,7 @@ Sentence segmentation (also called sentence tokenization) was done using NLTK's 
 Since I wasn't able to integrate a sentence tokenizer for Romansh into the pipeline, I used the an NLTK Punkt tokenizer model which was trained on Italian. 
 After instantiating both the German and the Italian models, I extended the list of abbreviations\footnotemark~to enhance the performance of the tokenizer and avoid wrong segmentation. 
 
+\interfootnotelinepenalty=10000
 \footnotetext{The abbreviations for Romansh were kindly taken from Lisa Gasner's/Samuel Läubli's GitHub repository.}
 
 In the course of sentence segmentation, paragraphs are retained by converting line breaks into  special \texttt{<p>} tokens. 
@@ -215,7 +216,7 @@ The file IDs/dates will be used by \texttt{hunalign} as anchor points for keepin
 \vspace{0.25cm}
 
 \begin{lstlisting}[language=txt, caption={[Excerpt from a file containing sentences for alignment.]Excerpt from a  file containing sentences for alignment. 
-In order to keep the file structured and increase alignment performance, each document starts with a date and paragraph are boundaries are marked with a special \texttt{<p>} token.}, captionpos=t, label={lst:sentences}]
+In order to keep the file structured and increase alignment performance, each document starts with a date, and paragraph boundaries are marked with a special \texttt{<p>} token.}, captionpos=t, label={lst:sentences}]
 2004-01-27
 www.gr.ch neu mit Online-Schalter und mit Interessenbindungen des Grossen Rats
 Ein neues, zentrales Element von www.gr.ch ist der integrierte Behörden-Online-Schalter www.ch.ch.
@@ -254,7 +255,7 @@ The result is three files containing all the sentence pairs for each language co
 
 \subsection{Filtering and Tokenizing}
 The press releases often contain sentences that are repeated throughout many of them, such as noting the source of the information at the end of the press release. 
-A very common sentence ending a press release in German is \emph{Quelle: dt Standeskanzlei Graubünden} \enquote{Source: German State Chancellory Grisons}. 
+A very common sentence ending a press release in German is \emph{Quelle: dt Standeskanzlei Graubünden} (\enquote{Source: German State Chancellory Grisons}). 
 Such duplicate sentences are not simply redundant in the corpus, but might also be considered noise in the data. % which might negatively influence an \acrshort{nmt} model trained on this corpus \autocite{thompson-koehn-2019-vecalign}. 
 Misaligned sentences and untranslated sentences are also considered noise that can have a negative influence on \acrshort{nmt} models \autocite{khayrallah-koehn-2018-impact}.
 Therefore, duplicates and untranslated sentences should be filtered out, in order to make sure the remaining pairs are of high quality.
