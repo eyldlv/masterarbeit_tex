@@ -42,9 +42,9 @@ Of special interest is here the Romansh language, which, having such a low numbe
 \section{Research Question and Goals}
 \subsection{Research Question}\label{sec:research-question}
 Given two sentences which are mutual translations, word alignment is a mapping of the words in the sentence of the source language to the words in the sentence of the target language \autocite[84]{koehn2009}.
-\cite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment (SimAlign), which is similarity-based and uses multilingual word embeddings to compute similarity, outperforms statistical models. 
+\textcite{jalili-sabet-etal-2020-simalign} were able to show that their algorithm for word alignment (SimAlign), which is similarity-based and uses multilingual word embeddings to compute similarity, outperforms statistical models. 
 
-But not only that the model outperforms the existing statistical models, its biggest advantage, as propagated by \cite{jalili-sabet-etal-2020-simalign}, is that it requires no parallel training data (pairs of sentences which are mutual translations), but only monolingual training data--- 
+But not only that the model outperforms the existing statistical models, its biggest advantage, as propagated by \textcite{jalili-sabet-etal-2020-simalign}, is that it requires no parallel training data (pairs of sentences which are mutual translations), but only monolingual training data--- 
 statistical models will only reach good performance with enough parallel training data \autocites{jalili-sabet-etal-2020-simalign,och-ney-2000-improved}. 
 Using word embeddings, words in just one single sentence pair can be aligned with high accuracy, without the need of a large set of sentence pairs for first training a word alignment model.
 However, all of this works presuming we already have  a multilingual language model, trained on monolingual data, whose learned embeddings we can leverage for this task. 
@@ -81,7 +81,7 @@ After finishing my work, I will make my gold standard and the corpus I compiled 
 \section{Structure}
 In the course of the following pages I will first give a short introduction to the Romansh language (Chapter~\ref{chap:romansh}), then describe how I collected the data and aligned the documents (Chapter~\ref{chap:compiling}) and how I further aligned the sentences to extract sentence pairs (Chapter~\ref{chap:sentence-alignment}). 
 I will shortly explain the mechanism behind statistical and similarity-based word alignment methods (Chapter~\ref{chap:word-alignment}). 
-Finally, I will explain how and according to which guidelines I created the gold standard (Chapter~\ref{chap:gold-standard}) and display the results of my experiments in which I compared different word aligning systems (Chapter~\ref{chap:results}).
+Finally, I will explain how and according to which guidelines I created the gold standard (Chapter~\ref{chap:gold-standard}) and display the results of my experiments, in which I compared different word aligning systems (Chapter~\ref{chap:results}).
 
 Throughout this work, I went to effort to not become too technical in details, always writing to an imaginary fellow  student of linguistics, such that this work, if it ever falls in the hands of a future student, will be comprehensible and readable. 
 I hope that it \emph{will} be read by and inspire future students, in the same way I that was inspired by works written by students before me.
