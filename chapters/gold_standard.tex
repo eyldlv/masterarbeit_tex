@@ -25,7 +25,7 @@ There are several possibilities, all of them arguable, none of them plain wrong.
 
 \section{Sure and Possible Alignments}
 \label{sec:sure_possible}
-An approach for solving problematic cases is the distinction between \enquote{Sure} and \enquote{Possible} alignments \autocite{och-ney-2000-improved}, which are also sometimes referred as \enquote{fuzzy alignments} \autocite{clematide2018}. 
+An approach for solving problematic cases is the distinction between \enquote{Sure} and \enquote{Possible} alignments \autocite{och-ney-2000-improved}, which are also sometimes referred to as \enquote{fuzzy alignments} \autocite{clematide2018}. 
 Generally, these labels allow to distinguish between ambiguous and unambiguous links. 
 Ambiguous links are labeled Possible and unambiguous links are labeled Sure \autocite{lambert2005}. 
 The Possible label was conceived to be used especially for aligning words within idiomatic expressions, free translations and missing function words \autocite{och-ney-2000-improved}.
@@ -60,7 +60,7 @@ I fixed this issue, so that source (German) and target (Romansh) languages stay 
 
 As mentioned in Section~\ref{sec:sure_possible}, the annotation scheme used by \textcite{steingrimsson-etal-2021-combalign} does not allow labeling of links with Sure and Possible. 
 Instead, AlignMan treats the union of 1-to-1 alignments made by two annotators as Sure alignments and all other alignments as Possible. 
-This means, each annotator is expected to only annotate Sure alignments. This also applied to myself while annotating the German-Romansh gold standard: I only annotated Sure alignments. 
+This means that each annotator is expected to only annotate Sure alignments. This also applied to myself while annotating the German-Romansh gold standard: I only annotated Sure alignments. 
 
 
 \subsection{Guidelines}
@@ -107,8 +107,7 @@ I will now give some examples to illustrate the above principles.
 \subsubsection{Compound words}
 Compounding is the formation of new lexemes by adjoining two or more lexemes \autocite{bauer1988}. In German, compounds are productive and prominent means of word formation in German \autocite{clematide2018}. 
 In a sample of 4,500 types examined by \textcite{clematide2018}, 80\% of German nouns were compounds.
-Romansh, in comparison, uses prepositions (usually \emph{da}) for linking nouns, with one noun modifying the other \autocite{valladers}. Some other prepositions used for linking words are \emph{cunter} and \emph{per}.
-\footnote{Typologically, this is inline with other Romance languages such as French, which uses prepositions (\emph{de}, \emph{en} and \emph{à}) for linking two nouns, e.g., \emph{une robe de soie} \enquote{a silk dress} \autocite[510]{price2008}.}
+Romansh, in comparison, uses prepositions (usually \emph{da}) for linking nouns, with one noun modifying the other \autocite{valladers}. Some other prepositions used for linking words are \emph{cunter} and \emph{per}.\footnote{Typologically, this is inline with other Romance languages such as French, which uses prepositions (\emph{de}, \emph{en} and \emph{à}) for linking two nouns, e.g., \emph{une robe de soie} \enquote{a silk dress} \autocite[510]{price2008}.}
 In other cases, German compounds might be translated to Romansh using an adjective + noun, e.g., German \emph{Gastkanton} was translated to \emph{chantun ospitant} ~\enquote{hosting canton}.
 See Table~\ref{tab:compounds} for more examples.
 
@@ -178,7 +177,7 @@ Some examples are \emph{nahm} (infinitive \emph{nehmen} \enquote{take}) or \emph
 The German perfect is an analytic construction made up of an auxiliary verb (\emph{haben} \enquote{have} or \emph{sein} \enquote{be}) and the past participle, e.g., \emph{Die Präsidentenkonferenz \textbf{hat} nun \textbf{entschieden}} \enquote{the presidential conference has decided}. 
 
 In contrast to German, Romansh only has one tense referring to past events: the perfect. 
-It is an analytic construction made, in a similar fashion as in German, of an auxiliary \emph{habere} \enquote{have} for transitive verbs or \emph{esse} \enquote{be} for intransitive verbs and the past participle \autocite[189]{bossong2008}. 
+It is an analytic construction made of, similarly to German, an auxiliary \emph{habere} \enquote{have} for transitive verbs or \emph{esse} \enquote{be} for intransitive verbs and the past participle \autocite[189]{bossong2008}. 
 The German sentence given above (\emph{Die Präsidentenkonferenz hat nun entschieden}) was translated as \emph{La conferenza da las presidentas e dals presidents \textbf{ha} usse \textbf{decidi}}. 
 \emph{ha} is the auxiliary and \emph{decidi} is the past participle. 
 This poses no real problem since we can link the German auxiliary to the Romansh auxiliary and the German participle to the Romansh participle.
@@ -279,9 +278,9 @@ This is also linguistically motivated: in certain cases, \emph{na} can be omitte
 \subsubsection{Articles and Prepositions}
 German articles inflect in case, which expresses some syntactic relations involving nouns. 
 Romansh often uses preopsitions for expressing the same relations. 
-Take the German genitive case in \emph{Zustimmung der Person} \enquote{the person's agreement} which is translated as \emph{consentiment da la persuna}. 
+Take, for example, the German genitive case in \emph{Zustimmung der Person} \enquote{the person's agreement}, which is translated as \emph{consentiment da la persuna}. 
 I align the German article in genitive  \emph{der} with the Romansh preposition \emph{da}, leaving \emph{la} unaligned. 
-Except for my preference for 1-to-1 alignments, the motivation for this is that it is the preposition \emph{da} that expresses the genitival relations between the nouns.
+Except for my preference for 1-to-1 alignments, the motivation for this is that it is the preposition \emph{da}, that expresses the genitival relations between the nouns.
 
 \subsubsection{Separable verbs}
 Separable verbs are verbs in front of which affixes (mostly prepositions) are placed. 
@@ -292,23 +291,23 @@ Since both the verb and the affix form together the meaning of the word and are 
 \label{sec:gold-flaws}
 I shall now discuss the quality of my gold standard and some of its flaws.
 
-The most obvious flaw is the fact that I created the gold standard by myself, without a second annotator. 
+The most obvious flaw is the fact that I created the gold standard on my own, without a second annotator. 
 With more than one annotator, more elaborate annotating schemes can be used in order to ensure higher quality, consistency and harmony. 
-For instance the annotators' agreement can be measured using the so-called inter-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
+For instance, the annotators' agreement can be measured using the so-called inter-annotator agreement \autocite{holmqvist-ahrenberg-2011-gold}. 
 Further, the intersection of the annotators' Sure alignment can be used to build the final Sure alignments set and the reunion of the annotators' Possible alignments can be used to create the final Possible alignments set \autocite{mihalcea-pedersen-2003-evaluation}.
 A third annotator can also revise and resolve conflicts between two annotators \autocite{mihalcea-pedersen-2003-evaluation}.
 When several annotators work on the same task, they can also discuss conflicts and resolve them using a majority vote \autocite{DBLP:journals/corr/cmp-lg-9805004}.
 All of these possible schemes cannot be realized in the case of a single annotator, which was my case.
 
 Another flaw are the missing confidence labels (Sure and Possible), which may influence the evaluation scores (see Section~\refnameref{sec:problems-evaluation}). 
-There are however precedents for gold standards without Possible links, using only Sure links \autocites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore arguable.
+There are however precedents for gold standards without Possible links, using only Sure links, cf., \textcites{clematide2018,mihalcea-pedersen-2003-evaluation}. It is therefore arguable.
 
 
 %Despite of the flaws mentioned, I am certain that gold standard is of high quality and consistency, due to the fact that I was also the one to define the guidelines. 
 
 \section{Statistics}
-The 600 sentence pairs of the gold standard contain 6743 German tokens and 9158 Romansh tokens. 
-The gold standard contains 6962 edges, 6275 of them are 1-to-1 alignments.
+The 600 sentence pairs of the gold standard contain \numprint{6743} German tokens and \numprint{9158} Romansh tokens. 
+The gold standard contains \numprint{6962} edges, \numprint{6275} of them are 1-to-1 alignments.
 
 Unfortunately, I did not keep tabs on time during annotation, but I  estimate that at a rate of around 60 sentences per hour, annotation took around 10 hours (not including setting up the alignment program and defining the annotation guidelines). 
 

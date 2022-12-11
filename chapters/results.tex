@@ -17,9 +17,9 @@ It answers the question \enquote{how many of all the true positives were actuall
 F-measure is a score that incorporates precision and recall. 
 The fourth measurement for evaluating word alignment, \acrfull{aer}, was introduced by \textcite{och-ney-2000-improved}. 
 
-For computing the evaluation scores of the word alignments, I used a script made available on GitHub\footnotemark by the creators of SimAlign \autocite{jalili-sabet-etal-2020-simalign}. 
+For computing the evaluation scores of the word alignments, I used a script made available on GitHub\footnotemark{} by the creators of SimAlign \autocite{jalili-sabet-etal-2020-simalign}. 
 \footnotetext{\url{https://github.com/cisnlp/simalign/blob/master/scripts/calc_align_score.py}}
-The script uses a definition of precision, recall and AER which stems from \textcite{och-ney-2000-improved} and was later used by many others \autocites{mihalcea-pedersen-2003-evaluation,och-ney-2003-systematic,Ostling2016efmaral,jalili-sabet-etal-2020-simalign}. Precision, recall, F-measure and \acrshort{aer} are defined as follows:
+The script uses a definition of precision, recall and AER which stems from \textcite{och-ney-2000-improved} and was later used by many others, cf. \textcites{mihalcea-pedersen-2003-evaluation,och-ney-2003-systematic,Ostling2016efmaral,jalili-sabet-etal-2020-simalign}. Precision, recall, F-measure and \acrshort{aer} are defined as follows:
 
 \[
 	\text{Recall} = \frac{|A\cap S|}{|S|},~~~~\text{Precision}  = \frac{|A\cap P|}{|A|},~~~F_1 = 2\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision}+\text{Recall}}
@@ -36,7 +36,7 @@ I will later discuss shortly some of the problems I see in these evaluation sche
 
 \section{Baseline Systems}
 I chose two baseline systems: fast\_align \autocite{dyer-etal-2013-simple} and eflomal \autocite{Ostling2016efmaral}. 
-Both have established themselves as well performing models and were used as baseline models in previous works \autocites{Ostling2016efmaral,jalili-sabet-etal-2020-simalign,steingrimsson-etal-2021-combalign}
+Both have established themselves as well performing models and were used as baseline models in previous works, cf. \textcites{Ostling2016efmaral,jalili-sabet-etal-2020-simalign,steingrimsson-etal-2021-combalign}.
 
 \subsection{fast\_align}
 fast\_align is a re-parameterization of the IBM Model 2 which overcomes two problems posed by IBM Models 1 and 2: 
@@ -71,8 +71,8 @@ Statistical word alignment models rely heavily  on a minimal amount of parallel 
 The performance of the two baseline models on different dataset sizes is presented in Table~\ref{tab:baseline}. The relation between quality and dataset size is striking. 
 
 Compared to  results reported in other papers, the results achieved by the models can be considered good. 
-For eflomal,  an \acrshort{aer} of 0.106  was achieved for English-Swedish (\numprint{692662} sentences) and an AER of 0.279 for English-Romanian (\numprint{48641} sentences) (Table 2 in \textcite{Ostling2016efmaral}). 
-Trained on \numprint{50000} sentence pairs of German-French, Giza achieves an AER of 0.156; trained on \numprint{100000} an AER of 0.125 is achieved (Table 5 in \textcite{och-ney-2000-improved}). 
+For eflomal,  an \acrshort{aer} of 0.106  was achieved for English-Swedish (\numprint{692662} sentences) and an AER of 0.279 for English-Romanian (\numprint{48641} sentences), cf. Table 2 in \textcite{Ostling2016efmaral}. 
+Trained on \numprint{50000} sentence pairs of German-French, Giza achieves an AER of 0.156; trained on \numprint{100000} an AER of 0.125 is achieved, cf. Table 5 in \textcite{och-ney-2000-improved}. 
 The AER of 0.148 achieved for German-Romansh using eflomnal is within this range.
 
 
@@ -128,7 +128,7 @@ Match has the lowest precision (0.795) but the highest recall (0.767), which mak
 
 These results are reasonable and within the range of reported results for other language pairs using SimAlign. 
 SimAlign's AER ranges between 0.06 for English-French, and 0.39 for English-Hindi. 
-For English-Romanian an AER of 0.29 was achieved, and for English-German an AER of 0.19 (Table 2 in \textcite{jalili-sabet-etal-2020-simalign}). 
+For English-Romanian an AER of 0.29 was achieved, and for English-German an AER of 0.19, cf. Table 2 in \textcite{jalili-sabet-etal-2020-simalign}. 
 This puts the minimal AER of 0.19 achieved for German-Romansh in a reasonable place within this range.
 
 \begin{table}
@@ -174,7 +174,7 @@ Despite this fact, the performance is excellent.
 SimAlign's recall is on par with that of fast\_align and its precision is higher than that of fast\_align by 17.3 percentage points (27.8\%).
 Also, in the hypothetical case in which we only had the 600 annotated sentences to compute word alignment, SimAlign would have outperformed eflomal as well with an \acrshort{aer} of 0.219  (SimAlign) against an \acrshort{aer} of 0.284 (eflomal) (cf.~Table~\ref{tab:baseline}). 
 
-Further,  SimAlign's performance on the language pair German-Romansh (\acrshort{aer} of 0.19) does not fall from the performance of SimAlign on English-German sentence pairs (\acrshort{aer} of 0.19, Table 2 in \textcite{jalili-sabet-etal-2020-simalign}). This means that the performance in a zero-shot setting  with mBERT embeddings  for German-Romansh is virtually as good as the performance for a pair of seen languages.
+Further,  SimAlign's performance on the language pair German-Romansh (\acrshort{aer} of 0.19) does not fall from the performance of SimAlign on English-German sentence pairs (\acrshort{aer} of 0.19, cf. Table 2 in \textcite{jalili-sabet-etal-2020-simalign}). This means that the performance in a zero-shot setting  with mBERT embeddings  for German-Romansh is virtually as good as the performance for a pair of seen languages.
 
 \begin{table}
 \centering
@@ -242,7 +242,7 @@ It is a scenario in which a pre-trained model is fine-tuned (training taking pla
 Such models also perform well in a variety of tasks such as \acrshort{pos} tagging or \acrshort{ner} on \textbf{unseen languages} (languages which were not covered by the pre-trained model) such as Faroese, Maltese or Swiss German \autocite{muller-et-al-2020}.
 
 There is a lack of consensus as to what properties of a language favor performance in such scenarios, i.e., it is not entirely clear  \emph{when} zero-shot transfer works. 
-Some suggest sub-word overlap is crucial for good performance \autocite{wu-dredze-2019-beto}, while others show that transfer also works well between languages written in different scripts when they are typologically similar\footnotemark{}, meaning sub-word overlap is not a necessary condition \autocite{pires-etal-2019-multilingual}.  It was, however, shown that transliterating languages from unseen scripts leads to large gains in performance \autocite{muller-et-al-2020}.
+Some suggest sub-word overlap is crucial for good performance \autocite{wu-dredze-2019-beto}, while others show that transfer also works well between languages written in different scripts when they are typologically similar\footnotemark{}, meaning sub-word overlap is not a necessary condition \autocite{pires-etal-2019-multilingual}.  It was, however, shown by  \textcite{muller-et-al-2020} that transliterating languages from unseen scripts leads to large gains in performance.
 
 \footnotetext{mBERT fine-tuned for \acrshort{pos} tagging in Urdu (Arabic script) achieved 91\% accuracy on Hindi (Devanagari script) \autocite{pires-etal-2019-multilingual}. 
 Both languages are mutually intelligible and are considered variants of a single language---Hindustani \autocite{hindustani}.}
